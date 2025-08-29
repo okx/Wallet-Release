@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@solana/kit": "^2.3.0",
+    "@solana/spl-token": "^0.4.13",
+    "@solana/web3.js": "^1.98.4",
+    "@types/inquirer": "^8.2.12",
+    "anchor": "^1.4.1",
+    "bs58": "^6.0.0",
+    "dotenv": "^17.2.1",
+    "ec-pem": "^0.18.0",
+    "ethers": "^6.15.0",
+    "inquirer": "^8.2.7",
+    "litesvm": "^0.2.0",
+    "pem": "^1.14.8",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "scripts": {
+    "start": "node -r dotenv/config -r ts-node/register/transpile-only src/off_boarding.ts",
+    "build": "tsc",
+    "start:built": "node -r dotenv/config dist/src/off_boarding.js"
+  },
+  "devDependencies": {
+    "@types/bn.js": "^5.2.0"
+  }
+}
