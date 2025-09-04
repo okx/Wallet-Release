@@ -1,0 +1,875 @@
+{
+  "address": "tqVoUexaDpW35SukukXhMXhtWC1n1PBJq8riiiBZf8R",
+  "metadata": {
+    "name": "upgrade_mock",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "migrate_smart_account_v1",
+      "discriminator": [
+        50,
+        64,
+        147,
+        219,
+        106,
+        8,
+        94,
+        86
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "smart_account_v1",
+          "docs": [
+            "Validate this is a legitimate SmartAccountV1 from smart_account_solana program"
+          ],
+          "writable": true,
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account_v1.id",
+                "account": "SmartAccountV1"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                106,
+                254,
+                177,
+                7,
+                234,
+                127,
+                32,
+                30,
+                79,
+                197,
+                203,
+                127,
+                230,
+                216,
+                227,
+                83,
+                124,
+                237,
+                99,
+                196,
+                162,
+                145,
+                137,
+                11,
+                156,
+                36,
+                163,
+                88,
+                130,
+                142,
+                114,
+                187
+              ]
+            }
+          }
+        },
+        {
+          "name": "smart_account_v2",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account_v1.id",
+                "account": "SmartAccountV1"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account_v1.id",
+                "account": "SmartAccountV1"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account_v1.id",
+                "account": "SmartAccountV1"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "recover",
+      "discriminator": [
+        108,
+        216,
+        38,
+        58,
+        109,
+        146,
+        116,
+        17
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "signer": true
+        },
+        {
+          "name": "recipient",
+          "writable": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "smart_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccountV2"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccountV2"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccountV2"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "new_passkey",
+          "type": {
+            "defined": {
+              "name": "Passkey"
+            }
+          }
+        },
+        {
+          "name": "execution_fees",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "vault_transfer_sol",
+      "discriminator": [
+        42,
+        16,
+        89,
+        84,
+        184,
+        74,
+        224,
+        126
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "mandatory_signer",
+          "signer": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_state.id",
+                "account": "VaultState"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_state.id",
+                "account": "VaultState"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "recipient",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "SmartAccount",
+      "discriminator": [
+        186,
+        83,
+        247,
+        224,
+        59,
+        95,
+        223,
+        112
+      ]
+    },
+    {
+      "name": "SmartAccountV2",
+      "discriminator": [
+        171,
+        137,
+        32,
+        110,
+        182,
+        244,
+        6,
+        56
+      ]
+    },
+    {
+      "name": "VaultState",
+      "discriminator": [
+        228,
+        196,
+        82,
+        165,
+        98,
+        210,
+        235,
+        152
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidVaultProgram",
+      "msg": "Invalid vault program"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidNonce",
+      "msg": "Invalid nonce"
+    }
+  ],
+  "types": [
+    {
+      "name": "AuthorizationModel",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "PayMultisig",
+            "fields": [
+              {
+                "defined": {
+                  "name": "PayMultisig"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Signers",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SmartAccountSigners"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "OptimisticValidationState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_mint",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "token_amount",
+            "type": "u64"
+          },
+          {
+            "name": "max_slot",
+            "type": "u64"
+          },
+          {
+            "name": "target_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "tx_payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "validation_slot",
+            "type": "u64"
+          },
+          {
+            "name": "is_executed",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Passkey",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "type": {
+              "array": [
+                "u8",
+                33
+              ]
+            }
+          },
+          {
+            "name": "valid_from",
+            "type": "u64"
+          },
+          {
+            "name": "valid_until",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PayMultisig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "threshold",
+            "type": "u8"
+          },
+          {
+            "name": "mandatory_signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "user_signers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Passkey"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmartAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          },
+          {
+            "name": "account_type",
+            "type": {
+              "defined": {
+                "name": "SmartAccountType"
+              }
+            }
+          },
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "authorization_model",
+            "type": {
+              "defined": {
+                "name": "AuthorizationModel"
+              }
+            }
+          },
+          {
+            "name": "nonce",
+            "type": "u64"
+          },
+          {
+            "name": "optimistic_validation_state",
+            "type": {
+              "option": {
+                "defined": {
+                  "name": "OptimisticValidationState"
+                }
+              }
+            }
+          },
+          {
+            "name": "recovery_signers",
+            "type": {
+              "vec": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmartAccountSigners",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "passkey_signers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Passkey"
+                }
+              }
+            }
+          },
+          {
+            "name": "solana_key_signers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "SolanaKey"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmartAccountType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "PayWallet"
+          },
+          {
+            "name": "EasyWallet"
+          },
+          {
+            "name": "CeDeFiWallet"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmartAccountV2",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "version",
+            "type": "u8"
+          },
+          {
+            "name": "executor_count",
+            "type": "u32"
+          },
+          {
+            "name": "bump",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          },
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "authorization_model",
+            "type": {
+              "defined": {
+                "name": "AuthorizationModel"
+              }
+            }
+          },
+          {
+            "name": "nonce",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolanaKey",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "valid_from",
+            "type": "u64"
+          },
+          {
+            "name": "valid_until",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "delegated_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "smart_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "state_bump",
+            "type": "u8"
+          },
+          {
+            "name": "is_validated",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ]
+}

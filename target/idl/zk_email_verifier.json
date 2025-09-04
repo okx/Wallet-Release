@@ -1,0 +1,512 @@
+{
+  "address": "5ZWpsrh3afwUcbuiX6m1LwCriFFqtKnTf8DkJjvUfYb9",
+  "metadata": {
+    "name": "zk_email_verifier",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "recover",
+      "discriminator": [
+        108,
+        216,
+        38,
+        58,
+        109,
+        146,
+        116,
+        17
+      ],
+      "accounts": [
+        {
+          "name": "recovery_signer",
+          "signer": true
+        },
+        {
+          "name": "fee_recipient",
+          "writable": true
+        },
+        {
+          "name": "zk_verifier_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  122,
+                  107,
+                  95,
+                  118,
+                  101,
+                  114,
+                  105,
+                  102,
+                  105,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_state.id",
+                "account": "VaultState"
+              }
+            ]
+          }
+        },
+        {
+          "name": "smart_account_program"
+        },
+        {
+          "name": "smart_account_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "smart_account_program"
+            }
+          }
+        },
+        {
+          "name": "smart_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_state.id",
+                "account": "VaultState"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "smart_account_program"
+            }
+          }
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_state.id",
+                "account": "VaultState"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                203,
+                190,
+                52,
+                25,
+                56,
+                17,
+                59,
+                176,
+                107,
+                41,
+                126,
+                139,
+                85,
+                173,
+                172,
+                69,
+                111,
+                238,
+                52,
+                23,
+                74,
+                155,
+                54,
+                89,
+                107,
+                94,
+                63,
+                82,
+                112,
+                153,
+                199,
+                66
+              ]
+            }
+          }
+        },
+        {
+          "name": "vault_state",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "vault_state.id",
+                "account": "VaultState"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "entry_pda",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  101,
+                  110,
+                  116,
+                  114,
+                  121
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "email_info"
+              },
+              {
+                "kind": "arg",
+                "path": "email_info.dkim_pubkey_hash"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                215,
+                231,
+                51,
+                72,
+                97,
+                64,
+                227,
+                128,
+                118,
+                59,
+                19,
+                144,
+                34,
+                216,
+                245,
+                19,
+                250,
+                237,
+                33,
+                41,
+                189,
+                32,
+                109,
+                159,
+                98,
+                193,
+                194,
+                189,
+                57,
+                241,
+                234,
+                70
+              ]
+            }
+          }
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "email_info",
+          "type": {
+            "defined": {
+              "name": "EmailInfo"
+            }
+          }
+        },
+        {
+          "name": "proof",
+          "type": {
+            "defined": {
+              "name": "Proof"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "DkimEntry",
+      "discriminator": [
+        92,
+        252,
+        178,
+        13,
+        38,
+        23,
+        186,
+        239
+      ]
+    },
+    {
+      "name": "VaultState",
+      "discriminator": [
+        228,
+        196,
+        82,
+        165,
+        98,
+        210,
+        235,
+        152
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "ProgramIdMismatch",
+      "msg": "Program ID mismatch"
+    },
+    {
+      "code": 6001,
+      "name": "FailedVerifierInit",
+      "msg": "Failed to initialize verifier"
+    },
+    {
+      "code": 6002,
+      "name": "FailedVerification",
+      "msg": "Failed verification"
+    },
+    {
+      "code": 6003,
+      "name": "InvalidVaultProgram",
+      "msg": "Invalid vault program"
+    },
+    {
+      "code": 6004,
+      "name": "InvalidSmartAccountProgram",
+      "msg": "Invalid smart account program"
+    }
+  ],
+  "types": [
+    {
+      "name": "DkimEntry",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "EmailInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "email_domain",
+            "type": "string"
+          },
+          {
+            "name": "dkim_pubkey_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "email_nullifer",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "email_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "pubkey",
+            "type": {
+              "array": [
+                "u8",
+                33
+              ]
+            }
+          },
+          {
+            "name": "timestamp",
+            "type": "u64"
+          },
+          {
+            "name": "timestamp_str",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Proof",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "proof_a",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          },
+          {
+            "name": "proof_b",
+            "type": {
+              "array": [
+                "u8",
+                128
+              ]
+            }
+          },
+          {
+            "name": "proof_c",
+            "type": {
+              "array": [
+                "u8",
+                64
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "delegated_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "smart_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "state_bump",
+            "type": "u8"
+          },
+          {
+            "name": "is_validated",
+            "type": "bool"
+          }
+        ]
+      }
+    }
+  ]
+}

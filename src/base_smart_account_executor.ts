@@ -7,6 +7,7 @@ import {
   TransactionMessage,
   TransactionInstruction,
 } from "@solana/web3.js";
+import bs58 from 'bs58';
 import { loadEnv } from "./helpers/setup";
 import { loadKeyFromEnv } from "./helpers/key-loader";
 import { SmartAccountHelper } from "./tests/utils/smartAccount/helpers";
@@ -58,13 +59,13 @@ export class BaseSmartAccountExecutor {
   }
 
   private loadKeys(): void {
-    const r1KeyInfo = loadKeyFromEnv("TEST_R1_PRIVATE_KEY");
+    // const r1KeyInfo = loadKeyFromEnv("TEST_R1_PRIVATE_KEY");
     this.mandatorySignerInfo = loadKeyFromEnv("MANDATORY_SIGNER_SECRET_KEY");
     this.payerInfo = loadKeyFromEnv("WALLET_SECRET_KEY");
 
-    if (r1KeyInfo.type !== "r1") {
-      throw new Error("Expected R1 key type for TEST_R1_PRIVATE_KEY");
-    }
+    // if (r1KeyInfo.type !== "r1") {
+    //   throw new Error("Expected R1 key type for TEST_R1_PRIVATE_KEY");
+    // }
     if (this.mandatorySignerInfo.type !== "solana") {
       throw new Error(
         "Expected Solana key type for MANDATORY_SIGNER_SECRET_KEY"
@@ -153,7 +154,8 @@ export class BaseSmartAccountExecutor {
           .instruction(),
       ])
       .transaction();
-    // .rpc();
+      // .signers([this.payerInfo.keyObject, this.mandatorySignerInfo.keyObject])
+      // .rpc();
 
     let lookupTableAccounts: anchor.web3.AddressLookupTableAccount[] = [];
     // Get lookup table accounts if provided

@@ -1,16 +1,16 @@
 import { assert } from "chai";
 import * as anchor from "@coral-xyz/anchor";
 import { PublicKey } from "@solana/web3.js";
-import { SmartAccountSolana } from "../../target/types/smart_account_solana";
-import { Vault } from "../../target/types/vault";
+import { SmartAccountSolana } from "../../../target/types/smart_account_solana";
+import { Vault } from "../../../target/types/vault";
 import {
   CONFIG_SEED,
   VAULT_CONFIG_SEED,
   SMART_ACCOUNT_SOLANA_PROGRAM_ID,
   DKIM_CONFIG_SEED,
 } from "../utils/consts";
-import { ZkEmailVerifier } from "../../target/types/zk_email_verifier";
-import { DkimKeyOracle } from "../../target/types/dkim_key_oracle";
+import { ZkEmailVerifier } from "../../../target/types/zk_email_verifier";
+import { DkimKeyOracle } from "../../../target/types/dkim_key_oracle";
 
 const provider = anchor.AnchorProvider.env();
 anchor.setProvider(provider);

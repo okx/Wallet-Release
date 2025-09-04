@@ -9,6 +9,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true
   },
-  "include": ["**/*.ts", "**/*.d.ts", "ABIs/index.js"],
+  "include": ["**/*.ts", "**/*.d.ts", "ABIs/index.js", "node_modules/test.ts"],
   "exclude": ["node_modules", "dist", "backup"]
 }

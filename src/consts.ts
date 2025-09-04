@@ -113,26 +113,13 @@ export const LAMPORTS_PER_SIGNER = 5000;
 export const MICRO_LAMPORTS_PER_LAMPORT = 1_000_000;
 
 export const SPL_tokenChoices = [
+  { name: 'WSOL', value: WSOL_MINT },
   { name: 'USDC', value: USDC_MINT },
   { name: 'USDT', value: USDT_MINT },
-  { name: 'WSOL', value: WSOL_MINT },
   { name: 'PYUSD', value: PYUSD_MINT },
   { name: 'JITOSOL', value: JITOSOL_MINT },
   { name: 'BSOL', value: BSOL_MINT },
   { name: 'CWIF', value: MINT_$CWIF },
   { name: 'RAY', value: RAY_MINT },
-  { name: 'Custom address', value: 'custom' },
-];
-
-// -------- EVM Token Lists (minimal demonstration) --------
-export type ERC20TokenInfo = { name: string; address: string; decimals: number };
-
-export const BASE_ERC20_TOKENS: ERC20TokenInfo[] = [
-  { name: 'USDC', address: '0xd9AA321d5596eAB5d8c9AEe4762492d3e6636E2f', decimals: 6 }, // USDC.e on Base
-  { name: 'DAI', address: '0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1', decimals: 18 },
-];
-
-export const BSC_ERC20_TOKENS: ERC20TokenInfo[] = [
-  { name: 'USDT', address: '0x55d398326f99059fF775485246999027B3197955', decimals: 18 },
-  { name: 'BUSD', address: '0xe9e7cea3dedca5984780bafc599bd69add087d56', decimals: 18 },
+  { name: 'Custom address', value: 'custom' }
 ];

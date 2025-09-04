@@ -4,7 +4,7 @@ import { TestBase } from "../utils/testBase";
 import { SmartAccountHelper } from "../utils/smartAccount/helpers";
 import { LAMPORTS_PER_SIGNER, SMART_ACCOUNT_SEED } from "../utils/consts";
 import { Program } from "@coral-xyz/anchor";
-import { UpgradeMock } from "../../target/types/upgrade_mock";
+import { UpgradeMock } from "../../../target/types/upgrade_mock";
 import {
   generateIdFromString,
   getConfigAccount,

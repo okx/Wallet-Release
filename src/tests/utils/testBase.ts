@@ -2,10 +2,10 @@ import * as anchor from "@coral-xyz/anchor";
 import { fromWorkspace, LiteSVMProvider } from "anchor-litesvm";
 import { ComputeBudget, LiteSVM } from "litesvm";
 import { Program } from "@coral-xyz/anchor";
-import { SmartAccountSolana } from "../../target/types/smart_account_solana";
-import { ZkEmailVerifier } from "../../target/types/zk_email_verifier";
-import { UpgradeMock } from "../../target/types/upgrade_mock";
-import { Vault } from "../../target/types/vault";
+import { SmartAccountSolana } from "../../../target/types/smart_account_solana";
+import { ZkEmailVerifier } from "../../../target/types/zk_email_verifier";
+import { UpgradeMock } from "../../../target/types/upgrade_mock";
+import { Vault } from "../../../target/types/vault";
 import * as path from "path";
 import { Transaction, AccountMeta, PublicKey } from "@solana/web3.js";
 import { createSecp256r1Instruction } from "./r1-utils";
@@ -53,7 +53,7 @@ import {
   createTransferInstruction,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { DkimKeyOracle } from "../../target/types/dkim_key_oracle";
+import { DkimKeyOracle } from "../../../target/types/dkim_key_oracle";
 import {
   WebAuthnStringHelpers,
   WebAuthnAuthDataHelpers,

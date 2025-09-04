@@ -1,0 +1,4235 @@
+{
+  "address": "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp",
+  "metadata": {
+    "name": "smart_account_solana",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Created with Anchor"
+  },
+  "instructions": [
+    {
+      "name": "add_recovery_signer",
+      "discriminator": [
+        189,
+        255,
+        95,
+        64,
+        23,
+        84,
+        192,
+        1
+      ],
+      "accounts": [
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                203,
+                190,
+                52,
+                25,
+                56,
+                17,
+                59,
+                176,
+                107,
+                41,
+                126,
+                139,
+                85,
+                173,
+                172,
+                69,
+                111,
+                238,
+                52,
+                23,
+                74,
+                155,
+                54,
+                89,
+                107,
+                94,
+                63,
+                82,
+                112,
+                153,
+                199,
+                66
+              ]
+            }
+          }
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "recovery_signer",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "add_signer",
+      "discriminator": [
+        76,
+        104,
+        61,
+        51,
+        179,
+        139,
+        47,
+        222
+      ],
+      "accounts": [
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                203,
+                190,
+                52,
+                25,
+                56,
+                17,
+                59,
+                176,
+                107,
+                41,
+                126,
+                139,
+                85,
+                173,
+                172,
+                69,
+                111,
+                238,
+                52,
+                23,
+                74,
+                155,
+                54,
+                89,
+                107,
+                94,
+                63,
+                82,
+                112,
+                153,
+                199,
+                66
+              ]
+            }
+          }
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "signer",
+          "type": {
+            "defined": {
+              "name": "SignerType"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "add_webauthn_table_entry",
+      "discriminator": [
+        169,
+        47,
+        219,
+        73,
+        136,
+        66,
+        85,
+        204
+      ],
+      "accounts": [
+        {
+          "name": "webauthn_moderator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "webauthn_table",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  101,
+                  98,
+                  97,
+                  117,
+                  116,
+                  104,
+                  110,
+                  95,
+                  116,
+                  97,
+                  98,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "webauthn_table.table_index",
+                "account": "WebauthnTable"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "AddWebauthnTableEntryArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "close_and_migrate",
+      "discriminator": [
+        135,
+        3,
+        181,
+        41,
+        164,
+        3,
+        156,
+        50
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "solana_signer",
+          "signer": true,
+          "optional": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_config"
+        },
+        {
+          "name": "vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "new_delegated_program"
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "webauthn_table",
+          "optional": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "ix_data",
+          "type": "bytes"
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "webauthn_args",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "WebAuthnArgs"
+              }
+            }
+          }
+        },
+        {
+          "name": "intent_proof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "close_webauthn_table",
+      "discriminator": [
+        146,
+        36,
+        235,
+        132,
+        145,
+        96,
+        5,
+        180
+      ],
+      "accounts": [
+        {
+          "name": "webauthn_moderator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "webauthn_table",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  101,
+                  98,
+                  97,
+                  117,
+                  116,
+                  104,
+                  110,
+                  95,
+                  116,
+                  97,
+                  98,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "webauthn_table.table_index",
+                "account": "WebauthnTable"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "create_general_account",
+      "discriminator": [
+        108,
+        46,
+        28,
+        116,
+        213,
+        6,
+        45,
+        102
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "args"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_config"
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        },
+        {
+          "name": "webauthn_table",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CreateGeneralAccountArgs"
+            }
+          }
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "webauthn_args",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "WebAuthnArgs"
+              }
+            }
+          }
+        },
+        {
+          "name": "intent_proof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "create_pay_account",
+      "discriminator": [
+        55,
+        253,
+        165,
+        130,
+        161,
+        140,
+        116,
+        223
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "creator",
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "smart_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "args.id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_config"
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        },
+        {
+          "name": "webauthn_table",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CreatePayAccountArgs"
+            }
+          }
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "webauthn_args",
+          "type": {
+            "defined": {
+              "name": "WebAuthnArgs"
+            }
+          }
+        },
+        {
+          "name": "intent_proof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "create_webauthn_table",
+      "discriminator": [
+        155,
+        58,
+        219,
+        186,
+        130,
+        237,
+        7,
+        76
+      ],
+      "accounts": [
+        {
+          "name": "webauthn_moderator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "webauthn_table",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  101,
+                  98,
+                  97,
+                  117,
+                  116,
+                  104,
+                  110,
+                  95,
+                  116,
+                  97,
+                  98,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "args.table_index"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CreateWebauthnTableArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize_config",
+      "discriminator": [
+        208,
+        127,
+        21,
+        1,
+        194,
+        190,
+        196,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "docs": [
+            "Address to be set as protocol owner."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp"
+        },
+        {
+          "name": "program_data"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "InitializeConfigArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "optimistic_validation",
+      "discriminator": [
+        168,
+        232,
+        143,
+        98,
+        225,
+        229,
+        203,
+        67
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "solana_signer",
+          "signer": true,
+          "optional": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "webauthn_table",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "validation_args",
+          "type": {
+            "defined": {
+              "name": "OptimisticValidationArgs"
+            }
+          }
+        },
+        {
+          "name": "webauthn_args",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "WebAuthnArgs"
+              }
+            }
+          }
+        },
+        {
+          "name": "intent_proof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "post_optimistic_execution",
+      "discriminator": [
+        127,
+        90,
+        16,
+        72,
+        234,
+        138,
+        33,
+        185
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "signer": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "jito_tip_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_state"
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "jito_tip_amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "recover",
+      "discriminator": [
+        108,
+        216,
+        38,
+        58,
+        109,
+        146,
+        116,
+        17
+      ],
+      "accounts": [
+        {
+          "name": "smart_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "recovery_signer",
+          "signer": true
+        },
+        {
+          "name": "rent_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "passkey_pubkey",
+          "type": {
+            "array": [
+              "u8",
+              33
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "remove_recovery_signer",
+      "discriminator": [
+        87,
+        70,
+        39,
+        188,
+        229,
+        243,
+        48,
+        105
+      ],
+      "accounts": [
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                203,
+                190,
+                52,
+                25,
+                56,
+                17,
+                59,
+                176,
+                107,
+                41,
+                126,
+                139,
+                85,
+                173,
+                172,
+                69,
+                111,
+                238,
+                52,
+                23,
+                74,
+                155,
+                54,
+                89,
+                107,
+                94,
+                63,
+                82,
+                112,
+                153,
+                199,
+                66
+              ]
+            }
+          }
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "recovery_signer",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "remove_signer",
+      "discriminator": [
+        212,
+        32,
+        97,
+        47,
+        61,
+        67,
+        184,
+        141
+      ],
+      "accounts": [
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "signer": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                203,
+                190,
+                52,
+                25,
+                56,
+                17,
+                59,
+                176,
+                107,
+                41,
+                126,
+                139,
+                85,
+                173,
+                172,
+                69,
+                111,
+                238,
+                52,
+                23,
+                74,
+                155,
+                54,
+                89,
+                107,
+                94,
+                63,
+                82,
+                112,
+                153,
+                199,
+                66
+              ]
+            }
+          }
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "signer_identifier",
+          "type": {
+            "defined": {
+              "name": "SignerIdentifier"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "remove_webauthn_table_entry",
+      "discriminator": [
+        48,
+        227,
+        57,
+        118,
+        146,
+        235,
+        16,
+        203
+      ],
+      "accounts": [
+        {
+          "name": "webauthn_moderator",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "webauthn_table",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  119,
+                  101,
+                  98,
+                  97,
+                  117,
+                  116,
+                  104,
+                  110,
+                  95,
+                  116,
+                  97,
+                  98,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "webauthn_table.table_index",
+                "account": "WebauthnTable"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "RemoveWebauthnTableEntryArgs"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "revoke_admin",
+      "discriminator": [
+        45,
+        214,
+        156,
+        163,
+        28,
+        217,
+        217,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "simulate_close_and_migrate",
+      "discriminator": [
+        186,
+        121,
+        158,
+        183,
+        172,
+        3,
+        158,
+        39
+      ],
+      "accounts": [
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "solana_signer",
+          "signer": true,
+          "optional": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_config"
+        },
+        {
+          "name": "vault_state",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116,
+                  95,
+                  115,
+                  116,
+                  97,
+                  116,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116,
+                  95,
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ],
+            "program": {
+              "kind": "account",
+              "path": "vault_program"
+            }
+          }
+        },
+        {
+          "name": "new_delegated_program"
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "webauthn_table",
+          "optional": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "ix_data",
+          "type": "bytes"
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "webauthn_args",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "WebAuthnArgs"
+              }
+            }
+          }
+        },
+        {
+          "name": "intent_proof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "simulate_create_pay_account",
+      "discriminator": [
+        66,
+        18,
+        38,
+        71,
+        31,
+        13,
+        22,
+        164
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "creator",
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "smart_account",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "args.id"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_config"
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        },
+        {
+          "name": "webauthn_table",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "CreatePayAccountArgs"
+            }
+          }
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "webauthn_args",
+          "type": {
+            "defined": {
+              "name": "WebAuthnArgs"
+            }
+          }
+        },
+        {
+          "name": "intent_proof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "simulate_validate_execution",
+      "discriminator": [
+        250,
+        151,
+        22,
+        191,
+        129,
+        43,
+        193,
+        145
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "signer": true
+        },
+        {
+          "name": "solana_signer",
+          "signer": true,
+          "optional": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "optional": true,
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        },
+        {
+          "name": "webauthn_table",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "webauthn_args",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "WebAuthnArgs"
+              }
+            }
+          }
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "intent_proof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "simulate_validate_optimistic_execution",
+      "discriminator": [
+        25,
+        26,
+        39,
+        181,
+        18,
+        102,
+        213,
+        7
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "signer": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "smart_account_vault"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "update_admin",
+      "discriminator": [
+        161,
+        176,
+        40,
+        213,
+        60,
+        184,
+        179,
+        228
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "admin",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "update_creator",
+      "discriminator": [
+        39,
+        221,
+        251,
+        213,
+        194,
+        161,
+        31,
+        207
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "creator",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "update_mandatory_signer",
+      "discriminator": [
+        193,
+        233,
+        95,
+        205,
+        173,
+        146,
+        91,
+        41
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config"
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        }
+      ],
+      "args": [
+        {
+          "name": "mandatory_signer",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "update_webauthn_moderator",
+      "discriminator": [
+        171,
+        74,
+        71,
+        33,
+        213,
+        143,
+        103,
+        162
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "moderator",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "validate_execution",
+      "discriminator": [
+        151,
+        103,
+        96,
+        183,
+        173,
+        138,
+        255,
+        71
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "signer": true
+        },
+        {
+          "name": "solana_signer",
+          "signer": true,
+          "optional": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "smart_account_vault",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "optional": true,
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "vault_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_mint",
+          "optional": true
+        },
+        {
+          "name": "destination_token_account",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "token_program",
+          "optional": true
+        },
+        {
+          "name": "webauthn_table",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "webauthn_args",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "WebAuthnArgs"
+              }
+            }
+          }
+        },
+        {
+          "name": "token_amount",
+          "type": "u64"
+        },
+        {
+          "name": "intent_proof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "validate_optimistic_execution",
+      "discriminator": [
+        156,
+        136,
+        120,
+        197,
+        85,
+        221,
+        121,
+        127
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "signer": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "smart_account_vault"
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Config",
+      "discriminator": [
+        155,
+        12,
+        170,
+        224,
+        30,
+        250,
+        204,
+        130
+      ]
+    },
+    {
+      "name": "SmartAccount",
+      "discriminator": [
+        186,
+        83,
+        247,
+        224,
+        59,
+        95,
+        223,
+        112
+      ]
+    },
+    {
+      "name": "VaultState",
+      "discriminator": [
+        228,
+        196,
+        82,
+        165,
+        98,
+        210,
+        235,
+        152
+      ]
+    },
+    {
+      "name": "WebauthnTable",
+      "discriminator": [
+        38,
+        140,
+        37,
+        219,
+        121,
+        58,
+        156,
+        35
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "AccountRecovered",
+      "discriminator": [
+        53,
+        125,
+        64,
+        254,
+        83,
+        57,
+        71,
+        84
+      ]
+    },
+    {
+      "name": "AdminRevoked",
+      "discriminator": [
+        221,
+        50,
+        198,
+        169,
+        2,
+        46,
+        0,
+        73
+      ]
+    },
+    {
+      "name": "AdminUpdated",
+      "discriminator": [
+        69,
+        82,
+        49,
+        171,
+        43,
+        3,
+        80,
+        161
+      ]
+    },
+    {
+      "name": "ConfigInitialized",
+      "discriminator": [
+        181,
+        49,
+        200,
+        156,
+        19,
+        167,
+        178,
+        91
+      ]
+    },
+    {
+      "name": "CreatorUpdated",
+      "discriminator": [
+        249,
+        128,
+        133,
+        111,
+        137,
+        184,
+        164,
+        83
+      ]
+    },
+    {
+      "name": "ExecutionValidated",
+      "discriminator": [
+        63,
+        8,
+        130,
+        32,
+        33,
+        102,
+        189,
+        242
+      ]
+    },
+    {
+      "name": "GeneralSmartAccountCreated",
+      "discriminator": [
+        83,
+        143,
+        7,
+        133,
+        39,
+        239,
+        182,
+        89
+      ]
+    },
+    {
+      "name": "MandatorySignerUpdated",
+      "discriminator": [
+        140,
+        61,
+        242,
+        225,
+        61,
+        238,
+        91,
+        191
+      ]
+    },
+    {
+      "name": "OptimisticExecutionValidated",
+      "discriminator": [
+        150,
+        170,
+        122,
+        147,
+        65,
+        113,
+        238,
+        153
+      ]
+    },
+    {
+      "name": "PasskeySignerAdded",
+      "discriminator": [
+        156,
+        181,
+        176,
+        166,
+        186,
+        207,
+        185,
+        156
+      ]
+    },
+    {
+      "name": "PasskeySignerRemoved",
+      "discriminator": [
+        27,
+        170,
+        135,
+        208,
+        200,
+        0,
+        250,
+        35
+      ]
+    },
+    {
+      "name": "PaySmartAccountCreated",
+      "discriminator": [
+        34,
+        227,
+        166,
+        2,
+        54,
+        190,
+        247,
+        168
+      ]
+    },
+    {
+      "name": "PostExecution",
+      "discriminator": [
+        196,
+        172,
+        116,
+        120,
+        30,
+        130,
+        201,
+        243
+      ]
+    },
+    {
+      "name": "RecoverySignerAdded",
+      "discriminator": [
+        228,
+        10,
+        73,
+        237,
+        132,
+        158,
+        118,
+        48
+      ]
+    },
+    {
+      "name": "RecoverySignerRemoved",
+      "discriminator": [
+        68,
+        47,
+        172,
+        35,
+        129,
+        211,
+        192,
+        15
+      ]
+    },
+    {
+      "name": "SmartAccountClosed",
+      "discriminator": [
+        26,
+        29,
+        96,
+        74,
+        102,
+        210,
+        201,
+        179
+      ]
+    },
+    {
+      "name": "SolanaKeySignerAdded",
+      "discriminator": [
+        17,
+        201,
+        88,
+        128,
+        0,
+        24,
+        227,
+        165
+      ]
+    },
+    {
+      "name": "SolanaKeySignerRemoved",
+      "discriminator": [
+        4,
+        93,
+        236,
+        125,
+        222,
+        6,
+        45,
+        255
+      ]
+    },
+    {
+      "name": "WebauthnModeratorUpdated",
+      "discriminator": [
+        51,
+        186,
+        133,
+        133,
+        21,
+        76,
+        79,
+        36
+      ]
+    },
+    {
+      "name": "WebauthnTableClosed",
+      "discriminator": [
+        73,
+        227,
+        43,
+        19,
+        14,
+        160,
+        83,
+        37
+      ]
+    },
+    {
+      "name": "WebauthnTableCreated",
+      "discriminator": [
+        51,
+        14,
+        255,
+        6,
+        235,
+        64,
+        172,
+        13
+      ]
+    },
+    {
+      "name": "WebauthnTableEntryAdded",
+      "discriminator": [
+        88,
+        113,
+        235,
+        25,
+        109,
+        14,
+        240,
+        87
+      ]
+    },
+    {
+      "name": "WebauthnTableEntryRemoved",
+      "discriminator": [
+        89,
+        27,
+        124,
+        93,
+        225,
+        224,
+        204,
+        217
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "NotCreator",
+      "msg": "Smart account creation only through creator"
+    },
+    {
+      "code": 6001,
+      "name": "InvalidVaultProgram",
+      "msg": "Invalid vault program"
+    },
+    {
+      "code": 6002,
+      "name": "NotAdmin",
+      "msg": "Only updated by admin"
+    },
+    {
+      "code": 6003,
+      "name": "PasskeyAlreadyExists",
+      "msg": "Passkey already exists"
+    },
+    {
+      "code": 6004,
+      "name": "RemovingLastPasskey",
+      "msg": "Removing last passkey"
+    },
+    {
+      "code": 6005,
+      "name": "PasskeyNotFound",
+      "msg": "Passkey not found"
+    },
+    {
+      "code": 6006,
+      "name": "InvalidPasskeySession",
+      "msg": "Invalid passkey session"
+    },
+    {
+      "code": 6007,
+      "name": "InvalidSignerSession",
+      "msg": "Invalid signer session"
+    },
+    {
+      "code": 6008,
+      "name": "RecoverySignerNotFound",
+      "msg": "Recovery signer not found"
+    },
+    {
+      "code": 6009,
+      "name": "RecoverySignerAlreadyExists",
+      "msg": "Recovery signer already exists"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidAdmin",
+      "msg": "Invalid admin"
+    },
+    {
+      "code": 6011,
+      "name": "UnauthorizedSigner",
+      "msg": "Unauthorized signer"
+    },
+    {
+      "code": 6012,
+      "name": "RecoveryExpired",
+      "msg": "Recovery expired"
+    },
+    {
+      "code": 6013,
+      "name": "InvalidNonce",
+      "msg": "Invalid nonce"
+    },
+    {
+      "code": 6014,
+      "name": "InvalidRecoveryTimestamp",
+      "msg": "Invalid recovery timestamp"
+    },
+    {
+      "code": 6015,
+      "name": "InvalidTransactionStructure",
+      "msg": "Invalid transaction structure"
+    },
+    {
+      "code": 6016,
+      "name": "Secp256r1IxNotFound",
+      "msg": "Secp256r1 instruction not found"
+    },
+    {
+      "code": 6017,
+      "name": "InvalidVaultIx",
+      "msg": "Invalid vault instruction"
+    },
+    {
+      "code": 6018,
+      "name": "SimulationComplete",
+      "msg": "Simulation completed successfully"
+    },
+    {
+      "code": 6019,
+      "name": "InvalidTransactionInBuffer",
+      "msg": "Invalid transaction hash in buffer"
+    },
+    {
+      "code": 6020,
+      "name": "BufferAccountNotAuthorizedToBeClosed",
+      "msg": "Buffer account not authorized to be closed"
+    },
+    {
+      "code": 6021,
+      "name": "MissingRequiredAccounts",
+      "msg": "Missing required accounts"
+    },
+    {
+      "code": 6022,
+      "name": "ExcessAccounts",
+      "msg": "Excess accounts"
+    },
+    {
+      "code": 6023,
+      "name": "BufferAccountExpired",
+      "msg": "Buffer account expired"
+    },
+    {
+      "code": 6024,
+      "name": "RestrictedSigner",
+      "msg": "Restricted signer"
+    },
+    {
+      "code": 6025,
+      "name": "OptimisticValidationExpired",
+      "msg": "Optimistic validation expired"
+    },
+    {
+      "code": 6026,
+      "name": "InvalidTransactionHash",
+      "msg": "Invalid transaction hash"
+    },
+    {
+      "code": 6027,
+      "name": "OptimisticTransactionNotExecuted",
+      "msg": "Optimistic transaction not executed"
+    },
+    {
+      "code": 6028,
+      "name": "InvalidMaxSlot",
+      "msg": "Invalid max slot"
+    },
+    {
+      "code": 6029,
+      "name": "OptimisticValidationStateNotInitialized",
+      "msg": "Optimistic validation state not initialized"
+    },
+    {
+      "code": 6030,
+      "name": "OptimisticTransactionAlreadyExecuted",
+      "msg": "Optimistic transaction already executed"
+    },
+    {
+      "code": 6031,
+      "name": "TokenMintNotInitialized",
+      "msg": "Token mint not initialized"
+    },
+    {
+      "code": 6032,
+      "name": "RequiredOptionalAccountNotFound",
+      "msg": "Required optional account not found"
+    },
+    {
+      "code": 6033,
+      "name": "TokenTransferArgsNotFound",
+      "msg": "Token transfer args not found"
+    },
+    {
+      "code": 6034,
+      "name": "InvalidSmartAccountType",
+      "msg": "Invalid smart account type in arguments"
+    },
+    {
+      "code": 6035,
+      "name": "WebAuthnArgsNotFound",
+      "msg": "Webauthn args not found"
+    },
+    {
+      "code": 6036,
+      "name": "InvalidAuthorizationModel",
+      "msg": "Invalid authorization model"
+    },
+    {
+      "code": 6037,
+      "name": "InvalidMandatorySigner",
+      "msg": "Invalid mandatory signer"
+    },
+    {
+      "code": 6038,
+      "name": "MandatorySignerNotFound",
+      "msg": "Mandatory signer not found"
+    },
+    {
+      "code": 6039,
+      "name": "InitialSolanaKeySignerNotFound",
+      "msg": "Initial Solana keysigner not found"
+    },
+    {
+      "code": 6040,
+      "name": "InitialSolanaKeySignerNotAllowed",
+      "msg": "Initial Solana keysigner not allowed"
+    },
+    {
+      "code": 6041,
+      "name": "SolanaKeyNotSupportedInPayMultisig",
+      "msg": "Solana key signers not supported in PayMultisig authorization model"
+    },
+    {
+      "code": 6042,
+      "name": "SolanaKeyNotFound",
+      "msg": "Solana key not found"
+    },
+    {
+      "code": 6043,
+      "name": "InvalidWebAuthnIndex",
+      "msg": "Invalid webauthn index"
+    },
+    {
+      "code": 6044,
+      "name": "DuplicateEntry",
+      "msg": "Duplicate entry"
+    },
+    {
+      "code": 6045,
+      "name": "EntryNotFound",
+      "msg": "Entry not found"
+    },
+    {
+      "code": 6046,
+      "name": "MissingWebAuthnTable",
+      "msg": "Missing WebAuthn table"
+    },
+    {
+      "code": 6047,
+      "name": "NotWebauthnModerator",
+      "msg": "Not WebAuthn moderator"
+    },
+    {
+      "code": 6048,
+      "name": "InvalidTxPayer",
+      "msg": "Invalid tx payer"
+    },
+    {
+      "code": 6049,
+      "name": "ShouldSerializeVaultIxUsingSerializeVaultIx",
+      "msg": "Should serialize vault instruction using serialize_vault_ix"
+    },
+    {
+      "code": 6050,
+      "name": "InvalidRecoverySigner",
+      "msg": "Invalid recovery signer"
+    },
+    {
+      "code": 6051,
+      "name": "InvalidResponseType",
+      "msg": "Invalid response type"
+    },
+    {
+      "code": 6052,
+      "name": "InvalidChallenge",
+      "msg": "Invalid challenge"
+    },
+    {
+      "code": 6053,
+      "name": "InvalidSolTransfer",
+      "msg": "Invalid sol transfer"
+    },
+    {
+      "code": 6054,
+      "name": "RemovingLastSigner",
+      "msg": "Removing last signer"
+    },
+    {
+      "code": 6055,
+      "name": "JitoTipAccountNotFound",
+      "msg": "Jito tip account not found when jito tip amount is greater than 0"
+    }
+  ],
+  "types": [
+    {
+      "name": "AccountRecovered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "smart_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "passkey",
+            "type": {
+              "defined": {
+                "name": "Passkey"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AddWebauthnTableEntryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "entry",
+            "type": {
+              "defined": {
+                "name": "WebAuthnTableEntry"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "AdminRevoked",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "revoked_admin",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AdminUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AuthorizationModel",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "PayMultisig",
+            "fields": [
+              {
+                "defined": {
+                  "name": "PayMultisig"
+                }
+              }
+            ]
+          },
+          {
+            "name": "Signers",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SmartAccountSigners"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "ClientDataJson",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Direct",
+            "fields": [
+              "string"
+            ]
+          },
+          {
+            "name": "Index",
+            "fields": [
+              {
+                "array": [
+                  "u8",
+                  2
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          },
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "webauthn_moderator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConfigInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "creator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateGeneralAccountArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user_passkey",
+            "type": {
+              "defined": {
+                "name": "Passkey"
+              }
+            }
+          },
+          {
+            "name": "initial_solana_signer",
+            "type": {
+              "option": {
+                "defined": {
+                  "name": "SolanaKey"
+                }
+              }
+            }
+          },
+          {
+            "name": "initial_recovery_signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "account_type",
+            "type": {
+              "defined": {
+                "name": "SmartAccountType"
+              }
+            }
+          },
+          {
+            "name": "salt",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreatePayAccountArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "user_passkey",
+            "type": {
+              "defined": {
+                "name": "Passkey"
+              }
+            }
+          },
+          {
+            "name": "mandatory_signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "initial_recovery_signer",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreateWebauthnTableArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "table_index",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "CreatorUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ExecutionValidated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "token_amount",
+            "type": "u64"
+          },
+          {
+            "name": "token_mint",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "nonce_used",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "GeneralSmartAccountCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "smart_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "account_type",
+            "type": {
+              "defined": {
+                "name": "SmartAccountType"
+              }
+            }
+          },
+          {
+            "name": "user_passkey",
+            "type": {
+              "defined": {
+                "name": "Passkey"
+              }
+            }
+          },
+          {
+            "name": "initial_solana_signer",
+            "type": {
+              "option": {
+                "defined": {
+                  "name": "SolanaKey"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitializeConfigArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "webauthn_moderator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "MandatorySignerUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "mandatory_signer",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OptimisticExecutionValidated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "target_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "nonce_used",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OptimisticValidationArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "max_slot",
+            "type": "u64"
+          },
+          {
+            "name": "target_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "token_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "OptimisticValidationState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_mint",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "token_amount",
+            "type": "u64"
+          },
+          {
+            "name": "max_slot",
+            "type": "u64"
+          },
+          {
+            "name": "target_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "tx_payer",
+            "type": "pubkey"
+          },
+          {
+            "name": "validation_slot",
+            "type": "u64"
+          },
+          {
+            "name": "is_executed",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Passkey",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "type": {
+              "array": [
+                "u8",
+                33
+              ]
+            }
+          },
+          {
+            "name": "valid_from",
+            "type": "u64"
+          },
+          {
+            "name": "valid_until",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PasskeySignerAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "passkey",
+            "type": {
+              "defined": {
+                "name": "Passkey"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PasskeySignerRemoved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "passkey_signer",
+            "type": {
+              "array": [
+                "u8",
+                33
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PayMultisig",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "threshold",
+            "type": "u8"
+          },
+          {
+            "name": "mandatory_signer",
+            "type": "pubkey"
+          },
+          {
+            "name": "user_signers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Passkey"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "PaySmartAccountCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "smart_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "user_passkey",
+            "type": {
+              "defined": {
+                "name": "Passkey"
+              }
+            }
+          },
+          {
+            "name": "mandatory_signer",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PostExecution",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "target_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "jito_tip_amount",
+            "type": "u64"
+          },
+          {
+            "name": "token_amount",
+            "type": "u64"
+          },
+          {
+            "name": "token_mint",
+            "type": {
+              "option": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "RecoverySignerAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "recovery_signer",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RecoverySignerRemoved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "recovery_signer",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemoveWebauthnTableEntryArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "table_type",
+            "type": {
+              "defined": {
+                "name": "WebAuthnTableType"
+              }
+            }
+          },
+          {
+            "name": "entry_index",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SignerIdentifier",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Passkey",
+            "fields": [
+              {
+                "array": [
+                  "u8",
+                  33
+                ]
+              }
+            ]
+          },
+          {
+            "name": "SolanaKey",
+            "fields": [
+              "pubkey"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "SignerType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Passkey",
+            "fields": [
+              {
+                "defined": {
+                  "name": "Passkey"
+                }
+              }
+            ]
+          },
+          {
+            "name": "SolanaKey",
+            "fields": [
+              {
+                "defined": {
+                  "name": "SolanaKey"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmartAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          },
+          {
+            "name": "account_type",
+            "type": {
+              "defined": {
+                "name": "SmartAccountType"
+              }
+            }
+          },
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "authorization_model",
+            "type": {
+              "defined": {
+                "name": "AuthorizationModel"
+              }
+            }
+          },
+          {
+            "name": "nonce",
+            "type": "u64"
+          },
+          {
+            "name": "optimistic_validation_state",
+            "type": {
+              "option": {
+                "defined": {
+                  "name": "OptimisticValidationState"
+                }
+              }
+            }
+          },
+          {
+            "name": "recovery_signers",
+            "type": {
+              "vec": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmartAccountClosed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "smart_account",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmartAccountSigners",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "passkey_signers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "Passkey"
+                }
+              }
+            }
+          },
+          {
+            "name": "solana_key_signers",
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "SolanaKey"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SmartAccountType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "PayWallet"
+          },
+          {
+            "name": "EasyWallet"
+          },
+          {
+            "name": "CeDeFiWallet"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolanaKey",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
+            "type": "pubkey"
+          },
+          {
+            "name": "valid_from",
+            "type": "u64"
+          },
+          {
+            "name": "valid_until",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolanaKeySignerAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "solana_key",
+            "type": {
+              "defined": {
+                "name": "SolanaKey"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolanaKeySignerRemoved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "solana_key_signer",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "delegated_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "smart_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault_bump",
+            "type": "u8"
+          },
+          {
+            "name": "state_bump",
+            "type": "u8"
+          },
+          {
+            "name": "is_validated",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebAuthnArgs",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "client_data_json",
+            "type": {
+              "defined": {
+                "name": "ClientDataJson"
+              }
+            }
+          },
+          {
+            "name": "auth_data",
+            "type": {
+              "defined": {
+                "name": "WebAuthnAuthData"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebAuthnAuthData",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Direct",
+            "fields": [
+              {
+                "array": [
+                  "u8",
+                  37
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Index",
+            "fields": [
+              "u8"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebAuthnTableEntry",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "PreJson",
+            "fields": [
+              "string"
+            ]
+          },
+          {
+            "name": "PostJson",
+            "fields": [
+              "string"
+            ]
+          },
+          {
+            "name": "AuthData",
+            "fields": [
+              {
+                "array": [
+                  "u8",
+                  37
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebAuthnTableType",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "PreJson"
+          },
+          {
+            "name": "PostJson"
+          },
+          {
+            "name": "AuthData"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebauthnModeratorUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "webauthn_moderator",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebauthnTable",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": {
+              "array": [
+                "u8",
+                1
+              ]
+            }
+          },
+          {
+            "name": "table_index",
+            "type": "u32"
+          },
+          {
+            "name": "pre_json_table",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "post_json_table",
+            "type": {
+              "vec": "string"
+            }
+          },
+          {
+            "name": "auth_data_table",
+            "type": {
+              "vec": {
+                "array": [
+                  "u8",
+                  37
+                ]
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebauthnTableClosed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "webauthn_table",
+            "type": "pubkey"
+          },
+          {
+            "name": "table_index",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebauthnTableCreated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "table_index",
+            "type": "u32"
+          },
+          {
+            "name": "webauthn_table",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebauthnTableEntryAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "webauthn_table",
+            "type": "pubkey"
+          },
+          {
+            "name": "table_index",
+            "type": "u32"
+          },
+          {
+            "name": "entry_index",
+            "type": "u8"
+          },
+          {
+            "name": "entry",
+            "type": {
+              "defined": {
+                "name": "WebAuthnTableEntry"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "WebauthnTableEntryRemoved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "webauthn_table",
+            "type": "pubkey"
+          },
+          {
+            "name": "table_index",
+            "type": "u32"
+          },
+          {
+            "name": "removed_entry",
+            "type": {
+              "defined": {
+                "name": "WebAuthnTableEntry"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

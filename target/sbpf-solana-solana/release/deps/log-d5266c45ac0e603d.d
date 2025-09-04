@@ -1,0 +1,10 @@
+/Users/noahtsang/Downloads/SmartAccount-Solana-35014a8dfa4cfde020aeeb6a8a42516814d4ec67/target/sbpf-solana-solana/release/deps/liblog-d5266c45ac0e603d.rmeta: /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/lib.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/macros.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/serde.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/__private_api.rs
+
+/Users/noahtsang/Downloads/SmartAccount-Solana-35014a8dfa4cfde020aeeb6a8a42516814d4ec67/target/sbpf-solana-solana/release/deps/liblog-d5266c45ac0e603d.rlib: /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/lib.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/macros.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/serde.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/__private_api.rs
+
+/Users/noahtsang/Downloads/SmartAccount-Solana-35014a8dfa4cfde020aeeb6a8a42516814d4ec67/target/sbpf-solana-solana/release/deps/log-d5266c45ac0e603d.d: /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/lib.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/macros.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/serde.rs /Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/__private_api.rs
+
+/Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/lib.rs:
+/Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/macros.rs:
+/Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/serde.rs:
+/Users/noahtsang/.cargo/registry/src/index.crates.io-6f17d22bba15001f/log-0.4.27/src/__private_api.rs:

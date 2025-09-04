@@ -1,5 +1,6 @@
 import { Keypair } from '@solana/web3.js';
 import bs58 from 'bs58';
+import fs from 'fs';
 
 export function lamportsToSol(lamports: number | bigint): string {
   const val = typeof lamports === 'bigint' ? Number(lamports) : lamports;
@@ -17,6 +18,14 @@ export function amountToBaseUnits(humanAmount: string | number, decimals: number
 
 export async function parseSolanaKeypair(secret: string): Promise<Keypair> {
   let bytes: Uint8Array | null = null;
+
+  // 0. If the string looks like a filepath and the file exists, load it
+  try {
+    if (secret.length < 300 && fs.existsSync(secret)) {
+      const fileContent = fs.readFileSync(secret, 'utf8');
+      secret = fileContent.trim();
+    }
+  } catch (_) {}
   try {
     const arr = JSON.parse(secret);
     if (Array.isArray(arr)) {

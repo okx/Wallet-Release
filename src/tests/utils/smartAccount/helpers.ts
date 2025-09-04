@@ -10,11 +10,14 @@ import {
   POST_JSON,
 } from "../consts";
 import { SMART_ACCOUNT_SOLANA_PROGRAM_ID } from "../consts";
-import { SmartAccountSolana } from "../../../target/types/smart_account_solana";
+import { SmartAccountSolana } from "../../../../target/types/smart_account_solana";
 import { FailedTransactionMetadata, LiteSVM } from "litesvm";
 import { ethers } from "ethers";
 import { buildAuthData, buildWebauthnMessage } from "../webauthn";
 import { TestR1KeyHelper } from "../../../helpers/r1-test-helper";
+import { keccak_256 } from "@noble/hashes/sha3";
+import { generateIdFromString } from "../helpers";
+import { TestBase } from "../testBase";
 
 export interface DeconstructedInstruction {
   ixData: Buffer;
@@ -44,6 +47,113 @@ export interface BatchExecutionOptions {
 export interface BatchExecutionResult {
   versionedTransaction: anchor.web3.VersionedTransaction;
   transactionSize: number;
+}
+
+// TypeScript interfaces matching Rust structs for general account creation
+export interface GeneralPasskey {
+  pubkey: number[]; // [u8; 32]
+  validFrom: anchor.BN; // u64
+  validUntil: anchor.BN; // u64
+}
+
+export interface GeneralSolanaKey {
+  pubkey: anchor.web3.PublicKey; // Pubkey
+  validFrom: anchor.BN; // u64
+  validUntil: anchor.BN; // u64
+}
+
+export type SmartAccountType =
+  | { payWallet: {} }
+  | { easyWallet: {} }
+  | { ceDeFiWallet: {} };
+
+export interface CreateGeneralAccountArgs {
+  userPasskey: GeneralPasskey;
+  initialSolanaSigner: GeneralSolanaKey | null;
+  initialRecoverySigner: anchor.web3.PublicKey;
+  accountType: SmartAccountType;
+  salt: number[]; // [u8; 32]
+}
+
+/**
+ * Serialize CreateGeneralAccountArgs exactly as the Rust program does
+ * This is used both for ID generation and message signing
+ */
+export function serializeCreateGeneralAccountArgs(
+  args: CreateGeneralAccountArgs
+): Buffer {
+  // Create a buffer with enough space for all data
+  const chunks: Buffer[] = [];
+
+  // Add user_passkey
+  // pubkey (32 bytes)
+  chunks.push(Buffer.from(args.userPasskey.pubkey));
+  // validFrom (8 bytes, little endian)
+  const validFromBuffer = Buffer.alloc(8);
+  validFromBuffer.writeBigUInt64LE(
+    BigInt(args.userPasskey.validFrom.toString())
+  );
+  chunks.push(validFromBuffer);
+  // validUntil (8 bytes, little endian)
+  const validUntilBuffer = Buffer.alloc(8);
+  validUntilBuffer.writeBigUInt64LE(
+    BigInt(args.userPasskey.validUntil.toString())
+  );
+  chunks.push(validUntilBuffer);
+
+  // Add initial_solana_signer (Option<SolanaKey>)
+  if (args.initialSolanaSigner) {
+    chunks.push(Buffer.from([1])); // Some variant
+    chunks.push(Buffer.from(args.initialSolanaSigner.pubkey.toBytes()));
+    const signerValidFromBuffer = Buffer.alloc(8);
+    signerValidFromBuffer.writeBigUInt64LE(
+      BigInt(args.initialSolanaSigner.validFrom.toString())
+    );
+    chunks.push(signerValidFromBuffer);
+    const signerValidUntilBuffer = Buffer.alloc(8);
+    signerValidUntilBuffer.writeBigUInt64LE(
+      BigInt(args.initialSolanaSigner.validUntil.toString())
+    );
+    chunks.push(signerValidUntilBuffer);
+  } else {
+    chunks.push(Buffer.from([0])); // None variant
+  }
+
+  // Add initial_recovery_signer (Pubkey)
+  chunks.push(Buffer.from(args.initialRecoverySigner.toBytes()));
+
+  // Add account_type (1 byte for enum discriminant)
+  // SmartAccountType: PayWallet=0, EasyWallet=1, CeDeFiWallet=2
+  let accountTypeDiscriminant: number;
+  if ("payWallet" in args.accountType) {
+    accountTypeDiscriminant = 0;
+  } else if ("easyWallet" in args.accountType) {
+    accountTypeDiscriminant = 1;
+  } else if ("ceDeFiWallet" in args.accountType) {
+    accountTypeDiscriminant = 2;
+  } else {
+    throw new Error("Invalid account type");
+  }
+  chunks.push(Buffer.from([accountTypeDiscriminant]));
+
+  // Add salt (32 bytes)
+  chunks.push(Buffer.from(args.salt));
+
+  // Concatenate all chunks
+  return Buffer.concat(chunks);
+}
+
+/**
+ * Generate account ID by serializing args and hashing with keccak256
+ * This replicates the Rust generate_id() function exactly
+ */
+export function generateGeneralAccountId(
+  args: CreateGeneralAccountArgs
+): number[] {
+  const serialized = serializeCreateGeneralAccountArgs(args);
+  // Hash with keccak256
+  const hash = keccak_256(serialized);
+  return Array.from(hash);
 }
 
 export class SmartAccountHelper {
@@ -148,6 +258,55 @@ export class SmartAccountHelper {
       validFrom,
       validUntil,
       actualR1Key // Pass the raw key object
+    );
+  }
+
+  /**
+   * Create a new smart account helper for general account
+   */
+  public static createWithGeneralAccount(
+    testBase: TestBase,
+    idSeed: string,
+    emailSeed: string
+  ): SmartAccountHelper {
+    const dummyHelper = new SmartAccountHelper(
+      generateIdFromString(idSeed),
+      testBase.mandatorySigner,
+      testBase.saProgram
+    );
+
+    const now = Math.floor(Date.now() / 1000);
+    const validFrom = new anchor.BN(now);
+    const validUntil = new anchor.BN(now + 365 * 24 * 60 * 60); // 1 year
+    const salt = new Uint8Array(32); // Zero salt
+
+    // Set up SA helper
+    const createArgs: CreateGeneralAccountArgs = {
+      userPasskey: {
+        pubkey: Array.from(dummyHelper.getPasskeyPubkey()),
+        validFrom,
+        validUntil,
+      },
+      initialSolanaSigner: {
+        pubkey: testBase.mandatorySigner.publicKey,
+        validFrom,
+        validUntil,
+      },
+      initialRecoverySigner: dummyHelper.recoverySigners[0].publicKey,
+      accountType: { easyWallet: {} },
+      salt: Array.from(salt),
+    };
+
+    const generatedId = generateGeneralAccountId(createArgs);
+
+    return new SmartAccountHelper(
+      Buffer.from(generatedId),
+      testBase.mandatorySigner,
+      testBase.saProgram,
+      dummyHelper.recoverySigners[0],
+      validFrom,
+      validUntil,
+      dummyHelper.passkeyKeypair
     );
   }
 
@@ -258,7 +417,7 @@ export class SmartAccountHelper {
         serializedIntent.push(isSigner ? 1 : 0);
         serializedIntent.push(isWritable ? 1 : 0);
         serializedIntent.push(...v.pubkey.toBuffer());
-
+        
         remainingAccounts.push({
           ...v,
           isSigner,

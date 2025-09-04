@@ -3,11 +3,11 @@ import { Program } from "@coral-xyz/anchor";
 import { Connection } from "@solana/web3.js";
 import dotenv from "dotenv";
 import { Keypair } from "@solana/web3.js";
-import { SmartAccountSolana } from "../../target/types/smart_account_solana.json";
-import { Vault } from "../../target/types/vault.json";
-import { UpgradeMock } from "../../target/types/upgrade_mock.json";
-import { ZkEmailVerifier } from "../../target/types/zk_email_verifier.json";
-import { DkimKeyOracle } from "../../target/types/dkim_key_oracle.json";
+import { SmartAccountSolana } from "../../target/types/smart_account_solana";
+import { Vault } from "../../target/types/vault";
+import { UpgradeMock } from "../../target/types/upgrade_mock";
+import { ZkEmailVerifier } from "../../target/types/zk_email_verifier";
+import { DkimKeyOracle } from "../../target/types/dkim_key_oracle";
 
 // Load environment variables
 dotenv.config();
