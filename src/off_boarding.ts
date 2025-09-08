@@ -6,6 +6,7 @@ import {
   Keypair,
   PublicKey,
   clusterApiUrl,
+  Transaction,
   TransactionInstruction,
   LAMPORTS_PER_SOL,
   SystemProgram,
@@ -90,7 +91,8 @@ const main = async () => {
       }
     } else {
       const privateKey = process.env.EVM_EOA_PRIVATE_KEY || "";
-      const provider = new ethers.JsonRpcProvider(rpcUrl);
+      const fetchReq = new ethers.FetchRequest(rpcUrl);
+      const provider = new ethers.JsonRpcProvider(fetchReq);
 
       let wallet: ethers.Wallet;
       try {
@@ -276,11 +278,22 @@ const sendTransactionEvm = async (
     wallet
   );
 
+  //4. Estimate Gas Fee 
   try {
-    //4. Execute via AA wallet
+    const gasEstimate: bigint = await (contractWithSigner.execute as any).estimateGas(calls);
+    const feeData = await wallet.provider!.getFeeData();
+    const gasPrice = feeData.gasPrice ?? feeData.maxFeePerGas;
+    if (gasPrice) {
+      const estimatedFee = gasEstimate * gasPrice;
+      console.log(`📝 Estimated fee: ${ethers.formatEther(estimatedFee)} ETH (gas: ${gasEstimate}, gasPrice: ${ethers.formatUnits(gasPrice, "gwei")} gwei)`);
+    }
+  } catch (err) {
+    console.warn("⚠️  Could not estimate gas fee:", (err as any).message || err);
+  }
+
+  try {
+    //5. Execute via AA wallet
     const tx = await contractWithSigner.execute(calls);
-    console.log("Transaction sent. Waiting for confirmation...");
-    await tx.wait();
     console.log(`✅ Success! Tx hash: ${tx.hash}`);
   } catch (err: any) {
     console.error("❌ Transaction failed:", err.reason || err.message);
@@ -354,22 +367,21 @@ const sendTransactionSolana = async (
       return;
     }
 
-    const vaultTransferSolIx = await vaultProgram.methods
-      .vaultTransferSol(new anchor.BN(transferAmount * LAMPORTS_PER_SOL)) // lamports
-      .accountsPartial({
-        vaultState: executor.smartAccountHelper.vaultState,
-        smartAccountVault: vaultPda,
-        smartAccount: executor.smartAccountHelper.sa, // signer PDA
-        recipient: recipientPubkey,
-      })
-      .instruction();
-
-    // alternative way to transfer SOL
-    // const vaultTransferSolIx = await SystemProgram.transfer({
-    //   fromPubkey: vaultPda,
-    //   toPubkey: recipientPubkey,
-    //   lamports: transferAmount,
-    // });
+    // const vaultTransferSolIx = await vaultProgram.methods
+    //   .vaultTransferSol(new anchor.BN(transferAmount * LAMPORTS_PER_SOL)) // lamports
+    //   .accountsPartial({
+    //     vaultState: executor.smartAccountHelper.vaultState,
+    //     smartAccountVault: vaultPda,
+    //     smartAccount: executor.smartAccountHelper.sa, // signer PDA
+    //     recipient: recipientPubkey,
+    //   })
+    //   .instruction();
+    
+    const vaultTransferSolIx = await SystemProgram.transfer({
+      fromPubkey: vaultPda,
+      toPubkey: recipientPubkey,
+      lamports: BigInt(transferAmount * LAMPORTS_PER_SOL),
+    });
 
     instructions = [vaultTransferSolIx];
   } else {
@@ -400,7 +412,7 @@ const sendTransactionSolana = async (
     }
 
     console.log(
-      `\n💳 Vault token account balance: ${initialVaultBalance.toString()}`);
+      `💳 Vault token account balance: ${initialVaultBalance.toString()}`);
 
     if (initialVaultBalance < transferAmount) {
       console.error("ℹ️ Insufficient balance in vault token account");
@@ -412,9 +424,7 @@ const sendTransactionSolana = async (
       true,
       TOKEN_PROGRAM_ID
     );
-    console.log("recipientPubkey: ", recipientPubkey);
-    console.log("recipientTokenAccount: ", recipientTokenAccount);
-    console.log("vaultTokenAccount: ", vaultTokenAccount);
+    
     // amount in smallest units
     const amountInBaseUnits = ethers.parseUnits(transferAmountRaw.toString(), decimals);
     
@@ -451,12 +461,22 @@ const sendTransactionSolana = async (
   }
 
   //3. Execute transaction
+  // --- Estimate Fee (SOL) ---
   try {
-    await executor.execute(
-      instructions,
-      "off-boarding token transfer"
-    );
+    const { blockhash } = await provider.connection.getLatestBlockhash();
+    const feeTx = new Transaction({ feePayer: keypair.publicKey, recentBlockhash: blockhash }).add(...instructions);
+    const feeInfo = await provider.connection.getFeeForMessage(feeTx.compileMessage());
+    if (feeInfo && feeInfo.value) {
+      const lamportsFee = feeInfo.value;
+      console.log(`📝 Estimated fee: ${lamportsFee} lamports (~${lamportsFee / LAMPORTS_PER_SOL} SOL)`);
+    }
+  } catch (err) {
+    console.warn("⚠️  Could not estimate Solana fee:", (err as any).message || err);
+  }
 
+  try {
+    await executor.execute(instructions, "off-boarding token transfer");
+    // await executor.execute([], "off-boarding token transfer");
   } catch (err: any) {
     console.error("❌ Transaction failed:", err.reason || err.message);
   }
