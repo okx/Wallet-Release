@@ -54,9 +54,19 @@ const main = async () => {
     console.log("Connected RPC URL: ", rpcUrl);
 
     if (chain === "Solana") {
-      const privateKey = process.env.WALLET_SECRET_KEY || "";
+      // Load private key into a Buffer for secure cleanup
+      let privateKeyBuf = Buffer.from(process.env.WALLET_SECRET_KEY || "", 'utf8');
       const connection = new Connection(rpcUrl, "confirmed");
-      const keypair = await parseSolanaKeypair(privateKey);
+      
+      let keypair: Keypair;
+      try {
+        keypair = await parseSolanaKeypair(privateKeyBuf.toString());
+      } finally {
+        // Wipe the buffer after use (but keep env var for CLI session)
+        privateKeyBuf.fill(0);
+        privateKeyBuf = Buffer.alloc(0);
+      }
+      
       const provider = new anchor.AnchorProvider(
         connection,
         new anchor.Wallet(keypair),
@@ -90,18 +100,23 @@ const main = async () => {
         }
       }
     } else {
-      const privateKey = process.env.EVM_EOA_PRIVATE_KEY || "";
+      // Load EVM private key into Buffer for secure cleanup
+      let privateKeyBuf = Buffer.from(process.env.EVM_EOA_PRIVATE_KEY || "", 'utf8');
       const fetchReq = new ethers.FetchRequest(rpcUrl);
       const provider = new ethers.JsonRpcProvider(fetchReq);
 
       let wallet: ethers.Wallet;
       try {
-        wallet = new ethers.Wallet(privateKey, provider);
+        wallet = new ethers.Wallet(privateKeyBuf.toString(), provider);
       } catch (error) {
         console.error(
           "\nℹ️ Error: Invalid private key provided. Please check and try again."
         );
         return;
+      } finally {
+        // Wipe the buffer after wallet creation (but keep env var for CLI session)
+        privateKeyBuf.fill(0);
+        privateKeyBuf = Buffer.alloc(0);
       }
       console.log(`\nWallet loaded successfully.`);
       console.log(`Your EOA address: ${wallet.address}`);
@@ -135,6 +150,10 @@ const main = async () => {
     }
   } catch (error: any) {
     console.error("\nAn unexpected error occurred:", error.message);
+  } finally {
+    // Clean up sensitive env vars when program exits
+    delete process.env.WALLET_SECRET_KEY;
+    delete process.env.EVM_EOA_PRIVATE_KEY;
   }
   
   console.log("\nThank you for using the EscapeTool. Exiting now.");
