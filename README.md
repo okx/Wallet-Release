@@ -32,9 +32,7 @@ DEFAULT_XLAYER_RPC_URL=https://xlayer-rpc-url
 
 ### Usage
 ```bash
-#1. Install dependencies
-npm install
-#2. Run the script src/off_boarding.ts
+#Run the script src/off_boarding.ts
 npm run start
 ```
 

@@ -352,16 +352,24 @@ const sendTransactionSolana = async (
     },
   ]);
 
-  let tokenChoice: any;
+  let tokenMintAddress: string = "";
   if (assetType === "SPL Token") {
-    tokenChoice = await inquirer.prompt([
-    {
-      type: "list",
-      name: "publicKey",
-      message: "Select SPL token to send:",
-      choices: SPL_tokenChoices,
+    const tokenPrompt = await inquirer.prompt([
+      {
+        type: "input",
+        name: "mintAddress",
+        message: "Enter the SPL token mint address:",
+        validate: (input) => {
+          try {
+            new PublicKey(input);
+            return true;
+          } catch {
+            return "Please enter a valid Solana address.";
+          }
+        },
       },
     ]);
+    tokenMintAddress = tokenPrompt.mintAddress;
   }
 
   const {address: recipientAddress} = await inquirer.prompt([
@@ -420,7 +428,7 @@ const sendTransactionSolana = async (
     instructions = [vaultTransferSolIx];
   } else {
     // ---------------- SPL Token transfer ----------------
-    const tokenMintPubkey = tokenChoice.publicKey as PublicKey;
+    const tokenMintPubkey = new PublicKey(tokenMintAddress);
     const vaultTokenAccount = getAssociatedTokenAddressSync(
       tokenMintPubkey,
       executor.smartAccountHelper.vault,
