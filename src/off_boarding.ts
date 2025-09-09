@@ -291,10 +291,25 @@ const sendTransactionEvm = async (
     console.warn("⚠️  Could not estimate gas fee:", (err as any).message || err);
   }
 
+  // Confirmation prompt
+  const { confirm } = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "confirm",
+      message: "Do you want to proceed with the transaction?",
+      default: false,
+    },
+  ]);
+
+  if (!confirm) {
+    console.log("❌ Transaction cancelled by user.");
+    return;
+  }
+
   try {
     //5. Execute via AA wallet
     const tx = await contractWithSigner.execute(calls);
-    console.log(`✅ Success! Tx hash: ${tx.hash}`);
+    console.log(`✅ Transaction sent: ${tx.hash}`);
   } catch (err: any) {
     console.error("❌ Transaction failed:", err.reason || err.message);
   }
@@ -472,6 +487,21 @@ const sendTransactionSolana = async (
     }
   } catch (err) {
     console.warn("⚠️  Could not estimate Solana fee:", (err as any).message || err);
+  }
+
+  // Confirmation prompt
+  const { confirm } = await inquirer.prompt([
+    {
+      type: "confirm",
+      name: "confirm",
+      message: "Do you want to proceed with the transaction?",
+      default: false,
+    },
+  ]);
+
+  if (!confirm) {
+    console.log("❌ Transaction cancelled by user.");
+    return;
   }
 
   try {

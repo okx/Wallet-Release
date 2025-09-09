@@ -3,5 +3,5 @@
 /.vscode
 /dist
 /backup
-/src/target
 test.ts
+.DS_Store
