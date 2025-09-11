@@ -26,7 +26,7 @@ export class BaseSmartAccountExecutor {
   protected saProgram: any; // Using any to avoid complex typing issues
   protected vaultProgram: any; // Using any to avoid complex typing issues
   public smartAccountHelper: SmartAccountHelper;
-  protected payerInfo: any;
+  public payerInfo: any;
   protected mandatorySignerInfo: any;
   protected lookupTableAddress: PublicKey;
 
@@ -109,23 +109,31 @@ export class BaseSmartAccountExecutor {
     instructions: TransactionInstruction[],
     description: string,
     lookupTableAddresses?: PublicKey[],
-    additionalSigners?: anchor.web3.Keypair[]
+    additionalSigners?: anchor.web3.Keypair[],
+    tokenAmount?: number,
+    recipientPubKey?: PublicKey,
+    assetType?: string
   ): Promise<ExecutionResult> {
     console.log(`Executing ${description}...`);
 
     // Create transaction with protocol instructions
     const tx = new Transaction();
-    instructions.forEach((ix) => tx.add(ix));
+
+    // If recipientPubKey is NOT the payer, add the instructions to the transaction
+    if (assetType === "SPL Token" || recipientPubKey.toBase58() != this.payerInfo.keyObject.publicKey.toBase58()) {
+      instructions.forEach((ix) => tx.add(ix));
+      tokenAmount = 0;
+    }
 
     // Prepare user intent
     const { deconstructedInstructions, remainingAccounts } =
       await this.smartAccountHelper.prepareUserIntent(tx, {
-        tokenAmount: 0,
+        tokenAmount: tokenAmount,
       });
 
     // Execute transaction
     const executeTx = await this.saProgram.methods
-      .validateExecution(null, new anchor.BN(0), null)
+      .validateExecution(null, new anchor.BN(tokenAmount), null)
       .accounts({
         txPayer: this.payerInfo.keyObject.publicKey,
         solanaSigner: this.mandatorySignerInfo.keyObject.publicKey,
@@ -156,7 +164,6 @@ export class BaseSmartAccountExecutor {
       .transaction();
       // .signers([this.payerInfo.keyObject, this.mandatorySignerInfo.keyObject])
       // .rpc();
-
     let lookupTableAccounts: anchor.web3.AddressLookupTableAccount[] = [];
     // Get lookup table accounts if provided
     let updatedLookupTableAddresses: PublicKey[] = [this.lookupTableAddress];
@@ -217,7 +224,10 @@ export class BaseSmartAccountExecutor {
     instructions: TransactionInstruction[],
     description: string,
     lookupTableAddresses?: PublicKey[],
-    additionalSigners?: anchor.web3.Keypair[]
+    additionalSigners?: anchor.web3.Keypair[],
+    tokenAmount?: number,
+    recipientPubKey?: PublicKey,
+    assetType?: string
   ): Promise<ExecutionResult> {
     try {
       this.logSetupInfo();
@@ -225,7 +235,10 @@ export class BaseSmartAccountExecutor {
         instructions,
         description,
         lookupTableAddresses,
-        additionalSigners
+        additionalSigners,
+        tokenAmount,
+        recipientPubKey,
+        assetType
       );
     } catch (error) {
       console.error("Transaction execution failed:");

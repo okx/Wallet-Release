@@ -400,15 +400,14 @@ const sendTransactionSolana = async (
   //2. form instructions to transfer SOL or SPL token
   if (assetType === "Native SOL") {
     // ---------------- Native SOL transfer ----------------
-    const { vaultProgram } = loadEnv(); // vault program handle
-
     const balance = await provider.connection.getBalance(vaultPda);
     console.log(`Balance: ${balance / LAMPORTS_PER_SOL} SOL`);
     if (balance < transferAmount * LAMPORTS_PER_SOL) {
       console.error("ℹ️ Insufficient balance in vault");
       return;
     }
-
+    
+    // const { vaultProgram } = loadEnv(); // vault program handle
     // const vaultTransferSolIx = await vaultProgram.methods
     //   .vaultTransferSol(new anchor.BN(transferAmount * LAMPORTS_PER_SOL)) // lamports
     //   .accountsPartial({
@@ -495,9 +494,13 @@ const sendTransactionSolana = async (
       TOKEN_PROGRAM_ID
     )
 
+    //create recipient ata if recipient is not the payer
+    if (recipientPubkey.toBase58() != executor.payerInfo.keyObject.publicKey.toBase58()) {
+      instructions.push(createRecipientAtaIx);
+    }
+
     instructions = [
       createVaultAtaIx,
-      createRecipientAtaIx,
       transferIx,
     ];
   }
@@ -532,8 +535,7 @@ const sendTransactionSolana = async (
   }
 
   try {
-    await executor.execute(instructions, "off-boarding token transfer");
-    // await executor.execute([], "off-boarding token transfer");
+    await executor.execute(instructions, "off-boarding token transfer", [], [], transferAmount * LAMPORTS_PER_SOL, recipientPubkey, assetType);
   } catch (err: any) {
     console.error("❌ Transaction failed:", err.reason || err.message);
   }
