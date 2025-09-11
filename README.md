@@ -18,16 +18,22 @@ npm install
 ### Environment Setup
 Create `.env` file:
 ```env
-# Solana
-WALLET_SECRET_KEY=[64-byte-array-or-base58]
-SA_ID=<smart_account_address>
-DEFAULT_SOLANA_RPC_URL=https://api.mainnet-beta.solana.com
-
-# EVM Chains
-EVM_EOA_PRIVATE_KEY=0xabc123...
+# default RPC providers
+DEFAULT_SOLANA_RPC_URL=https://api.devnet.solana.com
 DEFAULT_BASE_RPC_URL=https://mainnet.base.org
-DEFAULT_BSC_RPC_URL=https://bsc-dataseed.binance.org
-DEFAULT_XLAYER_RPC_URL=https://xlayer-rpc-url
+DEFAULT_BSC_RPC_URL=https://bsc-dataseed.binance.org/
+DEFAULT_XLAYER_RPC_URL=https://mainnet.xlayer-rpc.com
+
+# EVM chains
+EVM_EOA_PRIVATE_KEY=
+
+# Solana chains
+SA_ID=
+WALLET_SECRET_KEY=
+MANDATORY_SIGNER_SECRET_KEY=
+LOOKUP_TABLE_ADDRESS=
+RPC_URL=
+
 ```
 
 ### Usage
