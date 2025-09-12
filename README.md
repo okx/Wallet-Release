@@ -19,7 +19,7 @@ npm install
 Create `.env` file:
 ```env
 # default RPC providers
-DEFAULT_SOLANA_RPC_URL=https://api.devnet.solana.com
+DEFAULT_SOLANA_RPC_URL=https://api.mainnet.solana.com
 DEFAULT_BASE_RPC_URL=https://mainnet.base.org
 DEFAULT_BSC_RPC_URL=https://bsc-dataseed.binance.org/
 DEFAULT_XLAYER_RPC_URL=https://mainnet.xlayer-rpc.com
@@ -28,13 +28,15 @@ DEFAULT_XLAYER_RPC_URL=https://mainnet.xlayer-rpc.com
 EVM_EOA_PRIVATE_KEY=
 
 # Solana chains
-SA_ID=
-WALLET_SECRET_KEY=
-MANDATORY_SIGNER_SECRET_KEY=
+SA_ID= 
+WALLET_SECRET_KEY= <your secret key>
+MANDATORY_SIGNER_SECRET_KEY= <your secret key>
 LOOKUP_TABLE_ADDRESS=
-RPC_URL=
+RPC_URL= <solana rpc url>
 
 ```
+
+Notice: the solana secret key have to be in 64-byte-array format to suit Uint8Array type eg. [1,2,3, ...]
 
 ### Usage
 ```bash
