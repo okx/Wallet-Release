@@ -1,0 +1,192 @@
+/* Common styles for Emergency Escape Off-Boarding Tool */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #000000;
+    min-height: 100vh;
+    color: #ffffff;
+}
+
+.container {
+    background: #000000;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(154, 237, 44, 0.3);
+    border: 2px solid #9AED2C;
+}
+
+h1 {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+select, input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #9AED2C;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    background: white;
+    color: #000000;
+}
+
+select:focus, input:focus {
+    outline: none;
+    border-color: #1e8a42;
+    box-shadow: 0 0 0 3px rgba(37, 167, 80, 0.2);
+}
+
+button {
+    background: #9AED2C;
+    color: white;
+    padding: 15px 30px;
+    border: 2px solid #9AED2C;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+
+button:hover {
+    background: #1e8a42;
+    border-color: #1e8a42;
+}
+
+.back-btn {
+    background: #9AED2C;
+    border-color: #9AED2C;
+    margin-bottom: 20px;
+}
+
+.back-btn:hover {
+    background: #333333;
+    border-color: #333333;
+}
+
+.btn-danger {
+    background: #9AED2C;
+    border-color: #9AED2C;
+}
+
+.btn-danger:hover {
+    background: #1e8a42;
+    border-color: #1e8a42;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.btn-container button {
+    width: 48%;
+}
+
+.info {
+    background: rgba(37, 167, 80, 0.1);
+    border: 2px solid #9AED2C;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0;
+    color: #ffffff;
+}
+
+.error {
+    background: #000000;
+    border: 2px solid #ffffff;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0;
+    color: #ffffff;
+    text-align: center;
+}
+
+.success {
+    background: rgba(37, 167, 80, 0.2);
+    border: 2px solid #9AED2C;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0;
+    color: #ffffff;
+}
+
+.warning {
+    background: rgba(37, 167, 80, 0.05);
+    border: 2px solid #9AED2C;
+    border-radius: 6px;
+    padding: 15px;
+    margin: 20px 0;
+    color: #ffffff;
+}
+
+.transaction-details {
+    background: rgba(37, 167, 80, 0.05);
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    border-left: 4px solid #9AED2C;
+    border: 2px solid #9AED2C;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid #9AED2C;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.detail-value {
+    color: #ffffff;
+    word-break: break-all;
+}
+
+.token-input {
+    display: none;
+}
+
+.token-input.show {
+    display: block;
+}
+
+.tx-hash {
+    background: rgba(37, 167, 80, 0.1);
+    border: 2px solid #9AED2C;
+    border-radius: 4px;
+    padding: 10px;
+    font-family: monospace;
+    word-break: break-all;
+    margin: 10px 0;
+    color: #ffffff;
+}
+
+.text-center {
+    text-align: center;
+}

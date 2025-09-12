@@ -18,11 +18,9 @@ import {
   getAssociatedTokenAddressSync,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { parseSolanaKeypair } from "./utils";
-import { SMART_ACCOUNT_VAULT_SEED, SPL_tokenChoices, VAULT_PROGRAM_ID } from "./consts";
+import { parseSolanaKeypair } from "../backup/utils";
 import { BaseSmartAccountExecutor } from "./base_smart_account_executor";
-import { loadEnv } from "./helpers/setup";
-import evmExecuteABI from "./evmExecuteABI.json";
+import evmExecuteABI from "../backup/evmExecuteABI.json";
 
 dotenv.config();
 
@@ -104,7 +102,8 @@ const main = async () => {
       let privateKeyBuf = Buffer.from(process.env.EVM_EOA_PRIVATE_KEY || "", 'utf8');
       const fetchReq = new ethers.FetchRequest(rpcUrl);
       const provider = new ethers.JsonRpcProvider(fetchReq);
-
+      const AAWalletAddress = process.env.EVM_AA_ADDRESS || "";
+      
       let wallet: ethers.Wallet;
       try {
         wallet = new ethers.Wallet(privateKeyBuf.toString(), provider);
@@ -120,16 +119,6 @@ const main = async () => {
       }
       console.log(`\nWallet loaded successfully.`);
       console.log(`Your EOA address: ${wallet.address}`);
-
-      const { AAWalletAddress } = await inquirer.prompt([
-        {
-          type: "input",
-          name: "AAWalletAddress",
-          message: "Enter the AA wallet address:",
-          validate: (input) =>
-            ethers.isAddress(input) || "Please enter a valid EVM address.",
-        },
-      ]);
 
       while (true) {
         const { action } = await inquirer.prompt([
@@ -244,6 +233,7 @@ const sendTransactionEvm = async (
     let decimals: number = 18;
     try {
       decimals = await tokenContract.decimals();
+      console.log("decimals", decimals);
     } catch (_) {
       const { manualDecimals } = await inquirer.prompt([
         {
@@ -267,7 +257,7 @@ const sendTransactionEvm = async (
     try {
       const balance = await balanceContract.balanceOf(AAWalletAddress);
       const requiredAmount = ethers.parseUnits(amount, decimals);
-      
+
       console.log(`💰 AA Wallet Token Balance: ${ethers.formatUnits(balance, decimals)} tokens`);
       console.log(`💸 Transfer Amount: ${amount} tokens`);
       

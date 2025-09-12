@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Escape Off-Boarding Tool</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🚨 Emergency Escape Off-Boarding Tool</h1>
+        <div class="info">
+            <strong>Welcome!</strong> This tool helps you safely transfer assets from your smart accounts.
+            Select the blockchain network you want to work with.
+        </div>
+        
+        <form action="/select-chain" method="POST">
+            <div class="form-group">
+                <label for="chain">Select Blockchain:</label>
+                <select name="chain" id="chain" required>
+                    <option value="">Choose a blockchain...</option>
+                    <option value="Solana">Solana</option>
+                    <option value="Base">Base</option>
+                    <option value="BSC">Binance Smart Chain (BSC)</option>
+                    <option value="xLayer">xLayer</option>
+                </select>
+            </div>
+            <button type="submit">Continue</button>
+        </form>
+    </div>
+</body>
+</html>
