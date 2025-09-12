@@ -40,8 +40,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Favicon is served via data URL in HTML templates
-
 type SupportedChain = 'Solana' | 'Base' | 'BSC' | 'xLayer';
 
 const DEFAULT_RPCS: Record<SupportedChain, string> = {
@@ -53,6 +51,11 @@ const DEFAULT_RPCS: Record<SupportedChain, string> = {
 
 // Store transaction states 
 const transactionStates: Map<string, any> = new Map();
+
+// Serve favicon
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
+});
 
 // Serve CSS file
 app.get('/styles.css', (req, res) => {
