@@ -54,7 +54,7 @@ const transactionStates: Map<string, any> = new Map();
 
 // Serve favicon
 app.get('/favicon.ico', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'favicon.ico'));
+  res.sendFile(path.join(__dirname, 'public', 'favicon.png'));
 });
 
 // Serve CSS file

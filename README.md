@@ -9,8 +9,10 @@ A comprehensive tool for transferring assets from Smart Account vaults across mu
 - TypeScript
 
 ### Installation
+
+#### 📥 Manual Installation  
 ```bash
-git clone https://github.com/your-org/Emergency-Escape.git
+git clone https://github.com/okx/Emergency-Escape.git
 cd Emergency-Escape
 npm install
 ```
