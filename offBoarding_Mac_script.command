@@ -1,10 +1,7 @@
 #!/usr/bin/env bash
 
 # Change to the script's directory
-cd "$(dirname "$0")" || {
-    echo "❌ Failed to change to script directory"
-    exit 1
-}
+cd "$(dirname "$0")"
 
 # Check if Node.js is installed
 if ! command -v node >/dev/null 2>&1; then
@@ -12,12 +9,16 @@ if ! command -v node >/dev/null 2>&1; then
     echo "📥 Please install Node.js from https://nodejs.org/en/download/"
     echo "🚪 Exiting script. Please run again after installing Node.js."
     exit 1
+    else
+    echo "✅ Node.js is installed on this system."
 fi
 
 # Install dependencies if node_modules doesn't exist
 if [[ ! -d node_modules ]]; then
     echo "📦 Installing dependencies..."
     npm install
+    else
+    echo "✅ Dependencies already installed."
 fi
 
 if [[ ! -f .env ]]; then
@@ -43,7 +44,13 @@ SA_ID=
 WALLET_SECRET_KEY=
 MANDATORY_SIGNER_SECRET_KEY=
 EOF
+  echo "✅ Setup completed! The next run will start the web server."
 else 
+  # Check if port 3000 is already in use
+  if lsof -i :3000 -sTCP:LISTEN -t >/dev/null ; then
+      echo "❌ Port 3000 is already in use. Please terminate the process using it and try again."
+      exit 1
+  fi
   # Start the web server unless this is the first run
   echo "🚀 Starting web server (npm run web)..."
   npm run web
