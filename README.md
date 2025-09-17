@@ -21,27 +21,17 @@ npm install
 Create `.env` file:
 
 ```
-# Default RPC urls
-DEFAULT_SOLANA_RPC_URL=https://api.mainnet.solana.com
-DEFAULT_BASE_RPC_URL=https://mainnet.base.org
-DEFAULT_BSC_RPC_URL=https://bsc-dataseed.binance.org/
-DEFAULT_XLAYER_RPC_URL=https://mainnet.xlayer-rpc.com
-
-# Default Solana Values
-LOOKUP_TABLE_ADDRESS=Gjj1dX4UR6HcXGDm48wJHCZjompq5SJ6eKse1Trfq6Qe
-RPC_URL=https://api.mainnet.solana.com
-
 # EVM
-EVM_EOA_PRIVATE_KEY= <your secret key>
-EVM_AA_ADDRESS= <your AA address>
+EVM_EOA_PRIVATE_KEY=
+EVM_DEXTRADING_ADDRESS=
 
 # Solana
-SA_ID= <your AA ID>
-WALLET_SECRET_KEY= <your secret key>
-MANDATORY_SIGNER_SECRET_KEY= <your secret key>
+SOL_EOA_PRIVATE_KEY=
+SOL_DEXTRADING_ADDRESS=
+
 ```
 
-Notice: the solana secret key have to be in 64-byte-array format to suit Uint8Array type eg. [1,2,3, ...]
+Notice : you do not need to complete the entire .env file to run it, just input what you have
 
 ### Usage
 
@@ -81,11 +71,11 @@ Then open your browser to `http://localhost:3000`
 
 ### Common Issues
 - **"Invalid private key"**: Ensure Solana keys are in correct 64-byte array format
-- **"SA_ID not set"**: Check your `.env` file has all required variables
+- **"SOL_DEXTRADING_ADDRESS not set"**: Check your `.env` file has all required variables
 - **"Insufficient balance"**: Verify you have enough tokens/native currency
 - **"Too many decimals"**: Check token decimal precision matches your input
 
 ### Environment Variables
 All chains require their respective private keys and addresses to be set in `.env`:
-- **Solana**: `WALLET_SECRET_KEY`, `SA_ID`
-- **EVM chains**: `EVM_EOA_PRIVATE_KEY`, `AA_WALLET_ADDRESS`
+- **Solana**: `WALLET_SECRET_KEY`, `SOL_DEXTRADING_ADDRESS`
+- **EVM chains**: `EVM_EOA_PRIVATE_KEY`, `EVM_DEXTRADING_ADDRESS`

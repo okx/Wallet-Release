@@ -15,6 +15,14 @@ export const ANDROID_PACKAGE_NAME = "com.okinc.okex.gp";
 export const PRE_JSON = '{"type":"webauthn.get"';
 export const POST_JSON = `"origin":"${ORIGIN}","androidPackageName":"${ANDROID_PACKAGE_NAME}"}`;
 
+//rpc urls
+export const SOLANA_RPC_URL = "https://api.devnet.solana.com";
+export const BASE_RPC_URL = "https://mainnet.base.org";
+export const BSC_RPC_URL = "https://bsc-dataseed.binance.org";
+export const XLAYER_RPC_URL = "https://mainnet.xlayer-rpc.com";
+//solana lookup table address
+export const LOOKUP_TABLE_ADDRESS = "Gjj1dX4UR6HcXGDm48wJHCZjompq5SJ6eKse1Trfq6Qe";
+
 //public keys
 export const USDC_MINT = new anchor.web3.PublicKey(
   "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v"

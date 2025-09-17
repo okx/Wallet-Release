@@ -27,24 +27,13 @@ if not exist "node_modules" (
 if not exist ".env" (
     echo Creating default .env file...
     (
-        echo # Default RPC URLs
-        echo DEFAULT_SOLANA_RPC_URL=https://api.mainnet.solana.com
-        echo DEFAULT_BASE_RPC_URL=https://mainnet.base.org
-        echo DEFAULT_BSC_RPC_URL=https://bsc-dataseed.binance.org/
-        echo DEFAULT_XLAYER_RPC_URL=https://mainnet.xlayer-rpc.com
-        echo.
-        echo # Default Solana Values
-        echo LOOKUP_TABLE_ADDRESS=
-        echo RPC_URL=https://api.mainnet.solana.com
-        echo.
-        echo # EVM - Fill in your private key and AA wallet address
+        echo # EVM
         echo EVM_EOA_PRIVATE_KEY=
-        echo EVM_AA_ADDRESS=
+        echo EVM_DEXTRADING_ADDRESS=
         echo.
-        echo # Solana - Fill in your SA ID, wallet secret key, and mandatory signer secret key
-        echo SA_ID=
-        echo WALLET_SECRET_KEY=
-        echo MANDATORY_SIGNER_SECRET_KEY=
+        echo # Solana
+        echo SOL_EOA_PRIVATE_KEY=
+        echo SOL_DEXTRADING_ADDRESS=
     ) > .env
     echo Setup completed! The next run will start the web server.
     goto end

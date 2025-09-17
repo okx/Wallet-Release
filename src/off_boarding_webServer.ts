@@ -20,7 +20,7 @@ import {
   getAssociatedTokenAddressSync,
   TOKEN_PROGRAM_ID,
 } from '@solana/spl-token';
-import { parseSolanaKeypair } from './utils';
+import { getSAId, parseBase58SecretKeyToUint8Array, parseSolanaKeypair } from './utils';
 import { BaseSmartAccountExecutor } from './base_smart_account_executor';
 import evmExecuteABI from './evmExecuteABI.json';
 import { 
@@ -29,6 +29,7 @@ import {
   createTransactionHashDisplay, 
   getNativeTokenSymbol 
 } from './template-renderer';
+import { SOLANA_RPC_URL, BASE_RPC_URL, BSC_RPC_URL, XLAYER_RPC_URL } from './consts';
 
 dotenv.config();
 
@@ -43,10 +44,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 type SupportedChain = 'Solana' | 'Base' | 'BSC' | 'xLayer';
 
 const DEFAULT_RPCS: Record<SupportedChain, string> = {
-  Solana: process.env.DEFAULT_SOLANA_RPC_URL || clusterApiUrl('mainnet-beta'),
-  Base: process.env.DEFAULT_BASE_RPC_URL || 'https://mainnet.base.org',
-  BSC: process.env.DEFAULT_BSC_RPC_URL || 'https://bsc-dataseed.binance.org',
-  xLayer: process.env.DEFAULT_XLAYER_RPC_URL || 'https://mainnet.xlayer-rpc.com',
+  Solana: SOLANA_RPC_URL,
+  Base: BASE_RPC_URL,
+  BSC: BSC_RPC_URL,
+  xLayer: XLAYER_RPC_URL,
 };
 
 // Store transaction states 
@@ -152,22 +153,22 @@ app.post('/process-solana', async (req, res) => {
     transactionStates.set(session, state);
 
     // Get wallet and connection
-    let privateKeyBuf = Buffer.from(process.env.WALLET_SECRET_KEY || '', 'utf8');
     const connection = new Connection(DEFAULT_RPCS.Solana, 'confirmed');
     
     let keypair: Keypair;
     try {
-      keypair = await parseSolanaKeypair(privateKeyBuf.toString());
-    } finally {
-      privateKeyBuf.fill(0);
-      privateKeyBuf = Buffer.alloc(0);
+      const secretKeyString = parseBase58SecretKeyToUint8Array(process.env.SOL_EOA_PRIVATE_KEY || '');
+      keypair = parseSolanaKeypair(secretKeyString);
+    } catch (error) {
+      throw new Error('Invalid SOL_EOA_PRIVATE_KEY format');
     }
 
-    const saId = process.env.SA_ID || '';
-    if (!saId) {
-      throw new Error('SA_ID is not set in the environment variables');
+    const AAWalletAddress = process.env.SOL_DEXTRADING_ADDRESS || '';
+    if (!AAWalletAddress) {
+      throw new Error('SOL_DEXTRADING_ADDRESS is not set in the environment variables');
     }
 
+    const saId = await getSAId(AAWalletAddress,keypair);
     const executor = new BaseSmartAccountExecutor(saId);
     const vaultPda = executor.smartAccountHelper.getVaultPda();
 
@@ -287,10 +288,10 @@ app.post('/process-evm', async (req, res) => {
     const rpcUrl = DEFAULT_RPCS[state.chain as SupportedChain];
     const fetchReq = new ethers.FetchRequest(rpcUrl);
     const provider = new ethers.JsonRpcProvider(fetchReq);
-    const AAWalletAddress = process.env.EVM_AA_ADDRESS || '';
+    const EVM_DEXTRADING_ADDRESS = process.env.EVM_DEXTRADING_ADDRESS || '';
     
-    if (!AAWalletAddress) {
-      throw new Error('AA_WALLET_ADDRESS is not set in environment variables');
+    if (!EVM_DEXTRADING_ADDRESS) {
+      throw new Error('EVM_DEXTRADING_ADDRESS is not set in environment variables');
     }
 
     let wallet: ethers.Wallet;
@@ -306,7 +307,7 @@ app.post('/process-evm', async (req, res) => {
 
     // Check balance
     if (assetType === 'Native Token') {
-      const balance = await provider.getBalance(AAWalletAddress);
+      const balance = await provider.getBalance(EVM_DEXTRADING_ADDRESS);
       const requiredAmount = ethers.parseEther(amount.toString());
       const balanceEth = ethers.formatEther(balance);
       
@@ -325,7 +326,7 @@ app.post('/process-evm', async (req, res) => {
       
       try {
         const [balance, decimals] = await Promise.all([
-          balanceContract.balanceOf(AAWalletAddress),
+          balanceContract.balanceOf(EVM_DEXTRADING_ADDRESS),
           balanceContract.decimals()
         ]);
         const tokenBalance = ethers.formatUnits(balance, decimals);
@@ -342,7 +343,7 @@ app.post('/process-evm', async (req, res) => {
 
     // Estimate gas fee
     try {
-      const contractWithSigner = new Contract(AAWalletAddress, evmExecuteABI, wallet);
+      const contractWithSigner = new Contract(EVM_DEXTRADING_ADDRESS, evmExecuteABI, wallet);
       let calls: Array<{ target: string; value: bigint; data: string }> = [];
       
       if (assetType === 'Native Token') {
@@ -418,15 +419,14 @@ app.post('/execute-solana', async (req, res) => {
 
   try {
     // Execute Solana transaction
-    let privateKeyBuf = Buffer.from(process.env.WALLET_SECRET_KEY || '', 'utf8');
     const connection = new Connection(DEFAULT_RPCS.Solana, 'confirmed');
     
     let keypair: Keypair;
     try {
-      keypair = await parseSolanaKeypair(privateKeyBuf.toString());
-    } finally {
-      privateKeyBuf.fill(0);
-      privateKeyBuf = Buffer.alloc(0);
+      const secretKeyString = parseBase58SecretKeyToUint8Array(process.env.SOL_EOA_PRIVATE_KEY || '');
+      keypair = parseSolanaKeypair(secretKeyString);
+    } catch (error) {
+      throw new Error('Invalid SOL_EOA_PRIVATE_KEY format');
     }
 
     const provider = new anchor.AnchorProvider(
@@ -435,7 +435,8 @@ app.post('/execute-solana', async (req, res) => {
       { preflightCommitment: 'confirmed' }
     );
 
-    const saId = process.env.SA_ID || '';
+    const AAWalletAddress = process.env.SOL_DEXTRADING_ADDRESS || '';
+    const saId = await getSAId(AAWalletAddress,keypair);
     const executor = new BaseSmartAccountExecutor(saId);
     const vaultPda = executor.smartAccountHelper.getVaultPda();
     const recipientPubkey = new PublicKey(state.recipient);
@@ -557,7 +558,7 @@ app.post('/execute-evm', async (req, res) => {
     const rpcUrl = DEFAULT_RPCS[state.chain as SupportedChain];
     const fetchReq = new ethers.FetchRequest(rpcUrl);
     const provider = new ethers.JsonRpcProvider(fetchReq);
-    const AAWalletAddress = process.env.EVM_AA_ADDRESS || '';
+    const AAWalletAddress = process.env.EVM_DEXTRADING_ADDRESS || '';
 
     let wallet: ethers.Wallet;
     try {

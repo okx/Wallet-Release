@@ -7,7 +7,6 @@ import {
   TransactionMessage,
   TransactionInstruction,
 } from "@solana/web3.js";
-import bs58 from 'bs58';
 import { loadEnv } from "./helpers/setup";
 import { loadKeyFromEnv } from "./helpers/key-loader";
 import { SmartAccountHelper } from "./tests/utils/smartAccount/helpers";
@@ -15,6 +14,7 @@ import {
   generateIdFromString,
   getLookupTableAccounts,
 } from "./tests/utils/helpers";
+import { LOOKUP_TABLE_ADDRESS } from "./consts";
 
 export interface ExecutionResult {
   txSignature: string;
@@ -39,7 +39,7 @@ export class BaseSmartAccountExecutor {
     this.setupProvider();
 
     this.loadKeys();
-
+    
     this.setupSmartAccount();
 
     this.loadLookupTableFromEnv();
@@ -47,7 +47,7 @@ export class BaseSmartAccountExecutor {
 
   private validateEnvironment(): void {
     if (!this.saId) {
-      throw new Error("SA_ID environment variable is required");
+      throw new Error("SOL_DEXTRADING_ADDRESS environment variable is required");
     }
   }
 
@@ -60,8 +60,10 @@ export class BaseSmartAccountExecutor {
 
   private loadKeys(): void {
     // const r1KeyInfo = loadKeyFromEnv("TEST_R1_PRIVATE_KEY");
-    this.mandatorySignerInfo = loadKeyFromEnv("MANDATORY_SIGNER_SECRET_KEY");
-    this.payerInfo = loadKeyFromEnv("WALLET_SECRET_KEY");
+    // this.mandatorySignerInfo = loadKeyFromEnv("WALLET_SECRET_KEY");
+    // this.payerInfo = loadKeyFromEnv("WALLET_SECRET_KEY");
+    this.mandatorySignerInfo = loadKeyFromEnv("SOL_EOA_PRIVATE_KEY");
+    this.payerInfo = loadKeyFromEnv("SOL_EOA_PRIVATE_KEY");
 
     // if (r1KeyInfo.type !== "r1") {
     //   throw new Error("Expected R1 key type for TEST_R1_PRIVATE_KEY");
@@ -72,14 +74,14 @@ export class BaseSmartAccountExecutor {
       );
     }
     if (this.payerInfo.type !== "solana") {
-      throw new Error("Expected Solana key type for WALLET_SECRET_KEY");
+      throw new Error("Expected Solana key type for SOL_EOA_PRIVATE_KEY");
     }
   }
 
   private setupSmartAccount(): void {
     const id = this.saId;
 
-    // Parse SA_ID as hex string if it's a hex string, otherwise treat as regular string
+    // Parse sa_id as hex string if it's a hex string, otherwise treat as regular string
     let idBuffer: Buffer;
     if (id.length === 64 && /^[0-9a-fA-F]+$/.test(id)) {
       // 64-character hex string (32 bytes)
@@ -256,8 +258,8 @@ export class BaseSmartAccountExecutor {
   }
 
   private loadLookupTableFromEnv(): void {
-    if (process.env.LOOKUP_TABLE_ADDRESS) {
-      this.lookupTableAddress = new PublicKey(process.env.LOOKUP_TABLE_ADDRESS);
+    if (LOOKUP_TABLE_ADDRESS) {
+      this.lookupTableAddress = new PublicKey(LOOKUP_TABLE_ADDRESS);
       console.log(
         "📋 Loaded lookup table from env:",
         this.lookupTableAddress.toBase58()

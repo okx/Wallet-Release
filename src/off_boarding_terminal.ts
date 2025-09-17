@@ -18,21 +18,21 @@ import {
   getAssociatedTokenAddressSync,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { parseSolanaKeypair } from "../backup/utils";
+import { parseBase58SecretKeyToUint8Array, parseSolanaKeypair } from "./utils";
 import { BaseSmartAccountExecutor } from "./base_smart_account_executor";
-import evmExecuteABI from "../backup/evmExecuteABI.json";
+import evmExecuteABI from "./evmExecuteABI.json";
+import { SOLANA_RPC_URL, BASE_RPC_URL, BSC_RPC_URL, XLAYER_RPC_URL } from "./consts";
+import { getSAId } from "./utils";
 
 dotenv.config();
 
 type SupportedChain = "Solana" | "Base" | "BSC" | "xLayer";
 
-type RpcName2Url = Record<SupportedChain, string>;
-
-const DEFAULT_RPCS: RpcName2Url = {
-  Solana: process.env.DEFAULT_SOLANA_RPC_URL || clusterApiUrl("mainnet-beta"),
-  Base: process.env.DEFAULT_BASE_RPC_URL || "https://mainnet.base.org",
-  BSC: process.env.DEFAULT_BSC_RPC_URL || "https://bsc-dataseed.binance.org",
-  xLayer:process.env.DEFAULT_XLAYER_RPC_URL || "https://mainnet.xlayer-rpc.com",
+const DEFAULT_RPCS: Record<SupportedChain, string> = {
+  Solana: SOLANA_RPC_URL,
+  Base: BASE_RPC_URL,
+  BSC: BSC_RPC_URL,
+  xLayer: XLAYER_RPC_URL,
 };
 
 const main = async () => {
@@ -53,18 +53,13 @@ const main = async () => {
 
     if (chain === "Solana") {
       // Load private key into a Buffer for secure cleanup
-      let privateKeyBuf = Buffer.from(process.env.WALLET_SECRET_KEY || "", 'utf8');
+
       const connection = new Connection(rpcUrl, "confirmed");
       
       let keypair: Keypair;
-      try {
-        keypair = await parseSolanaKeypair(privateKeyBuf.toString());
-      } finally {
-        // Wipe the buffer after use (but keep env var for CLI session)
-        privateKeyBuf.fill(0);
-        privateKeyBuf = Buffer.alloc(0);
-      }
-      
+      const secretKeyString = parseBase58SecretKeyToUint8Array(process.env.SOL_EOA_PRIVATE_KEY);
+      keypair = parseSolanaKeypair(secretKeyString);
+
       const provider = new anchor.AnchorProvider(
         connection,
         new anchor.Wallet(keypair),
@@ -74,9 +69,9 @@ const main = async () => {
       console.log(`\nWallet loaded successfully.`);
       console.log(`Your address: ${keypair.publicKey.toBase58()}\n`);
 
-      const saId = process.env.SA_ID || "";
-      if (!saId) {
-        console.error("SA_ID is not set in the environment variables.");
+      const AAWalletAddress = process.env.SOL_DEXTRADING_ADDRESS || "";
+      if (!AAWalletAddress) {
+        console.error("SOL_DEXTRADING_ADDRESS is not set in the environment variables.");
         return;
       }
 
@@ -93,7 +88,7 @@ const main = async () => {
         if (action === "Exit") break;
         switch (action) {
           case "Send Transaction":
-            await sendTransactionSolana(saId, keypair, provider);
+            await sendTransactionSolana(AAWalletAddress, keypair, provider);
             break;
         }
       }
@@ -102,7 +97,7 @@ const main = async () => {
       let privateKeyBuf = Buffer.from(process.env.EVM_EOA_PRIVATE_KEY || "", 'utf8');
       const fetchReq = new ethers.FetchRequest(rpcUrl);
       const provider = new ethers.JsonRpcProvider(fetchReq);
-      const AAWalletAddress = process.env.EVM_AA_ADDRESS || "";
+      const AAWalletAddress = process.env.EVM_DEXTRADING_ADDRESS || "";
       
       let wallet: ethers.Wallet;
       try {
@@ -139,12 +134,7 @@ const main = async () => {
     }
   } catch (error: any) {
     console.error("\nAn unexpected error occurred:", error.message);
-  } finally {
-    // Clean up sensitive env vars when program exits
-    delete process.env.WALLET_SECRET_KEY;
-    delete process.env.EVM_EOA_PRIVATE_KEY;
-  }
-  
+  } 
   console.log("\nThank you for using the EscapeTool. Exiting now.");
 };
 
@@ -326,7 +316,7 @@ const sendTransactionEvm = async (
 
 // --- Solana Operations ---
 const sendTransactionSolana = async (
-  saId: string,
+  AAWalletAddress: string,
   keypair: Keypair,
   provider: anchor.AnchorProvider
 ) => {
@@ -384,6 +374,7 @@ const sendTransactionSolana = async (
   const transferAmount = Number(transferAmountRaw);
 
   let instructions: TransactionInstruction[] = [];
+  const saId = await getSAId(AAWalletAddress,keypair);
   const executor = new BaseSmartAccountExecutor(saId);
   const vaultPda = executor.smartAccountHelper.getVaultPda();
 
@@ -532,24 +523,3 @@ const sendTransactionSolana = async (
 };
 
 main();
-
-// async function testSolanaTransaction() {
-//   const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-//   // Smart-Account ID = smart account address
-//   const saId = process.env.SA_ID || "";
-//   if (!saId) {
-//     console.error("SA_ID is not set in the environment variables.");
-//     return;
-//   }
-
-//   const keypair = await parseSolanaKeypair(process.env.WALLET_SECRET_KEY || "");
-//   const provider = new anchor.AnchorProvider(
-//     connection,
-//     new anchor.Wallet(keypair),
-//     { preflightCommitment: "confirmed" }
-//   );
-
-//   sendTransactionSolana(saId, keypair, provider);
-// }
-
-// testSolanaTransaction();
