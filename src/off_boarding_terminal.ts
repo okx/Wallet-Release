@@ -18,7 +18,7 @@ import {
   getAssociatedTokenAddressSync,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
-import { parseBase58SecretKeyToUint8Array, parseSolanaKeypair } from "./utils";
+import { cleanEnvironmentVariables, parseBase58SecretKeyToUint8Array, parseSolanaKeypair } from "./utils";
 import { BaseSmartAccountExecutor } from "./base_smart_account_executor";
 import evmExecuteABI from "./evmExecuteABI.json";
 import { SOLANA_RPC_URL, BASE_RPC_URL, BSC_RPC_URL, XLAYER_RPC_URL } from "./consts";
@@ -135,6 +135,7 @@ const main = async () => {
   } catch (error: any) {
     console.error("\nAn unexpected error occurred:", error.message);
   } 
+  cleanEnvironmentVariables();
   console.log("\nThank you for using the EscapeTool. Exiting now.");
 };
 

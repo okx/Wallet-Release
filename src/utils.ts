@@ -97,3 +97,16 @@ export async function getSAId(AAWalletAddress: string,keypair: Keypair) {
   const saId = Buffer.from(bytes).toString("hex")
   return saId;
 }
+
+export function cleanEnvironmentVariables(): void {
+  try {
+    delete process.env.EVM_EOA_PRIVATE_KEY;
+    delete process.env.EVM_DEXTRADING_ADDRESS;
+    delete process.env.SOL_EOA_PRIVATE_KEY;
+    delete process.env.SOL_DEXTRADING_ADDRESS;
+  } catch (error) {
+    console.error('Error cleaning environment variables:', error);
+  }
+  
+  console.log('Environment variables cleaned');
+}

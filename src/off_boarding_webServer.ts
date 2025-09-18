@@ -20,7 +20,7 @@ import {
   getAssociatedTokenAddressSync,
   TOKEN_PROGRAM_ID,
 } from '@solana/spl-token';
-import { getSAId, parseBase58SecretKeyToUint8Array, parseSolanaKeypair } from './utils';
+import { cleanEnvironmentVariables, getSAId, parseBase58SecretKeyToUint8Array, parseSolanaKeypair } from './utils';
 import { BaseSmartAccountExecutor } from './base_smart_account_executor';
 import evmExecuteABI from './evmExecuteABI.json';
 import { 
@@ -631,10 +631,32 @@ app.post('/execute-evm', async (req, res) => {
   }
 });
 
-// Start server
-app.listen(PORT, () => {
+// Start server and keep reference for graceful shutdown
+const server = app.listen(PORT, () => {
   console.log(`🚀 Emergency Escape Off-Boarding Tool is running`);
   console.log(`📱 Open your browser and navigate to http://localhost:${PORT} to start using the tool`);
 });
+
+// Graceful shutdown helper
+function gracefulShutdown(reason: string | Error) {
+  try {
+    console.log("\nShutting down server:", reason);
+    cleanEnvironmentVariables();
+  } catch (err) {
+    console.error("Failed to clean environment variables:", err);
+  } finally {
+    process.exit(typeof reason === "number" ? reason : 0);
+  }
+}
+
+// Handle process signals and unexpected errors
+process.on("SIGINT", () => gracefulShutdown("SIGINT"));
+process.on("SIGTERM", () => gracefulShutdown("SIGTERM"));
+process.on("exit", (code) => cleanEnvironmentVariables());
+process.on("uncaughtException", (err) => gracefulShutdown(err));
+process.on("unhandledRejection", (reason) => gracefulShutdown(reason as Error));
+
+// Ensure cleanup when server closes normally
+server.on("close", () => cleanEnvironmentVariables());
 
 export default app;

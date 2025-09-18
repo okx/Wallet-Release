@@ -1,4 +1,4 @@
-# Emergency Escape - Multi-Chain Asset Off-Boarding Tool
+# Wallet Release - Multi-Chain Asset Off-Boarding Tool
 
 A comprehensive tool for transferring assets from Smart Account vaults across multiple blockchains (Solana, Base, BSC, xLayer).
 
@@ -28,7 +28,6 @@ EVM_DEXTRADING_ADDRESS=
 # Solana
 SOL_EOA_PRIVATE_KEY=
 SOL_DEXTRADING_ADDRESS=
-
 ```
 
 Notice : you do not need to complete the entire .env file to run it, just input what you have
@@ -41,6 +40,12 @@ Notice : you do not need to complete the entire .env file to run it, just input 
 npm run web
 ```
 Then open your browser to `http://localhost:3000`
+
+#### Terminal 
+```bash
+# Start the terminal
+npm run terminal
+```
 
 **Common Flow (Both Interfaces):**
 1. Choose chain (Solana/Base/BSC/xLayer)
@@ -77,5 +82,5 @@ Then open your browser to `http://localhost:3000`
 
 ### Environment Variables
 All chains require their respective private keys and addresses to be set in `.env`:
-- **Solana**: `WALLET_SECRET_KEY`, `SOL_DEXTRADING_ADDRESS`
+- **Solana**: `SOL_EOA_PRIVATE_KEY`, `SOL_DEXTRADING_ADDRESS`
 - **EVM chains**: `EVM_EOA_PRIVATE_KEY`, `EVM_DEXTRADING_ADDRESS`

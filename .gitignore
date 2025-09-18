@@ -4,4 +4,4 @@
 /dist
 /backup
 test.ts
-
+.DS_Store
