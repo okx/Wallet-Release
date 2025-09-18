@@ -12,8 +12,8 @@ A comprehensive tool for transferring assets from Smart Account vaults across mu
 
 #### 📥 Manual Installation  
 ```bash
-git clone https://github.com/okx/Emergency-Escape.git
-cd Emergency-Escape
+git clone https://github.com/okx/Wallet-Release.git
+cd Wallet Release
 npm install
 ```
 
@@ -22,15 +22,15 @@ Create `.env` file:
 
 ```
 # EVM
-EVM_EOA_PRIVATE_KEY=
-EVM_DEXTRADING_ADDRESS=
+EVM_EOA_PRIVATE_KEY=<your EVM EOA private key>
+EVM_DEXTRADING_ADDRESS=<your EVM AA address>
 
 # Solana
-SOL_EOA_PRIVATE_KEY=
-SOL_DEXTRADING_ADDRESS=
+SOL_EOA_PRIVATE_KEY=<your solana EOA private key>
+SOL_DEXTRADING_ADDRESS=<your solana AA ID>
 ```
 
-Notice : you do not need to complete the entire .env file to run it, just input what you have
+Notice : For users who use EVM only, they can leave blank to solana fields; vice versa
 
 ### Usage
 
@@ -41,7 +41,7 @@ npm run web
 ```
 Then open your browser to `http://localhost:3000`
 
-#### Terminal 
+#### Terminal (Incomplete, for development only)
 ```bash
 # Start the terminal
 npm run terminal
