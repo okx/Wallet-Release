@@ -7,20 +7,6 @@ const templateCache: Map<string, string> = new Map();
 // Read and cache styles
 let stylesContent: string | null = null;
 
-function getStyles(): string {
-  if (!stylesContent) {
-    const stylesPath = path.join(__dirname, 'templates', 'styles.css');
-    stylesContent = fs.readFileSync(stylesPath, 'utf-8');
-  }
-  return stylesContent;
-}
-
-/**
- * Renders a template with the given variables
- * @param templateName - Name of the template file (without .html extension)
- * @param variables - Object containing variables to replace in template
- * @returns Rendered HTML string
- */
 export function renderTemplate(templateName: string, variables: Record<string, string> = {}): string {
   // Get template content
   let template: string;
@@ -80,15 +66,12 @@ export function getNativeTokenSymbol(chain: string): string {
     case 'BSC':
       return 'BNB';
     case 'xLayer':
-      return 'ETH';
+      return 'OKB';
     default:
       return 'ETH';
   }
 }
 
-/**
- * Clear template cache (useful for development)
- */
 export function clearTemplateCache(): void {
   templateCache.clear();
   stylesContent = null;

@@ -1,4 +1,4 @@
-# Emergency Escape - Multi-Chain Asset Off-Boarding Tool
+# Wallet Release - Multi-Chain Asset Off-Boarding Tool
 
 A comprehensive tool for transferring assets from Smart Account vaults across multiple blockchains (Solana, Base, BSC, xLayer).
 
@@ -12,8 +12,8 @@ A comprehensive tool for transferring assets from Smart Account vaults across mu
 
 #### 📥 Manual Installation  
 ```bash
-git clone https://github.com/okx/Emergency-Escape.git
-cd Emergency-Escape
+git clone https://github.com/okx/Wallet-Release.git
+cd Wallet Release
 npm install
 ```
 
@@ -21,27 +21,16 @@ npm install
 Create `.env` file:
 
 ```
-# Default RPC urls
-DEFAULT_SOLANA_RPC_URL=https://api.mainnet.solana.com
-DEFAULT_BASE_RPC_URL=https://mainnet.base.org
-DEFAULT_BSC_RPC_URL=https://bsc-dataseed.binance.org/
-DEFAULT_XLAYER_RPC_URL=https://mainnet.xlayer-rpc.com
-
-# Default Solana Values
-LOOKUP_TABLE_ADDRESS=Gjj1dX4UR6HcXGDm48wJHCZjompq5SJ6eKse1Trfq6Qe
-RPC_URL=https://api.mainnet.solana.com
-
 # EVM
-EVM_EOA_PRIVATE_KEY= <your secret key>
-EVM_AA_ADDRESS= <your AA address>
+EVM_EOA_PRIVATE_KEY=<your EVM EOA private key>
+EVM_DEXTRADING_ADDRESS=<your EVM AA address>
 
 # Solana
-SA_ID= <your AA ID>
-WALLET_SECRET_KEY= <your secret key>
-MANDATORY_SIGNER_SECRET_KEY= <your secret key>
+SOL_EOA_PRIVATE_KEY=<your solana EOA private key>
+SOL_DEXTRADING_ADDRESS=<your solana AA ID>
 ```
 
-Notice: the solana secret key have to be in 64-byte-array format to suit Uint8Array type eg. [1,2,3, ...]
+Notice : For users who use EVM only, they can leave blank to solana fields; vice versa
 
 ### Usage
 
@@ -51,6 +40,12 @@ Notice: the solana secret key have to be in 64-byte-array format to suit Uint8Ar
 npm run web
 ```
 Then open your browser to `http://localhost:3000`
+
+#### Terminal (Incomplete, for development only)
+```bash
+# Start the terminal
+npm run terminal
+```
 
 **Common Flow (Both Interfaces):**
 1. Choose chain (Solana/Base/BSC/xLayer)
@@ -81,11 +76,11 @@ Then open your browser to `http://localhost:3000`
 
 ### Common Issues
 - **"Invalid private key"**: Ensure Solana keys are in correct 64-byte array format
-- **"SA_ID not set"**: Check your `.env` file has all required variables
+- **"SOL_DEXTRADING_ADDRESS not set"**: Check your `.env` file has all required variables
 - **"Insufficient balance"**: Verify you have enough tokens/native currency
 - **"Too many decimals"**: Check token decimal precision matches your input
 
 ### Environment Variables
 All chains require their respective private keys and addresses to be set in `.env`:
-- **Solana**: `WALLET_SECRET_KEY`, `SA_ID`
-- **EVM chains**: `EVM_EOA_PRIVATE_KEY`, `AA_WALLET_ADDRESS`
+- **Solana**: `SOL_EOA_PRIVATE_KEY`, `SOL_DEXTRADING_ADDRESS`
+- **EVM chains**: `EVM_EOA_PRIVATE_KEY`, `EVM_DEXTRADING_ADDRESS`
