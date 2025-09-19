@@ -19,19 +19,20 @@ import {
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 import { cleanEnvironmentVariables, parseBase58SecretKeyToUint8Array, parseSolanaKeypair } from "./utils";
+import { validateEvmPrivateKey, validateSolanaPrivateKey, ValidationError } from "./helpers/validation";
 import { BaseSmartAccountExecutor } from "./base_smart_account_executor";
 import evmExecuteABI from "./evmExecuteABI.json";
-import { SOLANA_RPC_URL, BASE_RPC_URL, BSC_RPC_URL, XLAYER_RPC_URL } from "./consts";
+import { SOLANA_RPC_URL, BASE_RPC_URL, BNB_CHAIN_RPC_URL, XLAYER_RPC_URL } from "./consts";
 import { getSAId } from "./utils";
 
 dotenv.config();
 
-type SupportedChain = "Solana" | "Base" | "BSC" | "xLayer";
+type SupportedChain = "Solana" | "Base" | "BNB_Chain" | "xLayer";
 
 const DEFAULT_RPCS: Record<SupportedChain, string> = {
   Solana: SOLANA_RPC_URL,
   Base: BASE_RPC_URL,
-  BSC: BSC_RPC_URL,
+  BNB_Chain: BNB_CHAIN_RPC_URL,
   xLayer: XLAYER_RPC_URL,
 };
 
@@ -45,7 +46,7 @@ const main = async () => {
         type: "list",
         name: "chain",
         message: "Select chain",
-        choices: ["Solana", "Base", "BSC", "xLayer"],
+        choices: ["Solana", "Base", "BNB_Chain", "xLayer"],
       },
     ]);
     const rpcUrl = DEFAULT_RPCS[chain as SupportedChain];
@@ -57,8 +58,22 @@ const main = async () => {
       const connection = new Connection(rpcUrl, "confirmed");
       
       let keypair: Keypair;
-      const secretKeyString = parseBase58SecretKeyToUint8Array(process.env.SOL_EOA_PRIVATE_KEY);
-      keypair = parseSolanaKeypair(secretKeyString);
+      try {
+        const privateKey = validateSolanaPrivateKey(
+          process.env.SOL_EOA_PRIVATE_KEY ?? ""
+        );
+        const secretKeyUint8 = parseBase58SecretKeyToUint8Array(privateKey);
+        keypair = parseSolanaKeypair(secretKeyUint8);
+      } catch (error) {
+        if (error instanceof ValidationError) {
+          console.error(`\nℹ️ Error: ${error.message}`);
+        } else {
+          console.error(
+            `\nℹ️ Error: Invalid Solana private key provided. Please check and try again.`
+          );
+        }
+        return;
+      }
 
       const provider = new anchor.AnchorProvider(
         connection,
@@ -93,24 +108,27 @@ const main = async () => {
         }
       }
     } else {
-      // Load EVM private key into Buffer for secure cleanup
-      let privateKeyBuf = Buffer.from(process.env.EVM_EOA_PRIVATE_KEY || "", 'utf8');
       const fetchReq = new ethers.FetchRequest(rpcUrl);
       const provider = new ethers.JsonRpcProvider(fetchReq);
+      const network = await provider.getNetwork();
+      console.log("Connected to chain ID:", network.chainId.toString());
       const AAWalletAddress = process.env.EVM_DEXTRADING_ADDRESS || "";
-      
+
       let wallet: ethers.Wallet;
       try {
-        wallet = new ethers.Wallet(privateKeyBuf.toString(), provider);
-      } catch (error) {
-        console.error(
-          "\nℹ️ Error: Invalid private key provided. Please check and try again."
+        const privateKey = validateEvmPrivateKey(
+          process.env.EVM_EOA_PRIVATE_KEY ?? ""
         );
+        wallet = new ethers.Wallet(privateKey, provider);
+      } catch (error) {
+        if (error instanceof ValidationError) {
+          console.error(`\nℹ️ Error: ${error.message}`);
+        } else {
+          console.error(
+            "\nℹ️ Error: Invalid EVM private key provided. Please check and try again."
+          );
+        }
         return;
-      } finally {
-        // Wipe the buffer after wallet creation (but keep env var for CLI session)
-        privateKeyBuf.fill(0);
-        privateKeyBuf = Buffer.alloc(0);
       }
       console.log(`\nWallet loaded successfully.`);
       console.log(`Your EOA address: ${wallet.address}`);
@@ -121,7 +139,7 @@ const main = async () => {
             type: "list",
             name: "action",
             message: "What would you like to do?",
-            choices: ["Send Transaction", "Exit"],
+            choices: ["Send Transaction", "Create AA wallet","Exit"],
           },
         ]);
         if (action === "Exit") break;
@@ -129,6 +147,9 @@ const main = async () => {
           case "Send Transaction":
             await sendTransactionEvm(wallet, AAWalletAddress);
             break;
+          case "Create AA wallet":
+            await createAAWallet(wallet);
+          break;
         }
       }
     }
@@ -267,7 +288,7 @@ const sendTransactionEvm = async (
       to,
       amtInBaseUnits,
     ]);
-
+    
     calls = [{ target: tokenAddress, value: 0n, data }];
   }
 
@@ -314,6 +335,14 @@ const sendTransactionEvm = async (
     console.error("❌ Transaction failed:", err.reason || err.message);
   }
 };
+
+const createAAWallet = async (
+  wallet: ethers.Wallet,
+) => {
+  console.log("\n--- Create AA Wallet ---");
+
+
+}
 
 // --- Solana Operations ---
 const sendTransactionSolana = async (

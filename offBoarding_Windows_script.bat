@@ -1,32 +1,31 @@
 @echo off
-setlocal
+setlocal enabledelayedexpansion
 
-:: Change to script directory
 cd /d "%~dp0"
 
-:: Check if Node.js is installed
-where node >nul 2>&1
-if errorlevel 1 (
-    echo Node.js is not installed on this system.
-    echo Please install Node.js from https://nodejs.org/en/download/
-    echo Exiting script. Please run again after installing Node.js.
+for %%A in (node.exe) do if "%%~$PATH:A"=="" (
+    echo Node.js not found in PATH. Install from https://nodejs.org/en/download/
     pause
     exit /b 1
-)else (
-    echo Node.js is installed on this system.
+) else (
+    echo Node.js found: %%~$PATH:A
+)
+for %%A in (npm.cmd) do if "%%~$PATH:A"=="" (
+    echo npm not found in PATH. Re-install Node.js or add npm to PATH.
+    pause
+    exit /b 1
 )
 
-if not exist "node_modules" (
+if not exist "node_modules\" (
     echo Installing dependencies...
-    npm install
-)else (
+    call npm install
+) else (
     echo Dependencies already installed.
 )
 
-:: Create .env file if it doesn't exist
 if not exist ".env" (
     echo Creating default .env file...
-    (
+    > .env (
         echo # EVM
         echo EVM_EOA_PRIVATE_KEY=
         echo EVM_DEXTRADING_ADDRESS=
@@ -34,25 +33,27 @@ if not exist ".env" (
         echo # Solana
         echo SOL_EOA_PRIVATE_KEY=
         echo SOL_DEXTRADING_ADDRESS=
-    ) > .env
-    echo Setup completed! The next run will start the web server.
-    goto end
+    )
+    echo Setup completed! Launch this script again to start the web server.
+    goto :END
 )
 
-:: Check if port 3000 is already in use before launching the web server
-for /f "tokens=5" %%i in ('netstat -ano ^| findstr ":3000" ^| findstr "LISTENING"') do (
-    echo Port 3000 is already in use by process ID %%i.
-    echo Please terminate the process using it and try again.
+set "PID="
+for /f "skip=4 tokens=1,2,3,4,5" %%a in ('netstat -ano ^| find ":3000"') do (
+    if "%%e"=="" (set PID=%%d) else (set PID=%%e)
+)
+if defined PID (
+    echo Port 3000 is already in use by process ID %PID%.
+    echo Terminate the process or change the port, then try again.
     pause
     exit /b 1
 )
 
-:: Start web server
-echo Starting web server (npm run web)...
-npm run web
+echo Starting web server...
+call npm run web
 
-:end
-:: Keep window open
+:END
+:: Keep window open so users can read output
 echo.
 echo Press any key to close this window...
 pause >nul

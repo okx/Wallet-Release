@@ -17,8 +17,9 @@ export const POST_JSON = `"origin":"${ORIGIN}","androidPackageName":"${ANDROID_P
 
 //rpc urls
 export const SOLANA_RPC_URL = "https://api.devnet.solana.com";
+// export const SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
 export const BASE_RPC_URL = "https://mainnet.base.org";
-export const BSC_RPC_URL = "https://bsc-dataseed.binance.org";
+export const BNB_CHAIN_RPC_URL = "https://bsc-dataseed.binance.org";
 export const XLAYER_RPC_URL = "https://mainnet.xlayer-rpc.com";
 //solana lookup table address
 export const LOOKUP_TABLE_ADDRESS = "Gjj1dX4UR6HcXGDm48wJHCZjompq5SJ6eKse1Trfq6Qe";
@@ -69,19 +70,19 @@ export const UPGRADEABLE_LOADER_PROGRAM_ID = new anchor.web3.PublicKey(
 );
 
 // //localnet
-// export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
-//   "8CfU477AfpF2ttCoxiF7s9Tdbmsvh9A8NauonsUGujuU"
-// );
-// export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
-//   "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
-// );
-// //devnet
 export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
-  "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp"
+  "8CfU477AfpF2ttCoxiF7s9Tdbmsvh9A8NauonsUGujuU"
 );
 export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
-  "L69twvAN6711ojwdei5Zkj9rQ6bpjzND2Xrmx6fWqWu"
+  "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
 );
+// //devnet
+// export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
+//   "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp"
+// );
+// export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
+//   "L69twvAN6711ojwdei5Zkj9rQ6bpjzND2Xrmx6fWqWu"
+// );
 //staging
 // export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
 //   "sau5tse38277KdPSjdxeD1ZUg4tmZg7hLDB9GqRMrxq"

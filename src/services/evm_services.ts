@@ -4,7 +4,7 @@ import {
   createTokenAddressRow, 
   getNativeTokenSymbol 
 } from '../template-renderer';
-import { BASE_RPC_URL, BSC_RPC_URL, XLAYER_RPC_URL } from '../consts';
+import { BASE_RPC_URL, BNB_CHAIN_RPC_URL, XLAYER_RPC_URL } from '../consts';
 import { 
   validateEvmTransactionInput, 
   validateEnvironmentVariable,
@@ -12,14 +12,36 @@ import {
   ValidationError
 } from '../helpers/validation';
 
-type SupportedChain = 'Base' | 'BSC' | 'xLayer';
+export type SupportedChain = 'Base' | 'BNB_Chain' | 'xLayer';
 
 const DEFAULT_RPCS: Record<SupportedChain, string> = {
   Base: BASE_RPC_URL,
-  BSC: BSC_RPC_URL,
+  BNB_Chain: BNB_CHAIN_RPC_URL,
   xLayer: XLAYER_RPC_URL,
 };
 
+// ----- helper functions -----
+const createProvider = (chain: SupportedChain) =>
+  new ethers.JsonRpcProvider(new ethers.FetchRequest(DEFAULT_RPCS[chain]));
+
+const createWallet = (privateKey: string, provider: ethers.JsonRpcProvider) =>
+  new ethers.Wallet(privateKey, provider);
+
+const ERC20_IFACE = new ethers.Interface([
+  'function balanceOf(address owner) view returns (uint256)',
+  'function transfer(address to,uint256 amount) external returns (bool)',
+  'function decimals() view returns (uint8)'
+]);
+
+const getTokenDecimals = async (tokenContract: Contract): Promise<number> => {
+  try {
+    return await tokenContract.decimals();
+  } catch {
+    return 18;
+  }
+};
+
+// ----- user input state -----
 interface EvmTransactionState {
   chain: string;
   assetType: string;
@@ -29,6 +51,7 @@ interface EvmTransactionState {
   amountStr: string;
 }
 
+// ----- main functions -----
 export async function processEvmTransaction(
   chain: string,
   assetType: string,
@@ -49,21 +72,17 @@ export async function processEvmTransaction(
     amount
   });
 
+  
+  //2. Get AA wallet, provider, wallet (keypair)
   const EVM_DEXTRADING_ADDRESS = validateEnvironmentVariable('EVM_DEXTRADING_ADDRESS', process.env.EVM_DEXTRADING_ADDRESS);
+  const provider = createProvider(validatedInput.chain as SupportedChain);
   const EVM_EOA_PRIVATE_KEY = validateEvmPrivateKey(process.env.EVM_EOA_PRIVATE_KEY ?? '');
+  const wallet = createWallet(EVM_EOA_PRIVATE_KEY, provider);
 
-  //2. Get wallet and provider
-  const rpcUrl = DEFAULT_RPCS[validatedInput.chain];
-  const fetchReq = new ethers.FetchRequest(rpcUrl);
-  const provider = new ethers.JsonRpcProvider(fetchReq);
-
-  const wallet = new ethers.Wallet(EVM_EOA_PRIVATE_KEY, provider);
-
+  //3. Check if AA has enough balance, update balanceInfo
   let balanceInfo = '';
   let estimatedFee = '';
 
-  
-  //3. Check balance
   const nativeTokenSymbol = getNativeTokenSymbol(validatedInput.chain);
   const unit = validatedInput.assetType === 'Native Token' ? nativeTokenSymbol : 'tokens';
   
@@ -79,11 +98,7 @@ export async function processEvmTransaction(
     }
   } else {
     // ERC20 Token
-    const erc20BalanceIface = new ethers.Interface([
-      'function balanceOf(address owner) view returns (uint256)',
-      'function decimals() view returns (uint8)'
-    ]);
-    const tokenContract = new Contract(validatedInput.tokenAddress!, erc20BalanceIface, wallet);
+    const tokenContract = new Contract(validatedInput.tokenAddress!, ERC20_IFACE, wallet);
     
     try {
       const [balance, decimals] = await Promise.all([
@@ -102,25 +117,18 @@ export async function processEvmTransaction(
     }
   }
 
-  //4. Estimate gas fee
+  //4. Estimate gas fee, update estimatedFee
   try {
     const SmartAccountContract = new Contract(EVM_DEXTRADING_ADDRESS, evmExecuteABI, wallet);
     let calls: Array<{ target: string; value: bigint; data: string }> = [];
     
     if (validatedInput.assetType === 'Native Token') {
+      console.log("amount: ", validatedInput.amount.toString());
       const value = ethers.parseEther(validatedInput.amount.toString());
       calls = [{ target: validatedInput.recipient, value, data: '0x' }];
     } else {
-      const erc20Iface = new ethers.Interface([
-        'function transfer(address to,uint256 amount) external returns (bool)',
-        'function decimals() view returns (uint8)'
-      ]);
-      const tokenContract = new Contract(validatedInput.tokenAddress!, erc20Iface, wallet);
-      
-      let decimals = 18;
-      try {
-        decimals = await tokenContract.decimals();
-      } catch {}
+      const tokenContract = new Contract(validatedInput.tokenAddress!, ERC20_IFACE, wallet);
+      const decimals = await getTokenDecimals(tokenContract);
       
       let amtInBaseUnits: bigint;
       try {
@@ -128,7 +136,7 @@ export async function processEvmTransaction(
       } catch {
         throw new ValidationError('Invalid amount for token decimals', 'amount');
       }
-      const data = erc20Iface.encodeFunctionData('transfer', [validatedInput.recipient, amtInBaseUnits]);
+      const data = ERC20_IFACE.encodeFunctionData('transfer', [validatedInput.recipient, amtInBaseUnits]);
       calls = [{ target: validatedInput.tokenAddress!, value: 0n, data }];
     }
 
@@ -159,17 +167,13 @@ export async function processEvmTransaction(
 }
 
 export async function executeEvmTransaction(state: EvmTransactionState): Promise<string> {
-  // Validate state and environment variables
+  //1. Get AA wallet, provider, wallet (keypair)
   const AAWalletAddress = validateEnvironmentVariable('EVM_DEXTRADING_ADDRESS', process.env.EVM_DEXTRADING_ADDRESS);
-  
-  // Execute EVM transaction
+  const provider = createProvider(state.chain as SupportedChain);
   const EOA_KEY = validateEvmPrivateKey(process.env.EVM_EOA_PRIVATE_KEY ?? '');
-  const rpcUrl = DEFAULT_RPCS[state.chain as SupportedChain];
-  const fetchReq = new ethers.FetchRequest(rpcUrl);
-  const provider = new ethers.JsonRpcProvider(fetchReq);
+  const wallet = createWallet(EOA_KEY, provider);
 
-  const wallet = new ethers.Wallet(EOA_KEY, provider);
-
+  // 2. Form EVM calldata to transfer Native Token or ERC20 Token
   let calls: Array<{ target: string; value: bigint; data: string }> = [];
 
   if (state.assetType === 'Native Token') {
@@ -177,17 +181,8 @@ export async function executeEvmTransaction(state: EvmTransactionState): Promise
     calls = [{ target: state.recipient, value, data: '0x' }];
   } else {
     // ERC20 Token
-    const erc20Iface = new ethers.Interface([
-      'function transfer(address to,uint256 amount) external returns (bool)',
-      'function decimals() view returns (uint8)'
-    ]);
-
-    const tokenContract = new Contract(state.tokenAddress!, erc20Iface, wallet);
-    
-    let decimals = 18;
-    try {
-      decimals = await tokenContract.decimals();
-    } catch {}
+    const tokenContract = new Contract(state.tokenAddress!, ERC20_IFACE, wallet);
+    const decimals = await getTokenDecimals(tokenContract);
     
       let amtInBaseUnits: bigint;
     try {
@@ -195,10 +190,11 @@ export async function executeEvmTransaction(state: EvmTransactionState): Promise
     } catch {
       throw new ValidationError('Invalid amount for token decimals', 'amount');
     }
-    const data = erc20Iface.encodeFunctionData('transfer', [state.recipient, amtInBaseUnits]);
+    const data = ERC20_IFACE.encodeFunctionData('transfer', [state.recipient, amtInBaseUnits]);
     calls = [{ target: state.tokenAddress!, value: 0n, data }];
   }
 
+  // 3. Execute transaction
   const SmartAccountContract = new Contract(AAWalletAddress, evmExecuteABI, wallet);
   try {
     const tx = await SmartAccountContract.execute(calls);

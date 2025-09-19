@@ -63,7 +63,7 @@ export function getNativeTokenSymbol(chain: string): string {
   switch (chain) {
     case 'Base':
       return 'ETH';
-    case 'BSC':
+    case 'BNB_Chain':
       return 'BNB';
     case 'xLayer':
       return 'OKB';

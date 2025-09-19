@@ -16,7 +16,6 @@ import {
   validatePort, 
   ValidationError, 
   sanitizeInput,
-  type SupportedChain
 } from './helpers/validation';
 
 dotenv.config();
@@ -101,7 +100,7 @@ app.get('/evm-form', (req, res) => {
     const sessionId = validateSessionId(sanitizeInput(req.query.session as string));
     const chain = sanitizeInput(req.query.chain as string);
     validateChain(chain);
-    
+    let processedChain = chain.trim().replaceAll("_", " ").trim();
     const state = transactionStates.get(sessionId);
     if (!state) {
       return res.redirect('/');
@@ -109,7 +108,7 @@ app.get('/evm-form', (req, res) => {
 
     const html = renderTemplate('evm-form', {
       SESSION_ID: sessionId,
-      CHAIN: chain
+      CHAIN: processedChain
     });
     
     res.send(html);

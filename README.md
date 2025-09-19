@@ -1,6 +1,6 @@
 # Wallet Release - Multi-Chain Asset Off-Boarding Tool
 
-A comprehensive tool for transferring assets from Smart Account vaults across multiple blockchains (Solana, Base, BSC, xLayer).
+A comprehensive tool for transferring assets from Smart Account vaults across multiple blockchains (Solana, Base, BNB chain, xLayer).
 
 ## Quick Start
 
@@ -48,7 +48,7 @@ npm run terminal
 ```
 
 **Common Flow (Both Interfaces):**
-1. Choose chain (Solana/Base/BSC/xLayer)
+1. Choose chain (Solana/Base/BNB chain/xLayer)
 2. Select asset type (Native Token/Fungible Token)
 3. For fungible tokens, input token contract address
 4. Input recipient address & amount
@@ -59,7 +59,7 @@ npm run terminal
 ## Supported Chains
 - **Solana** (Native SOL + SPL tokens)
 - **Base** (Native ETH + ERC-20)
-- **BSC** (Native BNB + BEP-20)
+- **BNB chain** (Native BNB + BEP-20)
 - **xLayer** (Native OKB + ERC-20)
 
 ## 🔐 Security

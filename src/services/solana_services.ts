@@ -18,7 +18,6 @@ import { getSAId, parseBase58SecretKeyToUint8Array, parseSolanaKeypair } from '.
 import { BaseSmartAccountExecutor } from '../base_smart_account_executor';
 import { 
   createTokenAddressRow, 
-  createTransactionHashDisplay, 
 } from '../template-renderer';
 import { SOLANA_RPC_URL } from '../consts';
 import { 
@@ -28,6 +27,27 @@ import {
   type SolanaTransactionInput
 } from '../helpers/validation';
 
+// ----- helper functions -----
+function getAAWalletAddress(): string {
+  return validateEnvironmentVariable('SOL_DEXTRADING_ADDRESS', process.env.SOL_DEXTRADING_ADDRESS);
+}
+
+function createConnection(): Connection {
+  return new Connection(SOLANA_RPC_URL, 'confirmed');
+}
+
+function getKeypair(): Keypair {
+  try {
+    const secretKeyString = parseBase58SecretKeyToUint8Array(
+      validateEnvironmentVariable('SOL_EOA_PRIVATE_KEY', process.env.SOL_EOA_PRIVATE_KEY)
+    );
+    return parseSolanaKeypair(secretKeyString);
+  } catch {
+    throw new ValidationError('Invalid SOL_EOA_PRIVATE_KEY format', 'SOL_EOA_PRIVATE_KEY');
+  }
+}
+
+// ----- user input state -----
 interface SolanaTransactionState {
   assetType: string;
   mintAddress?: string;
@@ -36,6 +56,7 @@ interface SolanaTransactionState {
   amountStr: string;
 }
 
+// ----- main functions -----
 export async function processSolanaTransaction(
   assetType: string,
   mintAddress: string,
@@ -46,7 +67,7 @@ export async function processSolanaTransaction(
   estimatedFee: string;
   templateData: any;
 }> {
-  // Validate inputs using helper functions
+  //1. Validate user inputs
   const validatedInput = validateSolanaTransactionInput({
     assetType,
     mintAddress,
@@ -54,17 +75,10 @@ export async function processSolanaTransaction(
     amount
   });
 
-  // Validate environment variables and get wallet/connection
-  const AAWalletAddress = validateEnvironmentVariable('SOL_DEXTRADING_ADDRESS', process.env.SOL_DEXTRADING_ADDRESS);
-  const connection = new Connection(SOLANA_RPC_URL, 'confirmed');
-  
-  let keypair: Keypair;
-  try {
-    const secretKeyString = parseBase58SecretKeyToUint8Array(validateEnvironmentVariable('SOL_EOA_PRIVATE_KEY', process.env.SOL_EOA_PRIVATE_KEY));
-    keypair = parseSolanaKeypair(secretKeyString);
-  } catch (error) {
-    throw new ValidationError('Invalid SOL_EOA_PRIVATE_KEY format', 'SOL_EOA_PRIVATE_KEY');
-  }
+  //2. Get AA wallet, connection, keypair
+  const AAWalletAddress = getAAWalletAddress();
+  const connection = createConnection();
+  const keypair = getKeypair();
 
   const saId = await getSAId(AAWalletAddress, keypair);
   const executor = new BaseSmartAccountExecutor(saId);
@@ -73,7 +87,7 @@ export async function processSolanaTransaction(
   let balanceInfo = '';
   let estimatedFee = '';
 
-  // Check balance and estimate fee
+  //3. Check if AA has enough balance, update balanceInfo
   if (validatedInput.assetType === 'Native SOL') {
     const balance = await connection.getBalance(vaultPda);
     const balanceSOL = balance / LAMPORTS_PER_SOL;
@@ -83,7 +97,6 @@ export async function processSolanaTransaction(
       throw new ValidationError(`Insufficient balance! Need ${validatedInput.amount} SOL, have ${balanceSOL} SOL`, 'balance');
     }
   } else {
-    // SPL Token
     const tokenMintPubkey = new PublicKey(validatedInput.mintAddress!);
     const vaultTokenAccount = getAssociatedTokenAddressSync(
       tokenMintPubkey,
@@ -107,7 +120,7 @@ export async function processSolanaTransaction(
     }
   }
 
-  // Estimate transaction fee
+  // 4.Estimate transaction fee, update estimatedFee
   try {
     const { blockhash } = await connection.getLatestBlockhash();
     const dummyTx = new Transaction({ feePayer: keypair.publicKey, recentBlockhash: blockhash });
@@ -134,24 +147,18 @@ export async function processSolanaTransaction(
 }
 
 export async function executeSolanaTransaction(state: SolanaTransactionState): Promise<string> {
-  // Validate environment variables
-  const AAWalletAddress = validateEnvironmentVariable('SOL_DEXTRADING_ADDRESS', process.env.SOL_DEXTRADING_ADDRESS);
-  
-  // Execute Solana transaction
-  const connection = new Connection(SOLANA_RPC_URL, 'confirmed');
-  
-  let keypair: Keypair;
-  try {
-    const secretKeyString = parseBase58SecretKeyToUint8Array(validateEnvironmentVariable('SOL_EOA_PRIVATE_KEY', process.env.SOL_EOA_PRIVATE_KEY));
-    keypair = parseSolanaKeypair(secretKeyString);
-  } catch (error) {
-    throw new ValidationError('Invalid SOL_EOA_PRIVATE_KEY format', 'SOL_EOA_PRIVATE_KEY');
-  }
+  //1. Get AA wallet, connection, keypair 
+  const AAWalletAddress = getAAWalletAddress();
+  const connection = createConnection();
+  const keypair = getKeypair();
+
+  //2. Get executor object, vault, recipient (items specific for transfer) 
   const saId = await getSAId(AAWalletAddress, keypair);
   const executor = new BaseSmartAccountExecutor(saId);
   const vaultPda = executor.smartAccountHelper.getVaultPda();
   const recipientPubkey = new PublicKey(state.recipient);
 
+  //3. Form instructions to transfer SOL or SPL token
   let instructions: TransactionInstruction[] = [];
 
   if (state.assetType === 'Native SOL') {
@@ -217,6 +224,7 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
     instructions.push(transferIx);
   }
 
+  //4. Execute transaction
   const transactionReceipt = await executor.execute(
     instructions, 
     'off-boarding token transfer', 

@@ -7,7 +7,7 @@ import { ethers } from 'ethers';
 import { PublicKey } from '@solana/web3.js';
 
 // Type definitions
-export type SupportedChain = 'Solana' | 'Base' | 'BSC' | 'xLayer';
+export type SupportedChain = 'Solana' | 'Base' | 'BNB_Chain' | 'xLayer';
 export type EvmAssetType = 'Native Token' | 'ERC20 Token';
 export type SolanaAssetType = 'Native SOL' | 'SPL Token';
 export type AssetType = EvmAssetType | SolanaAssetType;
@@ -22,14 +22,14 @@ export class ValidationError extends Error {
 
 // Chain validation
 export function validateChain(chain: string): asserts chain is SupportedChain {
-  const supportedChains: SupportedChain[] = ['Solana', 'Base', 'BSC', 'xLayer'];
+  const supportedChains: SupportedChain[] = ['Solana', 'Base', 'BNB_Chain', 'xLayer'];
   if (!supportedChains.includes(chain as SupportedChain)) {
     throw new ValidationError(`Invalid blockchain. Supported chains: ${supportedChains.join(', ')}`, 'chain');
   }
 }
 
-export function isEvmChain(chain: string): chain is 'Base' | 'BSC' | 'xLayer' {
-  return ['Base', 'BSC', 'xLayer'].includes(chain);
+export function isEvmChain(chain: string): chain is 'Base' | 'BNB_Chain' | 'xLayer' {
+  return ['Base', 'BNB_Chain', 'xLayer'].includes(chain);
 }
 
 export function isSolanaChain(chain: string): chain is 'Solana' {
@@ -146,6 +146,11 @@ export function validateAmount(amount: string | number, fieldName: string = 'amo
     throw new ValidationError(`${fieldName} is too large`, fieldName);
   }
 
+  // Check for reasonable lower bounds to prevent underflow
+  if (numAmount < Number.MIN_SAFE_INTEGER) {
+    throw new ValidationError(`${fieldName} is too small`, fieldName);
+  }
+
   // Check for reasonable precision (max 18 decimal places)
   const decimalPlaces = (numAmount.toString().split('.')[1] || '').length;
   if (decimalPlaces > 18) {
@@ -242,7 +247,7 @@ export interface SolanaTransactionInput {
 }
 
 export function validateEvmTransactionInput(input: EvmTransactionInput): {
-  chain: 'Base' | 'BSC' | 'xLayer';
+  chain: 'Base' | 'BNB_Chain' | 'xLayer';
   assetType: EvmAssetType;
   tokenAddress?: string;
   recipient: string;
