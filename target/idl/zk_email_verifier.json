@@ -50,7 +50,7 @@
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
+                "path": "vault_state.okx_id",
                 "account": "VaultState"
               }
             ]
@@ -106,7 +106,7 @@
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
+                "path": "vault_state.okx_id",
                 "account": "VaultState"
               }
             ],
@@ -118,7 +118,7 @@
         },
         {
           "name": "vault_program",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
         },
         {
           "name": "smart_account_vault",
@@ -151,45 +151,45 @@
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
+                "path": "vault_state.okx_id",
                 "account": "VaultState"
               }
             ],
             "program": {
               "kind": "const",
               "value": [
-                203,
-                190,
+                135,
+                80,
+                22,
+                201,
+                102,
+                138,
+                210,
+                118,
+                152,
+                2,
+                8,
                 52,
-                25,
-                56,
-                17,
-                59,
-                176,
-                107,
-                41,
-                126,
-                139,
-                85,
-                173,
-                172,
-                69,
-                111,
-                238,
-                52,
-                23,
-                74,
-                155,
-                54,
-                89,
-                107,
-                94,
-                63,
-                82,
-                112,
                 153,
-                199,
-                66
+                240,
+                81,
+                105,
+                32,
+                48,
+                103,
+                37,
+                90,
+                110,
+                158,
+                203,
+                226,
+                189,
+                5,
+                156,
+                215,
+                52,
+                91,
+                142
               ]
             }
           }
@@ -216,7 +216,7 @@
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
+                "path": "vault_state.okx_id",
                 "account": "VaultState"
               }
             ],
@@ -353,21 +353,26 @@
     },
     {
       "code": 6001,
+      "name": "InvalidEmailPtr",
+      "msg": "Invalid email ptr"
+    },
+    {
+      "code": 6002,
       "name": "FailedVerifierInit",
       "msg": "Failed to initialize verifier"
     },
     {
-      "code": 6002,
+      "code": 6003,
       "name": "FailedVerification",
       "msg": "Failed verification"
     },
     {
-      "code": 6003,
+      "code": 6004,
       "name": "InvalidVaultProgram",
       "msg": "Invalid vault program"
     },
     {
-      "code": 6004,
+      "code": 6005,
       "name": "InvalidSmartAccountProgram",
       "msg": "Invalid smart account program"
     }
@@ -477,7 +482,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "id",
+            "name": "okx_id",
             "type": {
               "array": [
                 "u8",

@@ -166,18 +166,18 @@ export class BaseSmartAccountExecutor {
       .transaction();
       // .signers([this.payerInfo.keyObject, this.mandatorySignerInfo.keyObject])
       // .rpc();
-    let lookupTableAccounts: anchor.web3.AddressLookupTableAccount[] = [];
-    // Get lookup table accounts if provided
-    let updatedLookupTableAddresses: PublicKey[] = [this.lookupTableAddress];
-    if (lookupTableAddresses && lookupTableAddresses.length > 0) {
-      updatedLookupTableAddresses = [...lookupTableAddresses];
-      updatedLookupTableAddresses.push(this.lookupTableAddress);
-    }
+    // let lookupTableAccounts: anchor.web3.AddressLookupTableAccount[] = [];
+    // // Get lookup table accounts if provided
+    // let updatedLookupTableAddresses: PublicKey[] = [this.lookupTableAddress];
+    // if (lookupTableAddresses && lookupTableAddresses.length > 0) {
+    //   updatedLookupTableAddresses = [...lookupTableAddresses];
+    //   updatedLookupTableAddresses.push(this.lookupTableAddress);
+    // }
 
-    lookupTableAccounts = await getLookupTableAccounts(
-      this.provider.connection,
-      updatedLookupTableAddresses
-    );
+    // lookupTableAccounts = await getLookupTableAccounts(
+    //   this.provider.connection,
+    //   updatedLookupTableAddresses
+    // );
 
     // Set recent blockhash
     let latestBlockhash = await this.provider.connection.getLatestBlockhash();
@@ -187,7 +187,7 @@ export class BaseSmartAccountExecutor {
       payerKey: this.payerInfo.keyObject.publicKey,
       recentBlockhash: latestBlockhash.blockhash,
       instructions: executeTx.instructions,
-    }).compileToV0Message(lookupTableAccounts);
+    }).compileToV0Message();
 
     const v0Transaction = new VersionedTransaction(messageV0);
 

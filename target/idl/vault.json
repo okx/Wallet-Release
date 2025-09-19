@@ -1,5 +1,5 @@
 {
-  "address": "L69twvAN6711ojwdei5Zkj9rQ6bpjzND2Xrmx6fWqWu",
+  "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH",
   "metadata": {
     "name": "vault",
     "version": "0.1.0",
@@ -7,61 +7,6 @@
     "description": "Created with Anchor"
   },
   "instructions": [
-    {
-      "name": "add_authorized_program",
-      "discriminator": [
-        80,
-        106,
-        127,
-        205,
-        217,
-        53,
-        202,
-        202
-      ],
-      "accounts": [
-        {
-          "name": "config",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  118,
-                  97,
-                  117,
-                  108,
-                  116,
-                  95,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "admin",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": [
-        {
-          "name": "program_id",
-          "type": "pubkey"
-        }
-      ]
-    },
     {
       "name": "approve_execution",
       "discriminator": [
@@ -130,128 +75,11 @@
           "signer": true
         },
         {
-          "name": "config",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  118,
-                  97,
-                  117,
-                  108,
-                  116,
-                  95,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "smart_account_vault",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  115,
-                  109,
-                  97,
-                  114,
-                  116,
-                  95,
-                  97,
-                  99,
-                  99,
-                  111,
-                  117,
-                  110,
-                  116,
-                  95,
-                  118,
-                  97,
-                  117,
-                  108,
-                  116
-                ]
-              },
-              {
-                "kind": "arg",
-                "path": "id"
-              }
-            ],
-            "program": {
-              "kind": "const",
-              "value": [
-                4,
-                227,
-                220,
-                192,
-                87,
-                10,
-                56,
-                116,
-                73,
-                9,
-                108,
-                39,
-                107,
-                147,
-                252,
-                221,
-                242,
-                218,
-                71,
-                134,
-                230,
-                108,
-                6,
-                248,
-                176,
-                214,
-                153,
-                125,
-                98,
-                75,
-                167,
-                78
-              ]
-            }
-          }
+          "name": "smart_account_vault"
         },
         {
           "name": "vault_state",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  118,
-                  97,
-                  117,
-                  108,
-                  116,
-                  95,
-                  115,
-                  116,
-                  97,
-                  116,
-                  101
-                ]
-              },
-              {
-                "kind": "arg",
-                "path": "id"
-              }
-            ]
-          }
+          "writable": true
         },
         {
           "name": "smart_account",
@@ -264,7 +92,7 @@
       ],
       "args": [
         {
-          "name": "id",
+          "name": "init_hash",
           "type": {
             "array": [
               "u8",
@@ -365,113 +193,6 @@
       ]
     },
     {
-      "name": "initialize_config",
-      "discriminator": [
-        208,
-        127,
-        21,
-        1,
-        194,
-        190,
-        196,
-        70
-      ],
-      "accounts": [
-        {
-          "name": "admin",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "config",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  118,
-                  97,
-                  117,
-                  108,
-                  116,
-                  95,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "program",
-          "address": "L69twvAN6711ojwdei5Zkj9rQ6bpjzND2Xrmx6fWqWu"
-        },
-        {
-          "name": "program_data"
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": []
-    },
-    {
-      "name": "revoke_admin",
-      "discriminator": [
-        45,
-        214,
-        156,
-        163,
-        28,
-        217,
-        217,
-        186
-      ],
-      "accounts": [
-        {
-          "name": "config",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  118,
-                  97,
-                  117,
-                  108,
-                  116,
-                  95,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "admin",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": []
-    },
-    {
       "name": "simulate_batch",
       "discriminator": [
         113,
@@ -562,61 +283,6 @@
       ]
     },
     {
-      "name": "update_admin",
-      "discriminator": [
-        161,
-        176,
-        40,
-        213,
-        60,
-        184,
-        179,
-        228
-      ],
-      "accounts": [
-        {
-          "name": "config",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  118,
-                  97,
-                  117,
-                  108,
-                  116,
-                  95,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "admin",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": [
-        {
-          "name": "admin",
-          "type": "pubkey"
-        }
-      ]
-    },
-    {
       "name": "upgrade_smart_account",
       "discriminator": [
         106,
@@ -629,30 +295,6 @@
         110
       ],
       "accounts": [
-        {
-          "name": "config",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  118,
-                  97,
-                  117,
-                  108,
-                  116,
-                  95,
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              }
-            ]
-          }
-        },
         {
           "name": "vault_state",
           "writable": true,
@@ -897,19 +539,6 @@
   ],
   "accounts": [
     {
-      "name": "VaultConfig",
-      "discriminator": [
-        99,
-        86,
-        43,
-        216,
-        184,
-        102,
-        119,
-        77
-      ]
-    },
-    {
       "name": "VaultState",
       "discriminator": [
         228,
@@ -924,32 +553,6 @@
     }
   ],
   "events": [
-    {
-      "name": "ConfigInitialized",
-      "discriminator": [
-        181,
-        49,
-        200,
-        156,
-        19,
-        167,
-        178,
-        91
-      ]
-    },
-    {
-      "name": "ConfigUpdated",
-      "discriminator": [
-        40,
-        241,
-        230,
-        122,
-        11,
-        19,
-        198,
-        194
-      ]
-    },
     {
       "name": "ExecutionCompleted",
       "discriminator": [
@@ -993,78 +596,53 @@
   "errors": [
     {
       "code": 6000,
-      "name": "InvalidVersion",
-      "msg": "Invalid version"
-    },
-    {
-      "code": 6001,
-      "name": "InvalidAdmin",
-      "msg": "Invalid admin"
-    },
-    {
-      "code": 6002,
-      "name": "InvalidMandatorySigner",
-      "msg": "Invalid mandatory signer"
-    },
-    {
-      "code": 6003,
-      "name": "InvalidOwner",
-      "msg": "Invalid account owner"
-    },
-    {
-      "code": 6004,
-      "name": "InvalidAccountData",
-      "msg": "Invalid account data structure"
-    },
-    {
-      "code": 6005,
-      "name": "UnauthorizedProgram",
-      "msg": "Unauthorized program"
-    },
-    {
-      "code": 6006,
       "name": "UnauthorizedSmartAccount",
       "msg": "Unauthorized smart account"
     },
     {
-      "code": 6007,
+      "code": 6001,
       "name": "Unauthorized",
       "msg": "Unauthorized admin"
     },
     {
-      "code": 6008,
+      "code": 6002,
       "name": "ProgramNotFound",
       "msg": "Program not found"
     },
     {
-      "code": 6009,
+      "code": 6003,
       "name": "UnauthorizedExecution",
       "msg": "Unauthorized execution"
     },
     {
-      "code": 6010,
+      "code": 6004,
       "name": "MissingRequiredAccounts",
       "msg": "Missing required accounts"
     },
     {
-      "code": 6011,
+      "code": 6005,
       "name": "AccountOrderMismatch",
       "msg": "Account order mismatch"
     },
     {
-      "code": 6012,
+      "code": 6006,
       "name": "InvalidProgramAccount",
       "msg": "Invalid program account"
     },
     {
-      "code": 6013,
+      "code": 6007,
       "name": "ProgramAlreadyAuthorized",
       "msg": "Program already authorized"
     },
     {
-      "code": 6014,
+      "code": 6008,
       "name": "SimulationComplete",
       "msg": "Simulation completed successfully"
+    },
+    {
+      "code": 6009,
+      "name": "InvalidAccountDerivation",
+      "msg": "Invalid account derivation"
     }
   ],
   "types": [
@@ -1081,36 +659,6 @@
                   "name": "DeconstructedInstruction"
                 }
               }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "ConfigInitialized",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "admin",
-            "type": "pubkey"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ConfigUpdated",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "admin",
-            "type": "pubkey"
-          },
-          {
-            "name": "authorized_programs",
-            "type": {
-              "vec": "pubkey"
             }
           }
         ]
@@ -1179,28 +727,6 @@
       }
     },
     {
-      "name": "VaultConfig",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "bump",
-            "type": "u8"
-          },
-          {
-            "name": "admin",
-            "type": "pubkey"
-          },
-          {
-            "name": "authorized_programs",
-            "type": {
-              "vec": "pubkey"
-            }
-          }
-        ]
-      }
-    },
-    {
       "name": "VaultCreated",
       "type": {
         "kind": "struct",
@@ -1224,6 +750,10 @@
           },
           {
             "name": "smart_account_vault",
+            "type": "pubkey"
+          },
+          {
+            "name": "delegated_program",
             "type": "pubkey"
           }
         ]

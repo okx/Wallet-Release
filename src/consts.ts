@@ -16,7 +16,7 @@ export const PRE_JSON = '{"type":"webauthn.get"';
 export const POST_JSON = `"origin":"${ORIGIN}","androidPackageName":"${ANDROID_PACKAGE_NAME}"}`;
 
 //rpc urls
-export const SOLANA_RPC_URL = "https://api.devnet.solana.com";
+export const SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
 // export const SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
 export const BASE_RPC_URL = "https://mainnet.base.org";
 export const BNB_CHAIN_RPC_URL = "https://bsc-dataseed.binance.org";
@@ -70,12 +70,12 @@ export const UPGRADEABLE_LOADER_PROGRAM_ID = new anchor.web3.PublicKey(
 );
 
 // //localnet
-export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
-  "8CfU477AfpF2ttCoxiF7s9Tdbmsvh9A8NauonsUGujuU"
-);
-export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
-  "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
-);
+// export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
+//   "8CfU477AfpF2ttCoxiF7s9Tdbmsvh9A8NauonsUGujuU"
+// );
+// export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
+//   "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
+// );
 // //devnet
 // export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
 //   "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp"
@@ -83,13 +83,13 @@ export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
 // export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
 //   "L69twvAN6711ojwdei5Zkj9rQ6bpjzND2Xrmx6fWqWu"
 // );
-//staging
-// export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
-//   "sau5tse38277KdPSjdxeD1ZUg4tmZg7hLDB9GqRMrxq"
-// );
-// export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
-//   "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
-// );
+// mainnet
+export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
+  "sa12qbQyuQqEaDcEqEPKmZEGTdzSMaqj87nKRYbE3QE"
+);
+export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
+  "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
+);
 
 export const ZK_EMAIL_VERIFIER_PROGRAM_ID = new anchor.web3.PublicKey(
   "5ZWpsrh3afwUcbuiX6m1LwCriFFqtKnTf8DkJjvUfYb9"

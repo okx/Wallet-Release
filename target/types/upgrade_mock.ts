@@ -1,20 +1,65 @@
-/**
- * Program IDL in camelCase format in order to be used in JS/TS.
- *
- * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/upgrade_mock.json`.
- */
 export type UpgradeMock = {
   "address": "tqVoUexaDpW35SukukXhMXhtWC1n1PBJq8riiiBZf8R",
   "metadata": {
-    "name": "upgradeMock",
+    "name": "upgrade_mock",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
   "instructions": [
     {
-      "name": "migrateSmartAccountV1",
+      "name": "get_email_ptr",
+      "discriminator": [
+        13,
+        94,
+        244,
+        235,
+        145,
+        49,
+        139,
+        159
+      ],
+      "accounts": [
+        {
+          "name": "smart_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccountV2"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "defined": {
+          "name": "EmailPtr"
+        }
+      }
+    },
+    {
+      "name": "migrate_smart_account_v1",
       "discriminator": [
         50,
         64,
@@ -32,7 +77,7 @@ export type UpgradeMock = {
           "signer": true
         },
         {
-          "name": "smartAccountV1",
+          "name": "smart_account_v1",
           "docs": [
             "Validate this is a legitimate SmartAccountV1 from smart_account_solana program"
           ],
@@ -61,7 +106,7 @@ export type UpgradeMock = {
               {
                 "kind": "account",
                 "path": "smart_account_v1.id",
-                "account": "smartAccountV1"
+                "account": "SmartAccountV1"
               }
             ],
             "program": {
@@ -104,7 +149,7 @@ export type UpgradeMock = {
           }
         },
         {
-          "name": "smartAccountV2",
+          "name": "smart_account_v2",
           "writable": true,
           "pda": {
             "seeds": [
@@ -129,21 +174,21 @@ export type UpgradeMock = {
               {
                 "kind": "account",
                 "path": "smart_account_v1.id",
-                "account": "smartAccountV1"
+                "account": "SmartAccountV1"
               }
             ]
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
-          "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "name": "vault_program",
+          "address": "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
         },
         {
-          "name": "smartAccountVault",
+          "name": "smart_account_vault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -174,17 +219,17 @@ export type UpgradeMock = {
               {
                 "kind": "account",
                 "path": "smart_account_v1.id",
-                "account": "smartAccountV1"
+                "account": "SmartAccountV1"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "vaultProgram"
+              "path": "vault_program"
             }
           }
         },
         {
-          "name": "vaultState",
+          "name": "vault_state",
           "writable": true,
           "pda": {
             "seeds": [
@@ -207,12 +252,12 @@ export type UpgradeMock = {
               {
                 "kind": "account",
                 "path": "smart_account_v1.id",
-                "account": "smartAccountV1"
+                "account": "SmartAccountV1"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "vaultProgram"
+              "path": "vault_program"
             }
           }
         }
@@ -233,7 +278,7 @@ export type UpgradeMock = {
       ],
       "accounts": [
         {
-          "name": "txPayer",
+          "name": "tx_payer",
           "signer": true
         },
         {
@@ -244,7 +289,7 @@ export type UpgradeMock = {
           "name": "config"
         },
         {
-          "name": "smartAccount",
+          "name": "smart_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -269,17 +314,17 @@ export type UpgradeMock = {
               {
                 "kind": "account",
                 "path": "smart_account.id",
-                "account": "smartAccountV2"
+                "account": "SmartAccountV2"
               }
             ]
           }
         },
         {
-          "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "name": "vault_program",
+          "address": "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
         },
         {
-          "name": "smartAccountVault",
+          "name": "smart_account_vault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -310,17 +355,17 @@ export type UpgradeMock = {
               {
                 "kind": "account",
                 "path": "smart_account.id",
-                "account": "smartAccountV2"
+                "account": "SmartAccountV2"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "vaultProgram"
+              "path": "vault_program"
             }
           }
         },
         {
-          "name": "vaultState",
+          "name": "vault_state",
           "pda": {
             "seeds": [
               {
@@ -342,37 +387,41 @@ export type UpgradeMock = {
               {
                 "kind": "account",
                 "path": "smart_account.id",
-                "account": "smartAccountV2"
+                "account": "SmartAccountV2"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "vaultProgram"
+              "path": "vault_program"
             }
           }
         },
         {
-          "name": "systemProgram",
+          "name": "zk_verifier_account",
+          "signer": true
+        },
+        {
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "newPasskey",
+          "name": "new_passkey",
           "type": {
             "defined": {
-              "name": "passkey"
+              "name": "Passkey"
             }
           }
         },
         {
-          "name": "executionFees",
+          "name": "execution_fees",
           "type": "u64"
         }
       ]
     },
     {
-      "name": "vaultTransferSol",
+      "name": "vault_transfer_sol",
       "discriminator": [
         42,
         16,
@@ -390,19 +439,19 @@ export type UpgradeMock = {
           "signer": true
         },
         {
-          "name": "mandatorySigner",
+          "name": "mandatory_signer",
           "signer": true
         },
         {
-          "name": "smartAccount",
+          "name": "smart_account",
           "writable": true
         },
         {
-          "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "name": "vault_program",
+          "address": "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
         },
         {
-          "name": "vaultState",
+          "name": "vault_state",
           "pda": {
             "seeds": [
               {
@@ -423,18 +472,18 @@ export type UpgradeMock = {
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
-                "account": "vaultState"
+                "path": "vault_state.okx_id",
+                "account": "VaultState"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "vaultProgram"
+              "path": "vault_program"
             }
           }
         },
         {
-          "name": "smartAccountVault",
+          "name": "smart_account_vault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -464,18 +513,18 @@ export type UpgradeMock = {
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
-                "account": "vaultState"
+                "path": "vault_state.okx_id",
+                "account": "VaultState"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "vaultProgram"
+              "path": "vault_program"
             }
           }
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         },
         {
@@ -493,7 +542,7 @@ export type UpgradeMock = {
   ],
   "accounts": [
     {
-      "name": "smartAccount",
+      "name": "SmartAccount",
       "discriminator": [
         186,
         83,
@@ -506,7 +555,7 @@ export type UpgradeMock = {
       ]
     },
     {
-      "name": "smartAccountV2",
+      "name": "SmartAccountV2",
       "discriminator": [
         171,
         137,
@@ -519,7 +568,7 @@ export type UpgradeMock = {
       ]
     },
     {
-      "name": "vaultState",
+      "name": "VaultState",
       "discriminator": [
         228,
         196,
@@ -535,37 +584,37 @@ export type UpgradeMock = {
   "errors": [
     {
       "code": 6000,
-      "name": "invalidVaultProgram",
+      "name": "InvalidVaultProgram",
       "msg": "Invalid vault program"
     },
     {
       "code": 6001,
-      "name": "invalidNonce",
+      "name": "InvalidNonce",
       "msg": "Invalid nonce"
     }
   ],
   "types": [
     {
-      "name": "authorizationModel",
+      "name": "AuthorizationModel",
       "type": {
         "kind": "enum",
         "variants": [
           {
-            "name": "payMultisig",
+            "name": "PayMultisig",
             "fields": [
               {
                 "defined": {
-                  "name": "payMultisig"
+                  "name": "PayMultisig"
                 }
               }
             ]
           },
           {
-            "name": "signers",
+            "name": "Signers",
             "fields": [
               {
                 "defined": {
-                  "name": "smartAccountSigners"
+                  "name": "SmartAccountSigners"
                 }
               }
             ]
@@ -574,26 +623,43 @@ export type UpgradeMock = {
       }
     },
     {
-      "name": "optimisticValidationState",
+      "name": "EmailPtr",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "tokenMint",
+            "name": "email_ptr",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "OptimisticValidationState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "token_mint",
             "type": {
               "option": "pubkey"
             }
           },
           {
-            "name": "tokenAmount",
+            "name": "token_amount",
             "type": "u64"
           },
           {
-            "name": "maxSlot",
+            "name": "max_slot",
             "type": "u64"
           },
           {
-            "name": "targetHash",
+            "name": "target_hash",
             "type": {
               "array": [
                 "u8",
@@ -602,22 +668,22 @@ export type UpgradeMock = {
             }
           },
           {
-            "name": "txPayer",
+            "name": "tx_payer",
             "type": "pubkey"
           },
           {
-            "name": "validationSlot",
+            "name": "validation_slot",
             "type": "u64"
           },
           {
-            "name": "isExecuted",
+            "name": "is_executed",
             "type": "bool"
           }
         ]
       }
     },
     {
-      "name": "passkey",
+      "name": "Passkey",
       "type": {
         "kind": "struct",
         "fields": [
@@ -631,18 +697,18 @@ export type UpgradeMock = {
             }
           },
           {
-            "name": "validFrom",
+            "name": "valid_from",
             "type": "u64"
           },
           {
-            "name": "validUntil",
+            "name": "valid_until",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "payMultisig",
+      "name": "PayMultisig",
       "type": {
         "kind": "struct",
         "fields": [
@@ -651,15 +717,15 @@ export type UpgradeMock = {
             "type": "u8"
           },
           {
-            "name": "mandatorySigner",
+            "name": "mandatory_signer",
             "type": "pubkey"
           },
           {
-            "name": "userSigners",
+            "name": "user_signers",
             "type": {
               "vec": {
                 "defined": {
-                  "name": "passkey"
+                  "name": "Passkey"
                 }
               }
             }
@@ -668,7 +734,7 @@ export type UpgradeMock = {
       }
     },
     {
-      "name": "smartAccount",
+      "name": "SmartAccount",
       "type": {
         "kind": "struct",
         "fields": [
@@ -682,10 +748,10 @@ export type UpgradeMock = {
             }
           },
           {
-            "name": "accountType",
+            "name": "account_type",
             "type": {
               "defined": {
-                "name": "smartAccountType"
+                "name": "SmartAccountType"
               }
             }
           },
@@ -699,10 +765,10 @@ export type UpgradeMock = {
             }
           },
           {
-            "name": "authorizationModel",
+            "name": "authorization_model",
             "type": {
               "defined": {
-                "name": "authorizationModel"
+                "name": "AuthorizationModel"
               }
             }
           },
@@ -711,45 +777,56 @@ export type UpgradeMock = {
             "type": "u64"
           },
           {
-            "name": "optimisticValidationState",
+            "name": "email_ptr",
             "type": {
-              "option": {
-                "defined": {
-                  "name": "optimisticValidationState"
-                }
-              }
+              "array": [
+                "u8",
+                32
+              ]
             }
           },
           {
-            "name": "recoverySigners",
+            "name": "zk_verifier_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "last_recovery",
+            "type": "u64"
+          },
+          {
+            "name": "optimistic_validation_state",
             "type": {
-              "vec": "pubkey"
+              "option": {
+                "defined": {
+                  "name": "OptimisticValidationState"
+                }
+              }
             }
           }
         ]
       }
     },
     {
-      "name": "smartAccountSigners",
+      "name": "SmartAccountSigners",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "passkeySigners",
+            "name": "passkey_signers",
             "type": {
               "vec": {
                 "defined": {
-                  "name": "passkey"
+                  "name": "Passkey"
                 }
               }
             }
           },
           {
-            "name": "solanaKeySigners",
+            "name": "solana_key_signers",
             "type": {
               "vec": {
                 "defined": {
-                  "name": "solanaKey"
+                  "name": "SolanaKey"
                 }
               }
             }
@@ -758,24 +835,24 @@ export type UpgradeMock = {
       }
     },
     {
-      "name": "smartAccountType",
+      "name": "SmartAccountType",
       "type": {
         "kind": "enum",
         "variants": [
           {
-            "name": "payWallet"
+            "name": "PayWallet"
           },
           {
-            "name": "easyWallet"
+            "name": "EasyWallet"
           },
           {
-            "name": "ceDeFiWallet"
+            "name": "CeDeFiWallet"
           }
         ]
       }
     },
     {
-      "name": "smartAccountV2",
+      "name": "SmartAccountV2",
       "type": {
         "kind": "struct",
         "fields": [
@@ -784,7 +861,7 @@ export type UpgradeMock = {
             "type": "u8"
           },
           {
-            "name": "executorCount",
+            "name": "executor_count",
             "type": "u32"
           },
           {
@@ -806,47 +883,19 @@ export type UpgradeMock = {
             }
           },
           {
-            "name": "authorizationModel",
+            "name": "authorization_model",
             "type": {
               "defined": {
-                "name": "authorizationModel"
+                "name": "AuthorizationModel"
               }
             }
           },
           {
             "name": "nonce",
             "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "solanaKey",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "pubkey",
-            "type": "pubkey"
           },
           {
-            "name": "validFrom",
-            "type": "u64"
-          },
-          {
-            "name": "validUntil",
-            "type": "u64"
-          }
-        ]
-      }
-    },
-    {
-      "name": "vaultState",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "id",
+            "name": "email_ptr",
             "type": {
               "array": [
                 "u8",
@@ -855,27 +904,72 @@ export type UpgradeMock = {
             }
           },
           {
-            "name": "delegatedProgram",
+            "name": "zk_verifier_program",
             "type": "pubkey"
           },
           {
-            "name": "smartAccount",
+            "name": "last_recovery",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SolanaKey",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pubkey",
             "type": "pubkey"
           },
           {
-            "name": "vaultBump",
+            "name": "valid_from",
+            "type": "u64"
+          },
+          {
+            "name": "valid_until",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "okx_id",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "delegated_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "smart_account",
+            "type": "pubkey"
+          },
+          {
+            "name": "vault_bump",
             "type": "u8"
           },
           {
-            "name": "stateBump",
+            "name": "state_bump",
             "type": "u8"
           },
           {
-            "name": "isValidated",
+            "name": "is_validated",
             "type": "bool"
           }
         ]
       }
     }
   ]
-};
+}

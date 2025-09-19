@@ -1,20 +1,14 @@
-/**
- * Program IDL in camelCase format in order to be used in JS/TS.
- *
- * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/dkim_key_oracle.json`.
- */
 export type DkimKeyOracle = {
   "address": "FXo8XW4G5qTzR9G4EnRcQGDBwJ2EciWfni57gV2pLL7w",
   "metadata": {
-    "name": "dkimKeyOracle",
+    "name": "dkim_key_oracle",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
   },
   "instructions": [
     {
-      "name": "cancelProposal",
+      "name": "cancel_proposal",
       "discriminator": [
         106,
         74,
@@ -70,17 +64,17 @@ export type DkimKeyOracle = {
               {
                 "kind": "account",
                 "path": "proposal.proposal_type",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               },
               {
                 "kind": "account",
                 "path": "proposal.domain_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               },
               {
                 "kind": "account",
                 "path": "proposal.key_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               }
             ]
           }
@@ -90,14 +84,14 @@ export type DkimKeyOracle = {
           "signer": true
         },
         {
-          "name": "rentPayer",
+          "name": "rent_payer",
           "writable": true
         }
       ],
       "args": []
     },
     {
-      "name": "changeAdmin",
+      "name": "change_admin",
       "discriminator": [
         193,
         151,
@@ -138,20 +132,20 @@ export type DkimKeyOracle = {
           "signer": true
         },
         {
-          "name": "rentPayer",
+          "name": "rent_payer",
           "writable": true,
           "signer": true
         }
       ],
       "args": [
         {
-          "name": "newAdmin",
+          "name": "new_admin",
           "type": "pubkey"
         }
       ]
     },
     {
-      "name": "executeAdd",
+      "name": "execute_add",
       "discriminator": [
         185,
         219,
@@ -187,7 +181,7 @@ export type DkimKeyOracle = {
           }
         },
         {
-          "name": "dkimEntry",
+          "name": "dkim_entry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -204,12 +198,12 @@ export type DkimKeyOracle = {
               {
                 "kind": "account",
                 "path": "proposal.domain_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               },
               {
                 "kind": "account",
                 "path": "proposal.key_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               }
             ]
           }
@@ -235,17 +229,17 @@ export type DkimKeyOracle = {
               {
                 "kind": "account",
                 "path": "proposal.proposal_type",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               },
               {
                 "kind": "account",
                 "path": "proposal.domain_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               },
               {
                 "kind": "account",
                 "path": "proposal.key_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               }
             ]
           }
@@ -255,18 +249,18 @@ export type DkimKeyOracle = {
           "signer": true
         },
         {
-          "name": "rentPayer",
+          "name": "rent_payer",
           "writable": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": []
     },
     {
-      "name": "executeDelete",
+      "name": "execute_delete",
       "discriminator": [
         198,
         254,
@@ -302,7 +296,7 @@ export type DkimKeyOracle = {
           }
         },
         {
-          "name": "dkimEntry",
+          "name": "dkim_entry",
           "writable": true,
           "pda": {
             "seeds": [
@@ -319,12 +313,12 @@ export type DkimKeyOracle = {
               {
                 "kind": "account",
                 "path": "proposal.domain_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               },
               {
                 "kind": "account",
                 "path": "proposal.key_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               }
             ]
           }
@@ -350,17 +344,17 @@ export type DkimKeyOracle = {
               {
                 "kind": "account",
                 "path": "proposal.proposal_type",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               },
               {
                 "kind": "account",
                 "path": "proposal.domain_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               },
               {
                 "kind": "account",
                 "path": "proposal.key_hash",
-                "account": "dkimProposal"
+                "account": "DkimProposal"
               }
             ]
           }
@@ -370,14 +364,14 @@ export type DkimKeyOracle = {
           "signer": true
         },
         {
-          "name": "rentPayer",
+          "name": "rent_payer",
           "writable": true
         }
       ],
       "args": []
     },
     {
-      "name": "grantRole",
+      "name": "grant_role",
       "discriminator": [
         218,
         234,
@@ -418,12 +412,12 @@ export type DkimKeyOracle = {
           "signer": true
         },
         {
-          "name": "rentPayer",
+          "name": "rent_payer",
           "writable": true,
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -432,7 +426,7 @@ export type DkimKeyOracle = {
           "name": "member",
           "type": {
             "defined": {
-              "name": "member"
+              "name": "Member"
             }
           }
         }
@@ -480,25 +474,25 @@ export type DkimKeyOracle = {
           "address": "FXo8XW4G5qTzR9G4EnRcQGDBwJ2EciWfni57gV2pLL7w"
         },
         {
-          "name": "programData"
+          "name": "program_data"
         },
         {
           "name": "admin",
           "signer": true
         },
         {
-          "name": "rentPayer",
+          "name": "rent_payer",
           "writable": true,
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "initialTimelock",
+          "name": "initial_timelock",
           "type": "u64"
         }
       ]
@@ -559,15 +553,15 @@ export type DkimKeyOracle = {
               },
               {
                 "kind": "arg",
-                "path": "proposalType"
+                "path": "proposal_type"
               },
               {
                 "kind": "arg",
-                "path": "domainHash"
+                "path": "domain_hash"
               },
               {
                 "kind": "arg",
-                "path": "keyHash"
+                "path": "key_hash"
               }
             ]
           }
@@ -577,12 +571,12 @@ export type DkimKeyOracle = {
           "signer": true
         },
         {
-          "name": "rentPayer",
+          "name": "rent_payer",
           "writable": true,
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -591,14 +585,14 @@ export type DkimKeyOracle = {
           "name": "args",
           "type": {
             "defined": {
-              "name": "proposeArgs"
+              "name": "ProposeArgs"
             }
           }
         }
       ]
     },
     {
-      "name": "revokeAdmin",
+      "name": "revoke_admin",
       "discriminator": [
         45,
         214,
@@ -642,7 +636,7 @@ export type DkimKeyOracle = {
       "args": []
     },
     {
-      "name": "revokeRole",
+      "name": "revoke_role",
       "discriminator": [
         179,
         232,
@@ -683,7 +677,7 @@ export type DkimKeyOracle = {
           "signer": true
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -697,7 +691,7 @@ export type DkimKeyOracle = {
   ],
   "accounts": [
     {
-      "name": "dkimEntry",
+      "name": "DkimEntry",
       "discriminator": [
         92,
         252,
@@ -710,7 +704,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "dkimOracleConfig",
+      "name": "DkimOracleConfig",
       "discriminator": [
         77,
         209,
@@ -723,7 +717,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "dkimProposal",
+      "name": "DkimProposal",
       "discriminator": [
         32,
         119,
@@ -738,7 +732,7 @@ export type DkimKeyOracle = {
   ],
   "events": [
     {
-      "name": "adminChanged",
+      "name": "AdminChanged",
       "discriminator": [
         232,
         34,
@@ -751,7 +745,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "adminRevoked",
+      "name": "AdminRevoked",
       "discriminator": [
         221,
         50,
@@ -764,7 +758,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "dkimKeyAdded",
+      "name": "DkimKeyAdded",
       "discriminator": [
         152,
         5,
@@ -777,7 +771,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "dkimKeyRemoved",
+      "name": "DkimKeyRemoved",
       "discriminator": [
         156,
         197,
@@ -790,7 +784,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "oracleInitialized",
+      "name": "OracleInitialized",
       "discriminator": [
         42,
         87,
@@ -803,7 +797,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "proposalCancelled",
+      "name": "ProposalCancelled",
       "discriminator": [
         253,
         59,
@@ -816,7 +810,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "proposalCreated",
+      "name": "ProposalCreated",
       "discriminator": [
         186,
         8,
@@ -829,7 +823,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "roleGranted",
+      "name": "RoleGranted",
       "discriminator": [
         220,
         183,
@@ -842,7 +836,7 @@ export type DkimKeyOracle = {
       ]
     },
     {
-      "name": "roleRevoked",
+      "name": "RoleRevoked",
       "discriminator": [
         167,
         183,
@@ -858,93 +852,93 @@ export type DkimKeyOracle = {
   "errors": [
     {
       "code": 6000,
-      "name": "timelockNotExpired",
+      "name": "TimelockNotExpired",
       "msg": "Timelock has not yet expired"
     },
     {
       "code": 6001,
-      "name": "invalidProposalType",
+      "name": "InvalidProposalType",
       "msg": "Invalid proposal type"
     },
     {
       "code": 6002,
-      "name": "notAdmin",
+      "name": "NotAdmin",
       "msg": "Not admin"
     },
     {
       "code": 6003,
-      "name": "invalidAdmin",
+      "name": "InvalidAdmin",
       "msg": "Invalid admin"
     },
     {
       "code": 6004,
-      "name": "notAMember",
+      "name": "NotAMember",
       "msg": "Not a member"
     },
     {
       "code": 6005,
-      "name": "duplicateMember",
+      "name": "DuplicateMember",
       "msg": "Duplicate member"
     },
     {
       "code": 6006,
-      "name": "notProposer",
+      "name": "NotProposer",
       "msg": "Not a proposer"
     },
     {
       "code": 6007,
-      "name": "notExecutor",
+      "name": "NotExecutor",
       "msg": "Not an executor"
     },
     {
       "code": 6008,
-      "name": "notCanceller",
+      "name": "NotCanceller",
       "msg": "Not a canceller"
     }
   ],
   "types": [
     {
-      "name": "adminChanged",
+      "name": "AdminChanged",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "oldAdmin",
+            "name": "old_admin",
             "type": "pubkey"
           },
           {
-            "name": "newAdmin",
+            "name": "new_admin",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "adminRevoked",
+      "name": "AdminRevoked",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "revokedAdmin",
+            "name": "revoked_admin",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "dkimEntry",
+      "name": "DkimEntry",
       "type": {
         "kind": "struct",
         "fields": []
       }
     },
     {
-      "name": "dkimKeyAdded",
+      "name": "DkimKeyAdded",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "domainHash",
+            "name": "domain_hash",
             "type": {
               "array": [
                 "u8",
@@ -953,7 +947,7 @@ export type DkimKeyOracle = {
             }
           },
           {
-            "name": "keyHash",
+            "name": "key_hash",
             "type": {
               "array": [
                 "u8",
@@ -965,12 +959,12 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "dkimKeyRemoved",
+      "name": "DkimKeyRemoved",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "domainHash",
+            "name": "domain_hash",
             "type": {
               "array": [
                 "u8",
@@ -979,7 +973,7 @@ export type DkimKeyOracle = {
             }
           },
           {
-            "name": "keyHash",
+            "name": "key_hash",
             "type": {
               "array": [
                 "u8",
@@ -991,7 +985,7 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "dkimOracleConfig",
+      "name": "DkimOracleConfig",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1000,7 +994,7 @@ export type DkimKeyOracle = {
             "type": "pubkey"
           },
           {
-            "name": "timelockDuration",
+            "name": "timelock_duration",
             "type": "u64"
           },
           {
@@ -1008,7 +1002,7 @@ export type DkimKeyOracle = {
             "type": {
               "vec": {
                 "defined": {
-                  "name": "member"
+                  "name": "Member"
                 }
               }
             }
@@ -1017,20 +1011,20 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "dkimProposal",
+      "name": "DkimProposal",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "proposalType",
+            "name": "proposal_type",
             "type": {
               "defined": {
-                "name": "proposalType"
+                "name": "ProposalType"
               }
             }
           },
           {
-            "name": "domainHash",
+            "name": "domain_hash",
             "type": {
               "array": [
                 "u8",
@@ -1039,7 +1033,7 @@ export type DkimKeyOracle = {
             }
           },
           {
-            "name": "keyHash",
+            "name": "key_hash",
             "type": {
               "array": [
                 "u8",
@@ -1048,18 +1042,18 @@ export type DkimKeyOracle = {
             }
           },
           {
-            "name": "proposeTime",
+            "name": "propose_time",
             "type": "u64"
           },
           {
-            "name": "rentPayer",
+            "name": "rent_payer",
             "type": "pubkey"
           }
         ]
       }
     },
     {
-      "name": "member",
+      "name": "Member",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1071,7 +1065,7 @@ export type DkimKeyOracle = {
             "name": "permissions",
             "type": {
               "defined": {
-                "name": "permissions"
+                "name": "Permissions"
               }
             }
           }
@@ -1079,7 +1073,7 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "oracleInitialized",
+      "name": "OracleInitialized",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1088,14 +1082,14 @@ export type DkimKeyOracle = {
             "type": "pubkey"
           },
           {
-            "name": "timelockDuration",
+            "name": "timelock_duration",
             "type": "u64"
           }
         ]
       }
     },
     {
-      "name": "permissions",
+      "name": "Permissions",
       "docs": [
         "Bitmask for permissions."
       ],
@@ -1110,20 +1104,20 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "proposalCancelled",
+      "name": "ProposalCancelled",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "proposalType",
+            "name": "proposal_type",
             "type": {
               "defined": {
-                "name": "proposalType"
+                "name": "ProposalType"
               }
             }
           },
           {
-            "name": "domainHash",
+            "name": "domain_hash",
             "type": {
               "array": [
                 "u8",
@@ -1132,7 +1126,7 @@ export type DkimKeyOracle = {
             }
           },
           {
-            "name": "keyHash",
+            "name": "key_hash",
             "type": {
               "array": [
                 "u8",
@@ -1144,20 +1138,20 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "proposalCreated",
+      "name": "ProposalCreated",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "proposalType",
+            "name": "proposal_type",
             "type": {
               "defined": {
-                "name": "proposalType"
+                "name": "ProposalType"
               }
             }
           },
           {
-            "name": "domainHash",
+            "name": "domain_hash",
             "type": {
               "array": [
                 "u8",
@@ -1166,7 +1160,7 @@ export type DkimKeyOracle = {
             }
           },
           {
-            "name": "keyHash",
+            "name": "key_hash",
             "type": {
               "array": [
                 "u8",
@@ -1178,34 +1172,34 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "proposalType",
+      "name": "ProposalType",
       "type": {
         "kind": "enum",
         "variants": [
           {
-            "name": "add"
+            "name": "Add"
           },
           {
-            "name": "remove"
+            "name": "Remove"
           }
         ]
       }
     },
     {
-      "name": "proposeArgs",
+      "name": "ProposeArgs",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "proposalType",
+            "name": "proposal_type",
             "type": {
               "defined": {
-                "name": "proposalType"
+                "name": "ProposalType"
               }
             }
           },
           {
-            "name": "domainHash",
+            "name": "domain_hash",
             "type": {
               "array": [
                 "u8",
@@ -1214,7 +1208,7 @@ export type DkimKeyOracle = {
             }
           },
           {
-            "name": "keyHash",
+            "name": "key_hash",
             "type": {
               "array": [
                 "u8",
@@ -1226,7 +1220,7 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "roleGranted",
+      "name": "RoleGranted",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1234,7 +1228,7 @@ export type DkimKeyOracle = {
             "name": "member",
             "type": {
               "defined": {
-                "name": "member"
+                "name": "Member"
               }
             }
           }
@@ -1242,7 +1236,7 @@ export type DkimKeyOracle = {
       }
     },
     {
-      "name": "roleRevoked",
+      "name": "RoleRevoked",
       "type": {
         "kind": "struct",
         "fields": [
@@ -1254,4 +1248,4 @@ export type DkimKeyOracle = {
       }
     }
   ]
-};
+}

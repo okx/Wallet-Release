@@ -62,27 +62,27 @@ export const UPGRADEABLE_LOADER_PROGRAM_ID = new anchor.web3.PublicKey(
   "BPFLoaderUpgradeab1e11111111111111111111111"
 );
 
-// //localnet
+// localnet
 // export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
 //   "8CfU477AfpF2ttCoxiF7s9Tdbmsvh9A8NauonsUGujuU"
 // );
 // export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
 //   "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
 // );
-// //devnet
-export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
-  "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp"
-);
-export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
-  "L69twvAN6711ojwdei5Zkj9rQ6bpjzND2Xrmx6fWqWu"
-);
-//staging
+// devnet
 // export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
-//   "sau5tse38277KdPSjdxeD1ZUg4tmZg7hLDB9GqRMrxq"
+//   "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp"
 // );
 // export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
-//   "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+//   "L69twvAN6711ojwdei5Zkj9rQ6bpjzND2Xrmx6fWqWu"
 // );
+// mainnet
+export const SMART_ACCOUNT_SOLANA_PROGRAM_ID = new anchor.web3.PublicKey(
+  "sa12qbQyuQqEaDcEqEPKmZEGTdzSMaqj87nKRYbE3QE"
+);
+export const VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
+  "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
+);
 
 export const ZK_EMAIL_VERIFIER_PROGRAM_ID = new anchor.web3.PublicKey(
   "5ZWpsrh3afwUcbuiX6m1LwCriFFqtKnTf8DkJjvUfYb9"

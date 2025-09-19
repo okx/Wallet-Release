@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/smart_account_solana.json`.
  */
 export type SmartAccountSolana = {
-  "address": "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp",
+  "address": "sa12qbQyuQqEaDcEqEPKmZEGTdzSMaqj87nKRYbE3QE",
   "metadata": {
     "name": "smartAccountSolana",
     "version": "0.1.0",
@@ -65,38 +65,38 @@ export type SmartAccountSolana = {
             "program": {
               "kind": "const",
               "value": [
-                203,
-                190,
-                52,
-                25,
-                56,
-                17,
-                59,
-                176,
-                107,
-                41,
-                126,
-                139,
-                85,
-                173,
-                172,
-                69,
-                111,
-                238,
-                52,
+                13,
+                185,
+                29,
+                0,
+                106,
+                206,
+                205,
+                226,
+                132,
+                222,
                 23,
-                74,
+                205,
+                205,
                 155,
-                54,
-                89,
-                107,
-                94,
-                63,
-                82,
-                112,
-                153,
-                199,
-                66
+                136,
+                103,
+                43,
+                45,
+                146,
+                43,
+                208,
+                223,
+                102,
+                86,
+                163,
+                58,
+                66,
+                26,
+                224,
+                3,
+                139,
+                84
               ]
             }
           }
@@ -169,38 +169,38 @@ export type SmartAccountSolana = {
             "program": {
               "kind": "const",
               "value": [
-                203,
-                190,
-                52,
-                25,
-                56,
-                17,
-                59,
-                176,
-                107,
-                41,
-                126,
-                139,
-                85,
-                173,
-                172,
-                69,
-                111,
-                238,
-                52,
+                13,
+                185,
+                29,
+                0,
+                106,
+                206,
+                205,
+                226,
+                132,
+                222,
                 23,
-                74,
+                205,
+                205,
                 155,
-                54,
-                89,
-                107,
-                94,
-                63,
-                82,
-                112,
-                153,
-                199,
-                66
+                136,
+                103,
+                43,
+                45,
+                146,
+                43,
+                208,
+                223,
+                102,
+                86,
+                163,
+                58,
+                66,
+                26,
+                224,
+                3,
+                139,
+                84
               ]
             }
           }
@@ -333,6 +333,11 @@ export type SmartAccountSolana = {
           "optional": true
         },
         {
+          "name": "rentReceiver",
+          "writable": true,
+          "optional": true
+        },
+        {
           "name": "smartAccount",
           "writable": true,
           "pda": {
@@ -365,10 +370,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
-        },
-        {
-          "name": "vaultConfig"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "vaultState",
@@ -626,7 +628,7 @@ export type SmartAccountSolana = {
               },
               {
                 "kind": "arg",
-                "path": "args"
+                "path": "args.generate_id(args"
               }
             ]
           }
@@ -641,10 +643,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
-        },
-        {
-          "name": "vaultConfig"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "smartAccountVault",
@@ -780,7 +779,7 @@ export type SmartAccountSolana = {
               },
               {
                 "kind": "arg",
-                "path": "args.id"
+                "path": "args"
               }
             ]
           }
@@ -795,10 +794,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
-        },
-        {
-          "name": "vaultConfig"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "smartAccountVault",
@@ -992,7 +988,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "program",
-          "address": "DXkuJYJfne9v7vc85361VvdhGezJ6ynMA6oLXYC4qiSp"
+          "address": "sa12qbQyuQqEaDcEqEPKmZEGTdzSMaqj87nKRYbE3QE"
         },
         {
           "name": "programData"
@@ -1119,7 +1115,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "vaultState"
@@ -1280,38 +1276,38 @@ export type SmartAccountSolana = {
             "program": {
               "kind": "const",
               "value": [
-                203,
-                190,
-                52,
-                25,
-                56,
-                17,
-                59,
-                176,
-                107,
-                41,
-                126,
-                139,
-                85,
-                173,
-                172,
-                69,
-                111,
-                238,
-                52,
+                13,
+                185,
+                29,
+                0,
+                106,
+                206,
+                205,
+                226,
+                132,
+                222,
                 23,
-                74,
+                205,
+                205,
                 155,
-                54,
-                89,
-                107,
-                94,
-                63,
-                82,
-                112,
-                153,
-                199,
-                66
+                136,
+                103,
+                43,
+                45,
+                146,
+                43,
+                208,
+                223,
+                102,
+                86,
+                163,
+                58,
+                66,
+                26,
+                224,
+                3,
+                139,
+                84
               ]
             }
           }
@@ -1323,6 +1319,11 @@ export type SmartAccountSolana = {
         {
           "name": "systemProgram",
           "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rentReceiver",
+          "writable": true,
+          "optional": true
         }
       ],
       "args": [
@@ -1384,38 +1385,38 @@ export type SmartAccountSolana = {
             "program": {
               "kind": "const",
               "value": [
-                203,
-                190,
-                52,
-                25,
-                56,
-                17,
-                59,
-                176,
-                107,
-                41,
-                126,
-                139,
-                85,
-                173,
-                172,
-                69,
-                111,
-                238,
-                52,
+                13,
+                185,
+                29,
+                0,
+                106,
+                206,
+                205,
+                226,
+                132,
+                222,
                 23,
-                74,
+                205,
+                205,
                 155,
-                54,
-                89,
-                107,
-                94,
-                63,
-                82,
-                112,
-                153,
-                199,
-                66
+                136,
+                103,
+                43,
+                45,
+                146,
+                43,
+                208,
+                223,
+                102,
+                86,
+                163,
+                58,
+                66,
+                26,
+                224,
+                3,
+                139,
+                84
               ]
             }
           }
@@ -1425,8 +1426,9 @@ export type SmartAccountSolana = {
           "writable": true
         },
         {
-          "name": "systemProgram",
-          "address": "11111111111111111111111111111111"
+          "name": "rentReceiver",
+          "writable": true,
+          "optional": true
         }
       ],
       "args": [
@@ -1588,6 +1590,11 @@ export type SmartAccountSolana = {
           "optional": true
         },
         {
+          "name": "rentReceiver",
+          "writable": true,
+          "optional": true
+        },
+        {
           "name": "smartAccount",
           "writable": true,
           "pda": {
@@ -1620,10 +1627,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
-        },
-        {
-          "name": "vaultConfig"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "vaultState",
@@ -1768,6 +1772,135 @@ export type SmartAccountSolana = {
       ]
     },
     {
+      "name": "simulateCreateGeneralAccount",
+      "discriminator": [
+        229,
+        206,
+        97,
+        239,
+        107,
+        117,
+        107,
+        249
+      ],
+      "accounts": [
+        {
+          "name": "txPayer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "smartAccount",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "arg",
+                "path": "args.generate_id(args"
+              }
+            ]
+          }
+        },
+        {
+          "name": "systemProgram",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "sysvarInstructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vaultProgram",
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
+        },
+        {
+          "name": "smartAccountVault",
+          "writable": true
+        },
+        {
+          "name": "vaultState",
+          "writable": true
+        },
+        {
+          "name": "vaultTokenAccount",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "tokenMint",
+          "optional": true
+        },
+        {
+          "name": "destinationTokenAccount",
+          "writable": true,
+          "optional": true
+        },
+        {
+          "name": "tokenProgram",
+          "optional": true
+        },
+        {
+          "name": "webauthnTable",
+          "optional": true
+        }
+      ],
+      "args": [
+        {
+          "name": "args",
+          "type": {
+            "defined": {
+              "name": "createGeneralAccountArgs"
+            }
+          }
+        },
+        {
+          "name": "tokenAmount",
+          "type": "u64"
+        },
+        {
+          "name": "webauthnArgs",
+          "type": {
+            "option": {
+              "defined": {
+                "name": "webAuthnArgs"
+              }
+            }
+          }
+        },
+        {
+          "name": "intentProof",
+          "type": {
+            "option": {
+              "vec": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "simulateCreatePayAccount",
       "discriminator": [
         66,
@@ -1832,7 +1965,7 @@ export type SmartAccountSolana = {
               },
               {
                 "kind": "arg",
-                "path": "args.id"
+                "path": "args"
               }
             ]
           }
@@ -1847,10 +1980,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
-        },
-        {
-          "name": "vaultConfig"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "smartAccountVault",
@@ -1951,7 +2081,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "vaultState",
@@ -2046,7 +2176,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "vaultState",
@@ -2258,7 +2388,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "vaultState",
@@ -2353,7 +2483,7 @@ export type SmartAccountSolana = {
         },
         {
           "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
         },
         {
           "name": "vaultState",
@@ -3001,6 +3131,21 @@ export type SmartAccountSolana = {
       "code": 6055,
       "name": "jitoTipAccountNotFound",
       "msg": "Jito tip account not found when jito tip amount is greater than 0"
+    },
+    {
+      "code": 6056,
+      "name": "smartAccountSizeExceeded",
+      "msg": "Smart account size exceeded"
+    },
+    {
+      "code": 6057,
+      "name": "minimumOneUserPasskeyRequired",
+      "msg": "Minimum one user passkey required"
+    },
+    {
+      "code": 6058,
+      "name": "minimumOneRecoverySignerRequired",
+      "msg": "Minimum one recovery signer required"
     }
   ],
   "types": [
@@ -3168,26 +3313,32 @@ export type SmartAccountSolana = {
         "kind": "struct",
         "fields": [
           {
-            "name": "userPasskey",
+            "name": "userPasskeys",
             "type": {
-              "defined": {
-                "name": "passkey"
-              }
-            }
-          },
-          {
-            "name": "initialSolanaSigner",
-            "type": {
-              "option": {
+              "vec": {
                 "defined": {
-                  "name": "solanaKey"
+                  "name": "passkey"
                 }
               }
             }
           },
           {
-            "name": "initialRecoverySigner",
-            "type": "pubkey"
+            "name": "solanaSigners",
+            "type": {
+              "option": {
+                "vec": {
+                  "defined": {
+                    "name": "solanaKey"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "name": "recoverySigners",
+            "type": {
+              "vec": "pubkey"
+            }
           },
           {
             "name": "accountType",
@@ -3215,7 +3366,7 @@ export type SmartAccountSolana = {
         "kind": "struct",
         "fields": [
           {
-            "name": "id",
+            "name": "payId",
             "type": {
               "array": [
                 "u8",
@@ -3224,10 +3375,12 @@ export type SmartAccountSolana = {
             }
           },
           {
-            "name": "userPasskey",
+            "name": "userPasskeys",
             "type": {
-              "defined": {
-                "name": "passkey"
+              "vec": {
+                "defined": {
+                  "name": "passkey"
+                }
               }
             }
           },
@@ -3236,8 +3389,10 @@ export type SmartAccountSolana = {
             "type": "pubkey"
           },
           {
-            "name": "initialRecoverySigner",
-            "type": "pubkey"
+            "name": "recoverySigners",
+            "type": {
+              "vec": "pubkey"
+            }
           }
         ]
       }
@@ -3324,21 +3479,31 @@ export type SmartAccountSolana = {
             }
           },
           {
-            "name": "userPasskey",
+            "name": "userPasskeys",
             "type": {
-              "defined": {
-                "name": "passkey"
+              "vec": {
+                "defined": {
+                  "name": "passkey"
+                }
               }
             }
           },
           {
-            "name": "initialSolanaSigner",
+            "name": "solanaSigners",
             "type": {
               "option": {
-                "defined": {
-                  "name": "solanaKey"
+                "vec": {
+                  "defined": {
+                    "name": "solanaKey"
+                  }
                 }
               }
+            }
+          },
+          {
+            "name": "recoverySigners",
+            "type": {
+              "vec": "pubkey"
             }
           }
         ]
@@ -3600,16 +3765,24 @@ export type SmartAccountSolana = {
             "type": "pubkey"
           },
           {
-            "name": "userPasskey",
+            "name": "userPasskeys",
             "type": {
-              "defined": {
-                "name": "passkey"
+              "vec": {
+                "defined": {
+                  "name": "passkey"
+                }
               }
             }
           },
           {
             "name": "mandatorySigner",
             "type": "pubkey"
+          },
+          {
+            "name": "recoverySigners",
+            "type": {
+              "vec": "pubkey"
+            }
           }
         ]
       }
@@ -4012,39 +4185,6 @@ export type SmartAccountSolana = {
                 "name": "clientDataJson"
               }
             }
-          },
-          {
-            "name": "authData",
-            "type": {
-              "defined": {
-                "name": "webAuthnAuthData"
-              }
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "webAuthnAuthData",
-      "type": {
-        "kind": "enum",
-        "variants": [
-          {
-            "name": "direct",
-            "fields": [
-              {
-                "array": [
-                  "u8",
-                  37
-                ]
-              }
-            ]
-          },
-          {
-            "name": "index",
-            "fields": [
-              "u8"
-            ]
           }
         ]
       }
@@ -4065,17 +4205,6 @@ export type SmartAccountSolana = {
             "fields": [
               "string"
             ]
-          },
-          {
-            "name": "authData",
-            "fields": [
-              {
-                "array": [
-                  "u8",
-                  37
-                ]
-              }
-            ]
           }
         ]
       }
@@ -4090,9 +4219,6 @@ export type SmartAccountSolana = {
           },
           {
             "name": "postJson"
-          },
-          {
-            "name": "authData"
           }
         ]
       }
@@ -4137,17 +4263,6 @@ export type SmartAccountSolana = {
             "name": "postJsonTable",
             "type": {
               "vec": "string"
-            }
-          },
-          {
-            "name": "authDataTable",
-            "type": {
-              "vec": {
-                "array": [
-                  "u8",
-                  37
-                ]
-              }
             }
           }
         ]

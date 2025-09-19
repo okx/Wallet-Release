@@ -1,13 +1,7 @@
-/**
- * Program IDL in camelCase format in order to be used in JS/TS.
- *
- * Note that this is only a type helper and is not the actual IDL. The original
- * IDL can be found at `target/idl/zk_email_verifier.json`.
- */
 export type ZkEmailVerifier = {
   "address": "5ZWpsrh3afwUcbuiX6m1LwCriFFqtKnTf8DkJjvUfYb9",
   "metadata": {
-    "name": "zkEmailVerifier",
+    "name": "zk_email_verifier",
     "version": "0.1.0",
     "spec": "0.1.0",
     "description": "Created with Anchor"
@@ -27,15 +21,15 @@ export type ZkEmailVerifier = {
       ],
       "accounts": [
         {
-          "name": "recoverySigner",
+          "name": "recovery_signer",
           "signer": true
         },
         {
-          "name": "feeRecipient",
+          "name": "fee_recipient",
           "writable": true
         },
         {
-          "name": "zkVerifierAccount",
+          "name": "zk_verifier_account",
           "pda": {
             "seeds": [
               {
@@ -56,17 +50,17 @@ export type ZkEmailVerifier = {
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
-                "account": "vaultState"
+                "path": "vault_state.okx_id",
+                "account": "VaultState"
               }
             ]
           }
         },
         {
-          "name": "smartAccountProgram"
+          "name": "smart_account_program"
         },
         {
-          "name": "smartAccountConfig",
+          "name": "smart_account_config",
           "pda": {
             "seeds": [
               {
@@ -83,12 +77,12 @@ export type ZkEmailVerifier = {
             ],
             "program": {
               "kind": "account",
-              "path": "smartAccountProgram"
+              "path": "smart_account_program"
             }
           }
         },
         {
-          "name": "smartAccount",
+          "name": "smart_account",
           "writable": true,
           "pda": {
             "seeds": [
@@ -112,22 +106,22 @@ export type ZkEmailVerifier = {
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
-                "account": "vaultState"
+                "path": "vault_state.okx_id",
+                "account": "VaultState"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "smartAccountProgram"
+              "path": "smart_account_program"
             }
           }
         },
         {
-          "name": "vaultProgram",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "name": "vault_program",
+          "address": "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
         },
         {
-          "name": "smartAccountVault",
+          "name": "smart_account_vault",
           "writable": true,
           "pda": {
             "seeds": [
@@ -157,51 +151,51 @@ export type ZkEmailVerifier = {
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
-                "account": "vaultState"
+                "path": "vault_state.okx_id",
+                "account": "VaultState"
               }
             ],
             "program": {
               "kind": "const",
               "value": [
-                203,
-                190,
+                135,
+                80,
+                22,
+                201,
+                102,
+                138,
+                210,
+                118,
+                152,
+                2,
+                8,
                 52,
-                25,
-                56,
-                17,
-                59,
-                176,
-                107,
-                41,
-                126,
-                139,
-                85,
-                173,
-                172,
-                69,
-                111,
-                238,
-                52,
-                23,
-                74,
-                155,
-                54,
-                89,
-                107,
-                94,
-                63,
-                82,
-                112,
                 153,
-                199,
-                66
+                240,
+                81,
+                105,
+                32,
+                48,
+                103,
+                37,
+                90,
+                110,
+                158,
+                203,
+                226,
+                189,
+                5,
+                156,
+                215,
+                52,
+                91,
+                142
               ]
             }
           }
         },
         {
-          "name": "vaultState",
+          "name": "vault_state",
           "pda": {
             "seeds": [
               {
@@ -222,18 +216,18 @@ export type ZkEmailVerifier = {
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
-                "account": "vaultState"
+                "path": "vault_state.okx_id",
+                "account": "VaultState"
               }
             ],
             "program": {
               "kind": "account",
-              "path": "vaultProgram"
+              "path": "vault_program"
             }
           }
         },
         {
-          "name": "entryPda",
+          "name": "entry_pda",
           "pda": {
             "seeds": [
               {
@@ -248,7 +242,7 @@ export type ZkEmailVerifier = {
               },
               {
                 "kind": "arg",
-                "path": "emailInfo"
+                "path": "email_info"
               },
               {
                 "kind": "arg",
@@ -295,20 +289,20 @@ export type ZkEmailVerifier = {
           }
         },
         {
-          "name": "sysvarInstructions",
+          "name": "sysvar_instructions",
           "address": "Sysvar1nstructions1111111111111111111111111"
         },
         {
-          "name": "systemProgram",
+          "name": "system_program",
           "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
         {
-          "name": "emailInfo",
+          "name": "email_info",
           "type": {
             "defined": {
-              "name": "emailInfo"
+              "name": "EmailInfo"
             }
           }
         },
@@ -316,7 +310,7 @@ export type ZkEmailVerifier = {
           "name": "proof",
           "type": {
             "defined": {
-              "name": "proof"
+              "name": "Proof"
             }
           }
         }
@@ -325,7 +319,7 @@ export type ZkEmailVerifier = {
   ],
   "accounts": [
     {
-      "name": "dkimEntry",
+      "name": "DkimEntry",
       "discriminator": [
         92,
         252,
@@ -338,7 +332,7 @@ export type ZkEmailVerifier = {
       ]
     },
     {
-      "name": "vaultState",
+      "name": "VaultState",
       "discriminator": [
         228,
         196,
@@ -354,49 +348,54 @@ export type ZkEmailVerifier = {
   "errors": [
     {
       "code": 6000,
-      "name": "programIdMismatch",
+      "name": "ProgramIdMismatch",
       "msg": "Program ID mismatch"
     },
     {
       "code": 6001,
-      "name": "failedVerifierInit",
-      "msg": "Failed to initialize verifier"
+      "name": "InvalidEmailPtr",
+      "msg": "Invalid email ptr"
     },
     {
       "code": 6002,
-      "name": "failedVerification",
-      "msg": "Failed verification"
+      "name": "FailedVerifierInit",
+      "msg": "Failed to initialize verifier"
     },
     {
       "code": 6003,
-      "name": "invalidVaultProgram",
-      "msg": "Invalid vault program"
+      "name": "FailedVerification",
+      "msg": "Failed verification"
     },
     {
       "code": 6004,
-      "name": "invalidSmartAccountProgram",
+      "name": "InvalidVaultProgram",
+      "msg": "Invalid vault program"
+    },
+    {
+      "code": 6005,
+      "name": "InvalidSmartAccountProgram",
       "msg": "Invalid smart account program"
     }
   ],
   "types": [
     {
-      "name": "dkimEntry",
+      "name": "DkimEntry",
       "type": {
         "kind": "struct",
         "fields": []
       }
     },
     {
-      "name": "emailInfo",
+      "name": "EmailInfo",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "emailDomain",
+            "name": "email_domain",
             "type": "string"
           },
           {
-            "name": "dkimPubkeyHash",
+            "name": "dkim_pubkey_hash",
             "type": {
               "array": [
                 "u8",
@@ -405,7 +404,7 @@ export type ZkEmailVerifier = {
             }
           },
           {
-            "name": "emailNullifer",
+            "name": "email_nullifer",
             "type": {
               "array": [
                 "u8",
@@ -414,7 +413,7 @@ export type ZkEmailVerifier = {
             }
           },
           {
-            "name": "emailHash",
+            "name": "email_hash",
             "type": {
               "array": [
                 "u8",
@@ -436,19 +435,19 @@ export type ZkEmailVerifier = {
             "type": "u64"
           },
           {
-            "name": "timestampStr",
+            "name": "timestamp_str",
             "type": "string"
           }
         ]
       }
     },
     {
-      "name": "proof",
+      "name": "Proof",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "proofA",
+            "name": "proof_a",
             "type": {
               "array": [
                 "u8",
@@ -457,7 +456,7 @@ export type ZkEmailVerifier = {
             }
           },
           {
-            "name": "proofB",
+            "name": "proof_b",
             "type": {
               "array": [
                 "u8",
@@ -466,7 +465,7 @@ export type ZkEmailVerifier = {
             }
           },
           {
-            "name": "proofC",
+            "name": "proof_c",
             "type": {
               "array": [
                 "u8",
@@ -478,12 +477,12 @@ export type ZkEmailVerifier = {
       }
     },
     {
-      "name": "vaultState",
+      "name": "VaultState",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "id",
+            "name": "okx_id",
             "type": {
               "array": [
                 "u8",
@@ -492,27 +491,27 @@ export type ZkEmailVerifier = {
             }
           },
           {
-            "name": "delegatedProgram",
+            "name": "delegated_program",
             "type": "pubkey"
           },
           {
-            "name": "smartAccount",
+            "name": "smart_account",
             "type": "pubkey"
           },
           {
-            "name": "vaultBump",
+            "name": "vault_bump",
             "type": "u8"
           },
           {
-            "name": "stateBump",
+            "name": "state_bump",
             "type": "u8"
           },
           {
-            "name": "isValidated",
+            "name": "is_validated",
             "type": "bool"
           }
         ]
       }
     }
   ]
-};
+}

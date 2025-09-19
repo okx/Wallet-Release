@@ -8,6 +8,57 @@
   },
   "instructions": [
     {
+      "name": "get_email_ptr",
+      "discriminator": [
+        13,
+        94,
+        244,
+        235,
+        145,
+        49,
+        139,
+        159
+      ],
+      "accounts": [
+        {
+          "name": "smart_account",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  109,
+                  97,
+                  114,
+                  116,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccountV2"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [],
+      "returns": {
+        "defined": {
+          "name": "EmailPtr"
+        }
+      }
+    },
+    {
       "name": "migrate_smart_account_v1",
       "discriminator": [
         50,
@@ -134,7 +185,7 @@
         },
         {
           "name": "vault_program",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
         },
         {
           "name": "smart_account_vault",
@@ -270,7 +321,7 @@
         },
         {
           "name": "vault_program",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
         },
         {
           "name": "smart_account_vault",
@@ -344,6 +395,10 @@
               "path": "vault_program"
             }
           }
+        },
+        {
+          "name": "zk_verifier_account",
+          "signer": true
         },
         {
           "name": "system_program",
@@ -393,7 +448,7 @@
         },
         {
           "name": "vault_program",
-          "address": "EiKypMWbgFmQTSpJJCKkTdBMPkUmu6i5uP3MnragfQQH"
+          "address": "A7CsUmonBupSwmfAwzavwTnPEZbqfryWG8qSfkFmUMwB"
         },
         {
           "name": "vault_state",
@@ -417,7 +472,7 @@
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
+                "path": "vault_state.okx_id",
                 "account": "VaultState"
               }
             ],
@@ -458,7 +513,7 @@
               },
               {
                 "kind": "account",
-                "path": "vault_state.id",
+                "path": "vault_state.okx_id",
                 "account": "VaultState"
               }
             ],
@@ -563,6 +618,23 @@
                 }
               }
             ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "EmailPtr",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "email_ptr",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
           }
         ]
       }
@@ -705,6 +777,23 @@
             "type": "u64"
           },
           {
+            "name": "email_ptr",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "zk_verifier_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "last_recovery",
+            "type": "u64"
+          },
+          {
             "name": "optimistic_validation_state",
             "type": {
               "option": {
@@ -712,12 +801,6 @@
                   "name": "OptimisticValidationState"
                 }
               }
-            }
-          },
-          {
-            "name": "recovery_signers",
-            "type": {
-              "vec": "pubkey"
             }
           }
         ]
@@ -810,6 +893,23 @@
           {
             "name": "nonce",
             "type": "u64"
+          },
+          {
+            "name": "email_ptr",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "zk_verifier_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "last_recovery",
+            "type": "u64"
           }
         ]
       }
@@ -840,7 +940,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "id",
+            "name": "okx_id",
             "type": {
               "array": [
                 "u8",

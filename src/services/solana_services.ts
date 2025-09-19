@@ -23,8 +23,7 @@ import { SOLANA_RPC_URL } from '../consts';
 import { 
   validateSolanaTransactionInput, 
   validateEnvironmentVariable,
-  ValidationError,
-  type SolanaTransactionInput
+  ValidationError
 } from '../helpers/validation';
 
 // ----- helper functions -----
@@ -225,16 +224,19 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
   }
 
   //4. Execute transaction
-  const transactionReceipt = await executor.execute(
-    instructions, 
-    'off-boarding token transfer', 
-    [], 
-    [], 
-    state.amount * LAMPORTS_PER_SOL, 
-    recipientPubkey, 
-    state.assetType
-  );
-
-  return transactionReceipt.txSignature;
+  try {
+    const transactionReceipt = await executor.execute(
+      instructions, 
+      'off-boarding token transfer', 
+      [], 
+      [], 
+      state.amount * LAMPORTS_PER_SOL, 
+      recipientPubkey, 
+      state.assetType
+    );
+    return transactionReceipt.txSignature;
+  } catch (err) {
+    throw new ValidationError('Transaction failed : ' + err['shortMessage'], 'transaction');
+  }
 }
 
