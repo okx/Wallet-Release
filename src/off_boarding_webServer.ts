@@ -16,6 +16,7 @@ import {
   validatePort, 
   ValidationError, 
   sanitizeInput,
+  formatNumberWithoutScientificNotation,
 } from './helpers/validation';
 
 dotenv.config();
@@ -219,7 +220,7 @@ app.post('/execute-solana', async (req, res) => {
 
     const html = renderTemplate('transaction-success', {
       ASSET_TYPE: state.assetType,
-      AMOUNT: state.amount.toString(),
+      AMOUNT: formatNumberWithoutScientificNotation(state.amount),
       UNIT: state.assetType === 'Native SOL' ? 'SOL' : 'tokens',
       RECIPIENT: state.recipient,
       TRANSACTION_HASH: createTransactionHashDisplay(txSignature)
@@ -261,7 +262,7 @@ app.post('/execute-evm', async (req, res) => {
 
     const html = renderTemplate('transaction-success', {
       ASSET_TYPE: state.assetType,
-      AMOUNT: state.amount.toString(),
+      AMOUNT: formatNumberWithoutScientificNotation(state.amount),
       UNIT: unit,
       RECIPIENT: state.recipient,
       TRANSACTION_HASH: createTransactionHashDisplay(txHash)

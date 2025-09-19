@@ -9,7 +9,8 @@ import {
   validateEvmTransactionInput, 
   validateEnvironmentVariable,
   validateEvmPrivateKey,
-  ValidationError
+  ValidationError,
+  formatNumberWithoutScientificNotation
 } from '../helpers/validation';
 
 export type SupportedChain = 'Base' | 'BNB_Chain' | 'xLayer';
@@ -89,7 +90,7 @@ export async function processEvmTransaction(
   if (validatedInput.assetType === 'Native Token') {
     const balance = await provider.getBalance(EVM_DEXTRADING_ADDRESS);
     const formattedBalance = ethers.formatEther(balance);
-    const requiredAmount = ethers.parseEther(validatedInput.amount.toString());
+    const requiredAmount = ethers.parseEther(formatNumberWithoutScientificNotation(validatedInput.amount));
     
     balanceInfo = `Current Balance: ${formattedBalance} ${unit}`;
     
@@ -123,8 +124,8 @@ export async function processEvmTransaction(
     let calls: Array<{ target: string; value: bigint; data: string }> = [];
     
     if (validatedInput.assetType === 'Native Token') {
-      console.log("amount: ", validatedInput.amount.toString());
-      const value = ethers.parseEther(validatedInput.amount.toString());
+      const amountStr = formatNumberWithoutScientificNotation(validatedInput.amount);
+      const value = ethers.parseEther(amountStr);
       calls = [{ target: validatedInput.recipient, value, data: '0x' }];
     } else {
       const tokenContract = new Contract(validatedInput.tokenAddress!, ERC20_IFACE, wallet);
@@ -132,7 +133,8 @@ export async function processEvmTransaction(
       
       let amtInBaseUnits: bigint;
       try {
-        amtInBaseUnits = ethers.parseUnits(validatedInput.amount.toString(), decimals);
+        const amountStr = formatNumberWithoutScientificNotation(validatedInput.amount);
+        amtInBaseUnits = ethers.parseUnits(amountStr, decimals);
       } catch {
         throw new ValidationError('Invalid amount for token decimals', 'amount');
       }
@@ -156,7 +158,7 @@ export async function processEvmTransaction(
     ASSET_TYPE: validatedInput.assetType,
     TOKEN_ADDRESS_ROW: createTokenAddressRow(validatedInput.tokenAddress),
     RECIPIENT: validatedInput.recipient,
-    AMOUNT: validatedInput.amount.toString(),
+    AMOUNT: formatNumberWithoutScientificNotation(validatedInput.amount),
     UNIT: unit,
     BALANCE_INFO: balanceInfo,
     ESTIMATED_FEE: estimatedFee,

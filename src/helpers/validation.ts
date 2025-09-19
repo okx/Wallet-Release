@@ -171,12 +171,28 @@ export function validateSessionId(sessionId: string): string {
     throw new ValidationError('Session ID cannot be empty', 'sessionId');
   }
 
+  // Handle potential scientific notation by converting to number and back to string
+  // This ensures we get the precise value without scientific notation
+  let normalizedSessionId = trimmed;
+  if (trimmed.includes('e') || trimmed.includes('E')) {
+    try {
+      const numValue = Number(trimmed);
+      if (isNaN(numValue) || !isFinite(numValue)) {
+        throw new ValidationError('Invalid session ID format', 'sessionId');
+      }
+      // Convert back to precise string representation without scientific notation
+      normalizedSessionId = numValue.toFixed(0);
+    } catch {
+      throw new ValidationError('Invalid session ID format', 'sessionId');
+    }
+  }
+
   // Basic format validation - should be numeric timestamp-like
-  if (!/^\d+$/.test(trimmed)) {
+  if (!/^\d+$/.test(normalizedSessionId)) {
     throw new ValidationError('Invalid session ID format', 'sessionId');
   }
 
-  return trimmed;
+  return normalizedSessionId;
 }
 
 // Environment variable validation
@@ -330,6 +346,31 @@ export function sanitizeInput(input: string | undefined): string {
     return '';
   }
   return input.trim();
+}
+
+// Utility function to format numbers without scientific notation
+export function formatNumberWithoutScientificNotation(num: number): string {
+  if (!isFinite(num)) {
+    throw new Error('Cannot format infinite or NaN values');
+  }
+  
+  // For integers, use toFixed(0) to avoid scientific notation
+  if (Number.isInteger(num)) {
+    return num.toFixed(0);
+  }
+  
+  // For decimals, check if the string representation contains 'e' 
+  const str = num.toString();
+  if (str.includes('e') || str.includes('E')) {
+    // Use toFixed with appropriate precision to avoid scientific notation
+    // Determine decimal places by converting to string and checking
+    const parts = str.split('e');
+    const exponent = parseInt(parts[1] || '0');
+    const precision = Math.max(0, -exponent + (parts[0].split('.')[1]?.length || 0));
+    return num.toFixed(Math.min(precision, 18)); // Cap at 18 decimal places
+  }
+  
+  return str;
 }
 
 // Port validation for server

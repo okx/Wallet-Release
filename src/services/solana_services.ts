@@ -23,7 +23,8 @@ import { SOLANA_RPC_URL } from '../consts';
 import { 
   validateSolanaTransactionInput, 
   validateEnvironmentVariable,
-  ValidationError
+  ValidationError,
+  formatNumberWithoutScientificNotation
 } from '../helpers/validation';
 
 // ----- helper functions -----
@@ -135,7 +136,7 @@ export async function processSolanaTransaction(
     ASSET_TYPE: validatedInput.assetType,
     TOKEN_ADDRESS_ROW: createTokenAddressRow(validatedInput.mintAddress),
     RECIPIENT: validatedInput.recipient,
-    AMOUNT: validatedInput.amount.toString(),
+    AMOUNT: formatNumberWithoutScientificNotation(validatedInput.amount),
     UNIT: validatedInput.assetType === 'Native SOL' ? 'SOL' : 'tokens',
     BALANCE_INFO: balanceInfo,
     ESTIMATED_FEE: estimatedFee,
@@ -161,6 +162,9 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
   let instructions: TransactionInstruction[] = [];
 
   if (state.assetType === 'Native SOL') {
+    if (state.amount * LAMPORTS_PER_SOL < 1) 
+      throw new ValidationError('Native SOL value is smaller than 1 Lamport (minimal unit)', 'amount');
+
     const vaultTransferSolIx = SystemProgram.transfer({
       fromPubkey: vaultPda,
       toPubkey: recipientPubkey,
@@ -187,7 +191,7 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
     // Get token decimals
     const vaultAccount = await connection.getTokenAccountBalance(vaultTokenAccount);
     const decimals = vaultAccount.value.decimals;
-    const amountInBaseUnits = ethers.parseUnits(state.amount.toString(), decimals);
+    const amountInBaseUnits = ethers.parseUnits(formatNumberWithoutScientificNotation(state.amount), decimals);
 
     const createVaultAtaIx = createAssociatedTokenAccountIdempotentInstruction(
       vaultPda,
