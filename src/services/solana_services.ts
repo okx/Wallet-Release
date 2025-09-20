@@ -98,6 +98,7 @@ export async function processSolanaTransaction(
     }
   } else {
     const tokenMintPubkey = new PublicKey(validatedInput.mintAddress!);
+
     const vaultTokenAccount = getAssociatedTokenAddressSync(
       tokenMintPubkey,
       executor.smartAccountHelper.vault,
@@ -115,8 +116,8 @@ export async function processSolanaTransaction(
         throw new ValidationError(`Insufficient token balance! Need ${validatedInput.amount}, have ${tokenBalance}`, 'balance');
       }
     } catch (err) {
-      balanceInfo = 'Token account not found - balance is 0';
-      throw new ValidationError('Insufficient balance in vault token account', 'balance');
+      balanceInfo = 'Cannot fetch Token account balance.';
+      throw new ValidationError(`Insufficient balance in vault token account. ${balanceInfo}`, 'balance');
     }
   }
 
@@ -192,7 +193,7 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
     const vaultAccount = await connection.getTokenAccountBalance(vaultTokenAccount);
     const decimals = vaultAccount.value.decimals;
     const amountInBaseUnits = ethers.parseUnits(formatNumberWithoutScientificNotation(state.amount), decimals);
-
+    
     const createVaultAtaIx = createAssociatedTokenAccountIdempotentInstruction(
       vaultPda,
       vaultTokenAccount,
