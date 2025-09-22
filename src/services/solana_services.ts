@@ -9,12 +9,11 @@ import {
   sendAndConfirmTransaction,
 } from '@solana/web3.js';
 import {
-  ASSOCIATED_TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountIdempotentInstruction,
-  createAssociatedTokenAccountInstruction,
-  createInitializeImmutableOwnerInstruction,
   createTransferInstruction,
+  createTransferCheckedInstruction,
   getAssociatedTokenAddressSync,
+  TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
 } from '@solana/spl-token';
 import { ethers } from 'ethers';
@@ -52,6 +51,14 @@ function getKeypair(): Keypair {
   }
 }
 
+async function isToken2022(
+  connection: Connection,
+  mint: PublicKey,
+): Promise<boolean> {
+  const info = await connection.getAccountInfo(mint);
+  if (!info) throw new Error('Mint account not found');
+  return info.owner.equals(TOKEN_2022_PROGRAM_ID);
+}
 // ----- user input state -----
 interface SolanaTransactionState {
   assetType: string;
@@ -103,12 +110,12 @@ export async function processSolanaTransaction(
     }
   } else {
     const tokenMintPubkey = new PublicKey(validatedInput.mintAddress!);
-
+    const is2022 = await isToken2022(connection, tokenMintPubkey)
     const vaultTokenAccount = getAssociatedTokenAddressSync(
       tokenMintPubkey,
       executor.smartAccountHelper.vault,
       true,
-      TOKEN_PROGRAM_ID
+      is2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID
     );
 
     try {
@@ -121,8 +128,7 @@ export async function processSolanaTransaction(
         throw new ValidationError(`Insufficient token balance! Need ${validatedInput.amount}, have ${tokenBalance}`, 'balance');
       }
     } catch (err) {
-      balanceInfo = 'Cannot fetch Token account balance.';
-      throw new ValidationError(`Insufficient balance in vault token account. ${balanceInfo}`, 'balance');
+      throw new ValidationError(`Cannot fetch Token account balance. ${err}`, 'balance');
     }
   }
 
@@ -182,18 +188,19 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
     console.log("SPL Token");
     // SPL Token
     const tokenMintPubkey = new PublicKey(state.mintAddress!);
+    const is2022 = await isToken2022(connection, tokenMintPubkey)
     const vaultTokenAccount = getAssociatedTokenAddressSync(
       tokenMintPubkey,
       executor.smartAccountHelper.vault,
       true,
-      TOKEN_PROGRAM_ID
+      is2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID
     );
 
     const recipientTokenAccount = getAssociatedTokenAddressSync(
       tokenMintPubkey,
       recipientPubkey,
       true,
-      TOKEN_PROGRAM_ID
+      is2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID
     );
 
     // Get token decimals
@@ -208,18 +215,29 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
       recipientTokenAccount,
       recipientPubkey,
       tokenMintPubkey,
-      TOKEN_PROGRAM_ID
+      is2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID
     );
 
-    const transferIx = createTransferInstruction(
-      vaultTokenAccount,
-      recipientTokenAccount,
-      vaultPda,
-      Number(amountInBaseUnits),
-      [],
-      TOKEN_PROGRAM_ID
-    );
-   
+    const transferIx = is2022
+      ? createTransferCheckedInstruction(
+          vaultTokenAccount,
+          tokenMintPubkey,
+          recipientTokenAccount,
+          vaultPda,
+          Number(amountInBaseUnits),
+          decimals,
+          [],
+          TOKEN_2022_PROGRAM_ID
+        )
+      : createTransferInstruction(
+          vaultTokenAccount,
+          recipientTokenAccount,
+          vaultPda,
+          Number(amountInBaseUnits),
+          [],
+          TOKEN_PROGRAM_ID
+        );
+    
     if (recipientPubkey.toBase58() !== executor.payerInfo.keyObject.publicKey.toBase58()) {
       //if recipient is not the payer, put instructions in one transaction
       instructions = [createRecipientAtaIx, transferIx];
@@ -230,7 +248,7 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
         recipientTokenAccount,
         recipientPubkey,
         tokenMintPubkey,
-        TOKEN_PROGRAM_ID
+        is2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID
       );
       const createRecipientAtaTxn = new Transaction().add(createRecipientAtaIx);
       await sendAndConfirmTransaction(
