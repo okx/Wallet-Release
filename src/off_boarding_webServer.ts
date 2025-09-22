@@ -213,6 +213,13 @@ app.post('/execute-solana', async (req, res) => {
       return res.json({ success: false, error: 'Session expired' });
     }
 
+    // Prevent double execution
+    if (state.executing) {
+      return res.json({ success: false, error: 'Transaction already in progress or executed' });
+    }
+    state.executing = true;
+    transactionStates.set(session, state);
+
     const txSignature = await executeSolanaTransaction(state);
 
     // Clean up
@@ -251,6 +258,12 @@ app.post('/execute-evm', async (req, res) => {
     if (!state) {
       return res.json({ success: false, error: 'Session expired' });
     }
+
+    if (state.executing) {
+      return res.json({ success: false, error: 'Transaction already in progress or executed' });
+    }
+    state.executing = true;
+    transactionStates.set(session, state);
 
     const txHash = await executeEvmTransaction(state);
 
