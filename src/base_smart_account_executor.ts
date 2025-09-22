@@ -15,6 +15,7 @@ import {
   getLookupTableAccounts,
 } from "./tests/utils/helpers";
 import { LOOKUP_TABLE_ADDRESS } from "./consts";
+import { createAssociatedTokenAccountIdempotentInstruction, getAssociatedTokenAddressSync, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
 export interface ExecutionResult {
   txSignature: string;
@@ -150,8 +151,7 @@ export class BaseSmartAccountExecutor {
         tokenMint: null,
         destinationTokenAccount: null,
         tokenProgram: null,
-      })
-      .postInstructions([
+      }).postInstructions([
         await this.vaultProgram.methods
           .executeBatch({
             deconstructedInstructions,
@@ -164,20 +164,6 @@ export class BaseSmartAccountExecutor {
           .instruction(),
       ])
       .transaction();
-      // .signers([this.payerInfo.keyObject, this.mandatorySignerInfo.keyObject])
-      // .rpc();
-    // let lookupTableAccounts: anchor.web3.AddressLookupTableAccount[] = [];
-    // // Get lookup table accounts if provided
-    // let updatedLookupTableAddresses: PublicKey[] = [this.lookupTableAddress];
-    // if (lookupTableAddresses && lookupTableAddresses.length > 0) {
-    //   updatedLookupTableAddresses = [...lookupTableAddresses];
-    //   updatedLookupTableAddresses.push(this.lookupTableAddress);
-    // }
-
-    // lookupTableAccounts = await getLookupTableAccounts(
-    //   this.provider.connection,
-    //   updatedLookupTableAddresses
-    // );
 
     // Set recent blockhash
     let latestBlockhash = await this.provider.connection.getLatestBlockhash();
@@ -204,6 +190,16 @@ export class BaseSmartAccountExecutor {
     // Log transaction size
     const serializedTx = v0Transaction.serialize();
     console.log(`📏 Final v0 transaction size: ${serializedTx.length} bytes`);
+
+    // Simulate transaction before sending
+    console.log("🔍 Simulating transaction...");
+
+    const simulationResult = await this.provider.connection.simulateTransaction(v0Transaction, {
+      sigVerify: false,
+      replaceRecentBlockhash: true,
+      commitment: "processed",
+    });
+    // console.log("🔍 Simulation result:", simulationResult);
 
     // Execute transaction
     const txSignature = await this.provider.connection.sendTransaction(

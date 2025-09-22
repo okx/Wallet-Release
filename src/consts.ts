@@ -111,24 +111,3 @@ export const METEORA_PROGRAM_ID = new anchor.web3.PublicKey(
 export const METEORA_VAULT_PROGRAM_ID = new anchor.web3.PublicKey(
   "24Uqj9JCLxUeoC3hGfh5W3s9FM9uCHDS2SG3LYwBpyTi"
 );
-
-// custom types
-export type AddedAccount = {
-  address: anchor.web3.PublicKey;
-  info: unknown;
-};
-
-export const LAMPORTS_PER_SIGNER = 5000;
-export const MICRO_LAMPORTS_PER_LAMPORT = 1_000_000;
-
-export const SPL_tokenChoices = [
-  { name: 'WSOL', value: WSOL_MINT },
-  { name: 'USDC', value: USDC_MINT },
-  { name: 'USDT', value: USDT_MINT },
-  { name: 'PYUSD', value: PYUSD_MINT },
-  { name: 'JITOSOL', value: JITOSOL_MINT },
-  { name: 'BSOL', value: BSOL_MINT },
-  { name: 'CWIF', value: MINT_$CWIF },
-  { name: 'RAY', value: RAY_MINT },
-  { name: 'Custom address', value: 'custom' }
-];

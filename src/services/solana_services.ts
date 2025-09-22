@@ -6,9 +6,13 @@ import {
   TransactionInstruction,
   LAMPORTS_PER_SOL,
   SystemProgram,
+  sendAndConfirmTransaction,
 } from '@solana/web3.js';
 import {
+  ASSOCIATED_TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountIdempotentInstruction,
+  createAssociatedTokenAccountInstruction,
+  createInitializeImmutableOwnerInstruction,
   createTransferInstruction,
   getAssociatedTokenAddressSync,
   TOKEN_PROGRAM_ID,
@@ -193,14 +197,6 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
     const vaultAccount = await connection.getTokenAccountBalance(vaultTokenAccount);
     const decimals = vaultAccount.value.decimals;
     const amountInBaseUnits = ethers.parseUnits(formatNumberWithoutScientificNotation(state.amount), decimals);
-    
-    const createVaultAtaIx = createAssociatedTokenAccountIdempotentInstruction(
-      vaultPda,
-      vaultTokenAccount,
-      vaultPda,
-      tokenMintPubkey,
-      TOKEN_PROGRAM_ID
-    );
 
     const createRecipientAtaIx = createAssociatedTokenAccountIdempotentInstruction(
       vaultPda,
@@ -218,14 +214,27 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
       [],
       TOKEN_PROGRAM_ID
     );
-
-    instructions = [createVaultAtaIx];
-    
+   
     if (recipientPubkey.toBase58() !== executor.payerInfo.keyObject.publicKey.toBase58()) {
-      instructions.push(createRecipientAtaIx);
+      //if recipient is not the payer, put instructions in one transaction
+      instructions = [createRecipientAtaIx, transferIx];
+    } else {
+       //elseif recipient is the payer, create recipient token account beforehand in another transaction
+      const createRecipientAtaIx = createAssociatedTokenAccountIdempotentInstruction(
+        keypair.publicKey,
+        recipientTokenAccount,
+        recipientPubkey,
+        tokenMintPubkey,
+        TOKEN_PROGRAM_ID
+      );
+      const createRecipientAtaTxn = new Transaction().add(createRecipientAtaIx);
+      await sendAndConfirmTransaction(
+        connection,
+        createRecipientAtaTxn,
+        [keypair] // signer
+      );
+      instructions = [transferIx];
     }
-    
-    instructions.push(transferIx);
   }
 
   //4. Execute transaction
