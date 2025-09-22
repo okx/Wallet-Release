@@ -28,7 +28,8 @@ import {
   validateSolanaTransactionInput, 
   validateEnvironmentVariable,
   ValidationError,
-  formatNumberWithoutScientificNotation
+  formatNumberWithoutScientificNotation,
+  validateAmountDecimals
 } from '../helpers/validation';
 
 // ----- helper functions -----
@@ -152,6 +153,7 @@ export async function processSolanaTransaction(
 }
 
 export async function executeSolanaTransaction(state: SolanaTransactionState): Promise<string> {
+  console.log("executeSolanaTransaction: ");
   //1. Get AA wallet, connection, keypair 
   const AAWalletAddress = getAAWalletAddress();
   const connection = createConnection();
@@ -177,6 +179,7 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
     });
     instructions = [vaultTransferSolIx];
   } else {
+    console.log("SPL Token");
     // SPL Token
     const tokenMintPubkey = new PublicKey(state.mintAddress!);
     const vaultTokenAccount = getAssociatedTokenAddressSync(
@@ -196,8 +199,10 @@ export async function executeSolanaTransaction(state: SolanaTransactionState): P
     // Get token decimals
     const vaultAccount = await connection.getTokenAccountBalance(vaultTokenAccount);
     const decimals = vaultAccount.value.decimals;
+    
+    // Validate amount doesn't have more decimals than token supports
+    validateAmountDecimals(state.amount, decimals, 'amount');
     const amountInBaseUnits = ethers.parseUnits(formatNumberWithoutScientificNotation(state.amount), decimals);
-
     const createRecipientAtaIx = createAssociatedTokenAccountIdempotentInstruction(
       vaultPda,
       recipientTokenAccount,

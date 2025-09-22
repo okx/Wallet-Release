@@ -10,7 +10,8 @@ import {
   validateEnvironmentVariable,
   validateEvmPrivateKey,
   ValidationError,
-  formatNumberWithoutScientificNotation
+  formatNumberWithoutScientificNotation,
+  validateAmountDecimals
 } from '../helpers/validation';
 
 export type SupportedChain = 'Base' | 'BNB_Chain' | 'xLayer';
@@ -186,7 +187,10 @@ export async function executeEvmTransaction(state: EvmTransactionState): Promise
     const tokenContract = new Contract(state.tokenAddress!, ERC20_IFACE, wallet);
     const decimals = await getTokenDecimals(tokenContract);
     
-      let amtInBaseUnits: bigint;
+    // Validate amount doesn't have more decimals than token supports
+    validateAmountDecimals(Number(state.amount), decimals, 'amount');
+    
+    let amtInBaseUnits: bigint;
     try {
       amtInBaseUnits = ethers.parseUnits(state.amountStr, decimals);
     } catch {

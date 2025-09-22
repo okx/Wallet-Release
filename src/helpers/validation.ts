@@ -160,6 +160,20 @@ export function validateAmount(amount: string | number, fieldName: string = 'amo
   return numAmount;
 }
 
+// Token decimal validation
+export function validateAmountDecimals(amount: number, tokenDecimals: number, fieldName: string = 'amount'): void {
+  const amountStr = formatNumberWithoutScientificNotation(amount);
+  const decimalParts = amountStr.split('.');
+  const actualDecimals = decimalParts.length > 1 ? decimalParts[1].length : 0;
+  
+  if (actualDecimals > tokenDecimals) {
+    throw new ValidationError(
+      `Amount has ${actualDecimals} decimal places, but token only supports ${tokenDecimals} decimals`,
+      fieldName
+    );
+  }
+}
+
 // Session validation
 export function validateSessionId(sessionId: string): string {
   if (!sessionId || typeof sessionId !== 'string') {
