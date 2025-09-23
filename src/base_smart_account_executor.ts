@@ -15,7 +15,6 @@ import {
   getLookupTableAccounts,
 } from "./tests/utils/helpers";
 import { LOOKUP_TABLE_ADDRESS } from "./consts";
-import { createAssociatedTokenAccountIdempotentInstruction, getAssociatedTokenAddressSync, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 
 export interface ExecutionResult {
   txSignature: string;

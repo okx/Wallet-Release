@@ -1,5 +1,5 @@
 /**
- * Emergency Off-Boarding Tool - Main Server
+ * Wallet Release - Main Server
  * Handles HTTP requests and delegates business logic to services
  */
 import express from 'express';
@@ -300,7 +300,7 @@ app.post('/execute-evm', async (req, res) => {
 
 // Start server and keep reference for graceful shutdown
 const server = app.listen(PORT, () => {
-  console.log(`🚀 Emergency Escape Off-Boarding Tool is running`);
+  console.log(`🚀 Wallet Release is running`);
   console.log(`📱 Open your browser and navigate to http://localhost:${PORT} to start using the tool`);
 });
 
