@@ -19,8 +19,6 @@ export function renderTemplate(templateName: string, variables: Record<string, s
     templateCache.set(templateName, template);
   }
 
-  // Note: Styles are now served via external CSS file, no longer injected inline
-
   // Replace all variables in the template
   for (const [key, value] of Object.entries(variables)) {
     const regex = new RegExp(`{{${key}}}`, 'g');

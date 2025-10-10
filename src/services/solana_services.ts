@@ -152,7 +152,9 @@ export async function processSolanaTransaction(
     UNIT: validatedInput.assetType === 'Native SOL' ? 'SOL' : 'tokens',
     BALANCE_INFO: balanceInfo,
     ESTIMATED_FEE: estimatedFee,
-    EXECUTE_ENDPOINT: '/execute-solana'
+    EXECUTE_ENDPOINT: '/execute-solana',
+    SENDER_ADDRESS: keypair.publicKey.toBase58(),
+    AA_WALLET_ADDRESS: AAWalletAddress
   };
 
   return { balanceInfo, estimatedFee, templateData };

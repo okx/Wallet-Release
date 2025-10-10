@@ -163,7 +163,9 @@ export async function processEvmTransaction(
     UNIT: unit,
     BALANCE_INFO: balanceInfo,
     ESTIMATED_FEE: estimatedFee,
-    EXECUTE_ENDPOINT: '/execute-evm'
+    EXECUTE_ENDPOINT: '/execute-evm',
+    SENDER_ADDRESS: wallet.address,
+    AA_WALLET_ADDRESS: EVM_DEXTRADING_ADDRESS
   };
 
   return { balanceInfo, estimatedFee, templateData };
