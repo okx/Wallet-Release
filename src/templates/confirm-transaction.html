@@ -60,16 +60,25 @@
     
     <script>
         async function executeTransaction() {
-            const response = await fetch('{{EXECUTE_ENDPOINT}}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ session: '{{SESSION_ID}}' }),
-            });
-            
-            const result = await response.text();
-            document.body.innerHTML = result;
+            try {
+                const response = await fetch('{{EXECUTE_ENDPOINT}}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ session: '{{SESSION_ID}}' }),
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Transaction failed: ' + response.statusText);
+                }
+                
+                const result = await response.text();
+                document.body.innerHTML = result;
+            } catch (error) {
+                console.error('Error executing transaction:', error);
+                alert('Error executing transaction: ' + error.message + '\n\nPlease check the console for details.');
+            }
         }
     </script>
 </body>

@@ -7,6 +7,19 @@ const templateCache: Map<string, string> = new Map();
 // Read and cache styles
 let stylesContent: string | null = null;
 
+function escapeHtml(unsafe: string): string {
+  return unsafe
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+// List of variables that contain safe HTML and should NOT be escaped
+const SAFE_HTML_VARIABLES = ['TRANSACTION_HASH', 'TOKEN_ADDRESS_ROW'];
+
+// Update renderTemplate to escape values
 export function renderTemplate(templateName: string, variables: Record<string, string> = {}): string {
   // Get template content
   let template: string;
@@ -21,8 +34,10 @@ export function renderTemplate(templateName: string, variables: Record<string, s
 
   // Replace all variables in the template
   for (const [key, value] of Object.entries(variables)) {
+    // Don't escape variables that contain safe HTML
+    const processedValue = SAFE_HTML_VARIABLES.includes(key) ? value : escapeHtml(value);
     const regex = new RegExp(`{{${key}}}`, 'g');
-    template = template.replace(regex, value);
+    template = template.replace(regex, processedValue);
   }
 
   return template;
@@ -34,10 +49,11 @@ export function renderTemplate(templateName: string, variables: Record<string, s
 export function createTokenAddressRow(tokenAddress: string | null): string {
   if (!tokenAddress) return '';
   
+  const escapedAddress = escapeHtml(tokenAddress);
   return `
     <div class="detail-row">
         <span class="detail-label">Token Address:</span>
-        <span class="detail-value">${tokenAddress}</span>
+        <span class="detail-value">${escapedAddress}</span>
     </div>
   `;
 }
@@ -48,9 +64,10 @@ export function createTokenAddressRow(tokenAddress: string | null): string {
 export function createTransactionHashDisplay(txHash: string | null): string {
   if (!txHash) return '';
   
+  const escapedHash = escapeHtml(txHash);
   return `
     <p><strong>Transaction Hash:</strong></p>
-    <div class="tx-hash">${txHash}</div>
+    <div class="tx-hash">${escapedHash}</div>
   `;
 }
 
