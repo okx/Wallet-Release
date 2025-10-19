@@ -61,6 +61,33 @@ app.use(limiter);
 // Store transaction states 
 const transactionStates: Map<string, any> = new Map();
 
+// Whitelist of allowed redirect paths
+const ALLOWED_REDIRECTS = {
+  HOME: '/',
+  SOLANA_FORM: '/solana-form',
+  EVM_FORM: '/evm-form'
+} as const;
+
+function safeRedirect(res: express.Response, path: keyof typeof ALLOWED_REDIRECTS, params?: Record<string, string>) {
+  let redirectUrl = ALLOWED_REDIRECTS[path];
+  
+  if (params) {
+    const queryParams = new URLSearchParams();
+    for (const [key, value] of Object.entries(params)) {
+      // Only allow specific parameter names
+      if (['session', 'chain'].includes(key)) {
+        queryParams.append(key, value);
+      }
+    }
+    const queryString = queryParams.toString();
+    if (queryString) {
+      redirectUrl += `?${queryString}`;
+    }
+  }
+  
+  res.redirect(redirectUrl);
+}
+
 // Serve favicon
 app.get('/favicon.ico', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'favicon.png'));
@@ -87,9 +114,9 @@ app.post('/select-chain', (req, res) => {
     transactionStates.set(sessionId, { chain });
     
     if (chain === 'Solana') {
-      res.redirect(`/solana-form?session=${sessionId}`);
+      safeRedirect(res, 'SOLANA_FORM', { session: sessionId });
     } else {
-      res.redirect(`/evm-form?session=${sessionId}&chain=${chain}`);
+      safeRedirect(res, 'EVM_FORM', { session: sessionId, chain: chain });
     }
   } catch (error) {
     console.error('Chain selection validation error:', error);
@@ -110,7 +137,7 @@ app.get('/solana-form', (req, res) => {
     const state = transactionStates.get(sessionId);
     
     if (!state) {
-      return res.redirect('/');
+      return safeRedirect(res, 'HOME');
     }
 
     const html = renderTemplate('solana-form', {
@@ -120,7 +147,7 @@ app.get('/solana-form', (req, res) => {
     res.send(html);
   } catch (error) {
     console.error('Session validation error:', error);
-    res.redirect('/');
+    safeRedirect(res, 'HOME');
   }
 });
 
@@ -132,7 +159,7 @@ app.get('/evm-form', (req, res) => {
     let processedChain = chain.trim().replaceAll("_", " ").trim();
     const state = transactionStates.get(sessionId);
     if (!state) {
-      return res.redirect('/');
+      return safeRedirect(res, 'HOME');
     }
 
     const html = renderTemplate('evm-form', {
@@ -143,7 +170,7 @@ app.get('/evm-form', (req, res) => {
     res.send(html);
   } catch (error) {
     console.error('EVM form validation error:', error);
-    res.redirect('/');
+    safeRedirect(res, 'HOME');
   }
 });
 
@@ -154,7 +181,7 @@ app.post('/process-solana', async (req, res) => {
     const state = transactionStates.get(session);
     
     if (!state) {
-      return res.redirect('/');
+      return safeRedirect(res, 'HOME');
     }
 
     const { templateData } = await processSolanaTransaction(assetType, mintAddress, recipient, amount);
@@ -198,7 +225,7 @@ app.post('/process-evm', async (req, res) => {
     const state = transactionStates.get(session);
     
     if (!state) {
-      return res.redirect('/');
+      return safeRedirect(res, 'HOME');
     }
 
     const { templateData } = await processEvmTransaction(state.chain, assetType, tokenAddress, recipient, amount);
