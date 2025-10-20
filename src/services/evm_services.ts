@@ -91,12 +91,13 @@ export async function processEvmTransaction(
   if (validatedInput.assetType === 'Native Token') {
     const balance = await provider.getBalance(EVM_DEXTRADING_ADDRESS);
     const formattedBalance = ethers.formatEther(balance);
-    const requiredAmount = ethers.parseEther(formatNumberWithoutScientificNotation(validatedInput.amount));
+    const amount = formatNumberWithoutScientificNotation(validatedInput.amount);
+    const requiredAmount = ethers.parseEther(amount);
     
     balanceInfo = `Current Balance: ${formattedBalance} ${unit}`;
     
     if (balance < requiredAmount) {
-      throw new ValidationError(`Insufficient balance! Need ${validatedInput.amount}, have ${formattedBalance}`, 'balance');
+      throw new ValidationError(`Insufficient balance! Need ${amount}, have ${formattedBalance}`, 'balance');
     }
   } else {
     // ERC20 Token

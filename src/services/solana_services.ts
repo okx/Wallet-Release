@@ -104,9 +104,9 @@ export async function processSolanaTransaction(
     const balance = await connection.getBalance(vaultPda);
     const balanceSOL = balance / LAMPORTS_PER_SOL;
     balanceInfo = `Current Balance: ${balanceSOL} SOL`;
-    
+    const amount = formatNumberWithoutScientificNotation(validatedInput.amount);
     if (balance < validatedInput.amount * LAMPORTS_PER_SOL) {
-      throw new ValidationError(`Insufficient balance! Need ${validatedInput.amount} SOL, have ${balanceSOL} SOL`, 'balance');
+      throw new ValidationError(`Insufficient balance! Need ${amount} SOL, have ${balanceSOL} SOL`, 'balance');
     }
   } else {
     const tokenMintPubkey = new PublicKey(validatedInput.mintAddress!);
