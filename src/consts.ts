@@ -17,7 +17,6 @@ export const POST_JSON = `"origin":"${ORIGIN}","androidPackageName":"${ANDROID_P
 
 //rpc urls
 export const SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
-// export const SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
 export const BASE_RPC_URL = "https://mainnet.base.org";
 export const BNB_CHAIN_RPC_URL = "https://bsc-dataseed.binance.org";
 export const XLAYER_RPC_URL = "https://mainnet.xlayer-rpc.com";

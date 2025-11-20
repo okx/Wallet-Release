@@ -37,7 +37,10 @@ function getAAWalletAddress(): string {
 }
 
 function createConnection(): Connection {
-  return new Connection(SOLANA_RPC_URL, 'confirmed');
+  return new Connection(SOLANA_RPC_URL, {
+    commitment: 'confirmed',
+    confirmTransactionInitialTimeout: 120000,
+  });
 }
 
 function getKeypair(): Keypair {
