@@ -16,10 +16,11 @@ export const PRE_JSON = '{"type":"webauthn.get"';
 export const POST_JSON = `"origin":"${ORIGIN}","androidPackageName":"${ANDROID_PACKAGE_NAME}"}`;
 
 //rpc urls
-export const SOLANA_RPC_URL = "https://api.mainnet-beta.solana.com";
-export const BASE_RPC_URL = "https://mainnet.base.org";
-export const BNB_CHAIN_RPC_URL = "https://bsc-dataseed.binance.org";
-export const XLAYER_RPC_URL = "https://mainnet.xlayer-rpc.com";
+export const SOLANA_RPC_URL = process.env.SOLANA_RPC_URL || "https://api.mainnet-beta.solana.com";
+export const BASE_RPC_URL =  process.env.BASE_RPC_URL || "https://mainnet.base.org";
+export const BNB_CHAIN_RPC_URL = process.env.BNB_CHAIN_RPC_URL || "https://bsc-dataseed.binance.org";
+export const XLAYER_RPC_URL = process.env.XLAYER_RPC_URL || "https://mainnet.xlayer-rpc.com";
+
 //solana lookup table address
 export const LOOKUP_TABLE_ADDRESS = "Gjj1dX4UR6HcXGDm48wJHCZjompq5SJ6eKse1Trfq6Qe";
 
