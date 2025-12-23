@@ -22,7 +22,12 @@ import { BaseSmartAccountExecutor } from '../base_smart_account_executor';
 import { 
   createTokenAddressRow, 
 } from '../template-renderer';
-import { SOLANA_RPC_URL } from '../consts';
+import { 
+  SOLANA_RPC_URL,
+  RPC_CONNECT_TIMEOUT,
+  RPC_BODY_TIMEOUT,
+  TX_CONFIRM_TIMEOUT,
+} from '../consts';
 import { 
   validateSolanaTransactionInput, 
   validateEnvironmentVariable,
@@ -30,16 +35,20 @@ import {
   formatNumberWithoutScientificNotation,
   validateAmountDecimals
 } from '../helpers/validation';
+import { Agent } from "undici";
 
 // ----- helper functions -----
 function getAAWalletAddress(): string {
   return validateEnvironmentVariable('SOL_DEXTRADING_ADDRESS', process.env.SOL_DEXTRADING_ADDRESS);
 }
 
+const rpcAgent = new Agent({ connectTimeout: RPC_CONNECT_TIMEOUT, bodyTimeout: RPC_BODY_TIMEOUT });
+
 function createConnection(): Connection {
   return new Connection(SOLANA_RPC_URL, {
     commitment: 'confirmed',
-    confirmTransactionInitialTimeout: 120000,
+    confirmTransactionInitialTimeout: TX_CONFIRM_TIMEOUT,
+    fetch: (url, opts) => fetch(url, { ...opts, dispatcher: rpcAgent }),
   });
 }
 
@@ -82,6 +91,7 @@ export async function processSolanaTransaction(
   estimatedFee: string;
   templateData: any;
 }> {
+  console.log("processSolanaTransaction");
   //1. Validate user inputs
   const validatedInput = validateSolanaTransactionInput({
     assetType,
@@ -164,7 +174,7 @@ export async function processSolanaTransaction(
 }
 
 export async function executeSolanaTransaction(state: SolanaTransactionState): Promise<string> {
-  console.log("executeSolanaTransaction: ");
+  console.log("executeSolanaTransaction");
   //1. Get AA wallet, connection, keypair 
   const AAWalletAddress = getAAWalletAddress();
   const connection = createConnection();

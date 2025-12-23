@@ -12,6 +12,8 @@
     "ec-pem": "^0.18.0",
     "ethers": "^6.15.0",
     "express": "^4.18.2",
+    "express-rate-limit": "^6.8.0",
+    "helmet": "^7.1.2",
     "inquirer": "^8.2.7",
     "litesvm": "^0.2.0",
     "pem": "^1.14.8",
@@ -19,8 +21,7 @@
     "react-dom": "^19.1.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.2",
-    "helmet": "^7.1.2",
-    "express-rate-limit": "^6.8.0"
+    "undici": "^7.16.0"
   },
   "scripts": {
     "terminal": "node -r dotenv/config -r ts-node/register/transpile-only src/off_boarding_terminal.ts",
