@@ -643,6 +643,11 @@
       "code": 6009,
       "name": "InvalidAccountDerivation",
       "msg": "Invalid account derivation"
+    },
+    {
+      "code": 6010,
+      "name": "InvalidStackHeight",
+      "msg": "Invalid stack height"
     }
   ],
   "types": [

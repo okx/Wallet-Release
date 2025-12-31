@@ -322,6 +322,32 @@
           "signer": true
         },
         {
+          "name": "sa_payer",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  97,
+                  95,
+                  112,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ]
+          }
+        },
+        {
           "name": "solana_signer",
           "signer": true,
           "optional": true
@@ -472,9 +498,50 @@
         {
           "name": "token_program",
           "optional": true
+        },
+        {
+          "name": "nonce_account",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  110,
+                  111,
+                  110,
+                  99,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account"
+              },
+              {
+                "kind": "arg",
+                "path": "nonce_key.ok_or(SaError :: NonceKeyNotFound) ? "
+              }
+            ]
+          }
         }
       ],
       "args": [
+        {
+          "name": "nonce_key",
+          "type": {
+            "option": "u64"
+          }
+        },
         {
           "name": "ix_data",
           "type": "bytes"
@@ -504,6 +571,12 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "name": "expiry_timestamp",
+          "type": {
+            "option": "u64"
           }
         }
       ]
@@ -705,6 +778,12 @@
               }
             }
           }
+        },
+        {
+          "name": "expiry_timestamp",
+          "type": {
+            "option": "u64"
+          }
         }
       ]
     },
@@ -853,6 +932,12 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "name": "expiry_timestamp",
+          "type": {
+            "option": "u64"
           }
         }
       ]
@@ -1561,6 +1646,86 @@
       "args": []
     },
     {
+      "name": "revoke_creator",
+      "discriminator": [
+        181,
+        239,
+        20,
+        154,
+        109,
+        44,
+        75,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "revoke_webauthn_moderator",
+      "discriminator": [
+        91,
+        238,
+        49,
+        85,
+        248,
+        243,
+        18,
+        64
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "simulate_close_and_migrate",
       "discriminator": [
         186,
@@ -1577,6 +1742,32 @@
           "name": "payer",
           "writable": true,
           "signer": true
+        },
+        {
+          "name": "sa_payer",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  97,
+                  95,
+                  112,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account.id",
+                "account": "SmartAccount"
+              }
+            ]
+          }
         },
         {
           "name": "solana_signer",
@@ -1729,9 +1920,50 @@
         {
           "name": "token_program",
           "optional": true
+        },
+        {
+          "name": "nonce_account",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  110,
+                  111,
+                  110,
+                  99,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account"
+              },
+              {
+                "kind": "arg",
+                "path": "nonce_key.ok_or(SaError :: NonceKeyNotFound) ? "
+              }
+            ]
+          }
         }
       ],
       "args": [
+        {
+          "name": "nonce_key",
+          "type": {
+            "option": "u64"
+          }
+        },
         {
           "name": "ix_data",
           "type": "bytes"
@@ -1761,6 +1993,12 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "name": "expiry_timestamp",
+          "type": {
+            "option": "u64"
           }
         }
       ]
@@ -1890,6 +2128,12 @@
                 ]
               }
             }
+          }
+        },
+        {
+          "name": "expiry_timestamp",
+          "type": {
+            "option": "u64"
           }
         }
       ]
@@ -2040,6 +2284,12 @@
               }
             }
           }
+        },
+        {
+          "name": "expiry_timestamp",
+          "type": {
+            "option": "u64"
+          }
         }
       ]
     },
@@ -2058,6 +2308,7 @@
       "accounts": [
         {
           "name": "tx_payer",
+          "writable": true,
           "signer": true
         },
         {
@@ -2111,9 +2362,56 @@
         {
           "name": "webauthn_table",
           "optional": true
+        },
+        {
+          "name": "nonce_account",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  110,
+                  111,
+                  110,
+                  99,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account"
+              },
+              {
+                "kind": "arg",
+                "path": "nonce_key.ok_or(SaError :: NonceKeyNotFound) ? "
+              }
+            ]
+          }
         }
       ],
       "args": [
+        {
+          "name": "nonce_key",
+          "type": {
+            "option": "u64"
+          }
+        },
+        {
+          "name": "expiry_timestamp",
+          "type": {
+            "option": "u64"
+          }
+        },
         {
           "name": "webauthn_args",
           "type": {
@@ -2181,6 +2479,93 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "simulate_validate_optimistic_execution_v2",
+      "discriminator": [
+        192,
+        208,
+        252,
+        24,
+        216,
+        51,
+        250,
+        216
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "smart_account_vault"
+        },
+        {
+          "name": "system_program",
+          "optional": true,
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "nonce_account",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  110,
+                  111,
+                  110,
+                  99,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account"
+              },
+              {
+                "kind": "arg",
+                "path": "nonce_key.ok_or(SaError :: NonceKeyNotFound) ? "
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "nonce_key",
+          "type": {
+            "option": "u64"
+          }
+        }
+      ]
     },
     {
       "name": "update_admin",
@@ -2365,6 +2750,7 @@
       "accounts": [
         {
           "name": "tx_payer",
+          "writable": true,
           "signer": true
         },
         {
@@ -2418,9 +2804,56 @@
         {
           "name": "webauthn_table",
           "optional": true
+        },
+        {
+          "name": "nonce_account",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  110,
+                  111,
+                  110,
+                  99,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account"
+              },
+              {
+                "kind": "arg",
+                "path": "nonce_key.ok_or(SaError :: NonceKeyNotFound) ? "
+              }
+            ]
+          }
         }
       ],
       "args": [
+        {
+          "name": "nonce_key",
+          "type": {
+            "option": "u64"
+          }
+        },
+        {
+          "name": "expiry_timestamp",
+          "type": {
+            "option": "u64"
+          }
+        },
         {
           "name": "webauthn_args",
           "type": {
@@ -2488,6 +2921,93 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "validate_optimistic_execution_v2",
+      "discriminator": [
+        69,
+        200,
+        154,
+        94,
+        16,
+        190,
+        17,
+        20
+      ],
+      "accounts": [
+        {
+          "name": "tx_payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "smart_account",
+          "writable": true
+        },
+        {
+          "name": "sysvar_instructions",
+          "address": "Sysvar1nstructions1111111111111111111111111"
+        },
+        {
+          "name": "vault_program",
+          "address": "va1t8sdGkReA6XFgAeZGXmdQoiEtMirwy4ifLv7yGdH"
+        },
+        {
+          "name": "vault_state",
+          "writable": true
+        },
+        {
+          "name": "smart_account_vault"
+        },
+        {
+          "name": "system_program",
+          "optional": true,
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "nonce_account",
+          "writable": true,
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  110,
+                  111,
+                  110,
+                  99,
+                  101,
+                  95,
+                  97,
+                  99,
+                  99,
+                  111,
+                  117,
+                  110,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "smart_account"
+              },
+              {
+                "kind": "arg",
+                "path": "nonce_key.ok_or(SaError :: NonceKeyNotFound) ? "
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "nonce_key",
+          "type": {
+            "option": "u64"
+          }
+        }
+      ]
     }
   ],
   "accounts": [
@@ -2502,6 +3022,19 @@
         250,
         204,
         130
+      ]
+    },
+    {
+      "name": "NonceAccount",
+      "discriminator": [
+        110,
+        202,
+        133,
+        201,
+        147,
+        206,
+        238,
+        84
       ]
     },
     {
@@ -2556,19 +3089,6 @@
         57,
         71,
         84
-      ]
-    },
-    {
-      "name": "AdminRevoked",
-      "discriminator": [
-        221,
-        50,
-        198,
-        169,
-        2,
-        46,
-        0,
-        73
       ]
     },
     {
@@ -2988,8 +3508,8 @@
     },
     {
       "code": 6028,
-      "name": "InvalidMaxSlot",
-      "msg": "Invalid max slot"
+      "name": "InvalidMaxTimestamp",
+      "msg": "Invalid max timestamp"
     },
     {
       "code": 6029,
@@ -3140,6 +3660,76 @@
       "code": 6058,
       "name": "MinimumOneRecoverySignerRequired",
       "msg": "Minimum one recovery signer required"
+    },
+    {
+      "code": 6059,
+      "name": "NotDeployer",
+      "msg": "Not deployer"
+    },
+    {
+      "code": 6060,
+      "name": "InvalidStackHeight",
+      "msg": "Invalid stack height"
+    },
+    {
+      "code": 6061,
+      "name": "ArithmeticOverflow",
+      "msg": "Arithmetic overflow"
+    },
+    {
+      "code": 6062,
+      "name": "ArithmeticUnderflow",
+      "msg": "Arithmetic underflow"
+    },
+    {
+      "code": 6063,
+      "name": "InvalidPubkey",
+      "msg": "Invalid Pubkey"
+    },
+    {
+      "code": 6064,
+      "name": "Secp256r1InvalidInstructionDataLength",
+      "msg": "Secp256r1 invalid instruction data length"
+    },
+    {
+      "code": 6065,
+      "name": "Secp256r1MessageInvalidLength",
+      "msg": "Secp256r1 message invalid length"
+    },
+    {
+      "code": 6066,
+      "name": "Secp256r1HeaderMismatch",
+      "msg": "Secp256r1 header mismatch"
+    },
+    {
+      "code": 6067,
+      "name": "Secp256r1MessageMismatch",
+      "msg": "Secp256r1 message mismatch"
+    },
+    {
+      "code": 6068,
+      "name": "InvalidPasskey",
+      "msg": "Invalid passkey"
+    },
+    {
+      "code": 6069,
+      "name": "AuthDataFlagMismatch",
+      "msg": "Authenticator data flags mismatch"
+    },
+    {
+      "code": 6070,
+      "name": "Secp256r1IxInvalid",
+      "msg": "Secp256r1 ix invalid"
+    },
+    {
+      "code": 6071,
+      "name": "TransactionExpired",
+      "msg": "Transaction expired"
+    },
+    {
+      "code": 6072,
+      "name": "NonceKeyNotFound",
+      "msg": "Nonce key not found"
     }
   ],
   "types": [
@@ -3180,24 +3770,16 @@
       }
     },
     {
-      "name": "AdminRevoked",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "revoked_admin",
-            "type": "pubkey"
-          }
-        ]
-      }
-    },
-    {
       "name": "AdminUpdated",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "admin",
+            "name": "previous_admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "current_admin",
             "type": "pubkey"
           }
         ]
@@ -3409,7 +3991,11 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "creator",
+            "name": "previous_creator",
+            "type": "pubkey"
+          },
+          {
+            "name": "current_creator",
             "type": "pubkey"
           }
         ]
@@ -3442,6 +4028,17 @@
           {
             "name": "nonce_used",
             "type": "u64"
+          },
+          {
+            "name": "intent_hash",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
           }
         ]
       }
@@ -3499,6 +4096,17 @@
             "type": {
               "vec": "pubkey"
             }
+          },
+          {
+            "name": "intent_hash",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
           }
         ]
       }
@@ -3541,6 +4149,18 @@
       }
     },
     {
+      "name": "NonceAccount",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "nonce",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "OptimisticExecutionValidated",
       "type": {
         "kind": "struct",
@@ -3576,7 +4196,7 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "max_slot",
+            "name": "max_timestamp",
             "type": "u64"
           },
           {
@@ -3611,7 +4231,7 @@
             "type": "u64"
           },
           {
-            "name": "max_slot",
+            "name": "max_timestamp",
             "type": "u64"
           },
           {
@@ -3628,7 +4248,7 @@
             "type": "pubkey"
           },
           {
-            "name": "validation_slot",
+            "name": "validation_timestamp",
             "type": "u64"
           },
           {
@@ -3776,6 +4396,15 @@
             "name": "recovery_signers",
             "type": {
               "vec": "pubkey"
+            }
+          },
+          {
+            "name": "intent_hash",
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
             }
           }
         ]
@@ -4015,6 +4644,17 @@
           {
             "name": "smart_account",
             "type": "pubkey"
+          },
+          {
+            "name": "intent_hash",
+            "type": {
+              "option": {
+                "array": [
+                  "u8",
+                  32
+                ]
+              }
+            }
           }
         ]
       }
@@ -4223,7 +4863,11 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "webauthn_moderator",
+            "name": "previous_moderator",
+            "type": "pubkey"
+          },
+          {
+            "name": "current_moderator",
             "type": "pubkey"
           }
         ]

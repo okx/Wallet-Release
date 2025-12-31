@@ -135,7 +135,7 @@ export class BaseSmartAccountExecutor {
 
     // Execute transaction
     const executeTx = await this.saProgram.methods
-      .validateExecution(null, new anchor.BN(tokenAmount), null)
+      .validateExecution(null, null, null, new anchor.BN(tokenAmount), null)
       .accounts({
         txPayer: this.payerInfo.keyObject.publicKey,
         solanaSigner: this.mandatorySignerInfo.keyObject.publicKey,
@@ -150,6 +150,7 @@ export class BaseSmartAccountExecutor {
         tokenMint: null,
         destinationTokenAccount: null,
         tokenProgram: null,
+        nonceAccount: null,
       }).postInstructions([
         await this.vaultProgram.methods
           .executeBatch({
