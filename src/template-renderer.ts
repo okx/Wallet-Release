@@ -77,6 +77,8 @@ export function createTransactionHashDisplay(txHash: string | null): string {
 export function getNativeTokenSymbol(chain: string): string {
   switch (chain) {
     case 'Base':
+    case 'Arbitrum':
+    case 'Ethereum':
       return 'ETH';
     case 'BNB_Chain':
       return 'BNB';

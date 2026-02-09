@@ -25,6 +25,8 @@ export const TX_CONFIRM_TIMEOUT = Number(process.env.TX_CONFIRM_TIMEOUT) || 120_
 export const BASE_RPC_URL =  process.env.BASE_RPC_URL || "https://mainnet.base.org";
 export const BNB_CHAIN_RPC_URL = process.env.BNB_CHAIN_RPC_URL || "https://bsc-dataseed.binance.org";
 export const XLAYER_RPC_URL = process.env.XLAYER_RPC_URL || "https://mainnet.xlayer-rpc.com";
+export const ARBITRUM_RPC_URL = process.env.ARBITRUM_RPC_URL || "https://arb1.arbitrum.io/rpc";
+export const ETHEREUM_RPC_URL = process.env.ETHEREUM_RPC_URL || "https://ethereum-rpc.publicnode.com";
 
 //solana lookup table address
 export const LOOKUP_TABLE_ADDRESS = "Gjj1dX4UR6HcXGDm48wJHCZjompq5SJ6eKse1Trfq6Qe";

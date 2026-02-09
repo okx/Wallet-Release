@@ -4,7 +4,7 @@ import {
   createTokenAddressRow, 
   getNativeTokenSymbol 
 } from '../template-renderer';
-import { BASE_RPC_URL, BNB_CHAIN_RPC_URL, XLAYER_RPC_URL } from '../consts';
+import { BASE_RPC_URL, BNB_CHAIN_RPC_URL, XLAYER_RPC_URL, ARBITRUM_RPC_URL, ETHEREUM_RPC_URL } from '../consts';
 import { 
   validateEvmTransactionInput, 
   validateEnvironmentVariable,
@@ -14,12 +14,14 @@ import {
   validateAmountDecimals
 } from '../helpers/validation';
 
-export type SupportedChain = 'Base' | 'BNB_Chain' | 'xLayer';
+export type SupportedChain = 'Base' | 'BNB_Chain' | 'xLayer' | 'Arbitrum' | 'Ethereum';
 
 const DEFAULT_RPCS: Record<SupportedChain, string> = {
   Base: BASE_RPC_URL,
   BNB_Chain: BNB_CHAIN_RPC_URL,
   xLayer: XLAYER_RPC_URL,
+  Arbitrum: ARBITRUM_RPC_URL,
+  Ethereum: ETHEREUM_RPC_URL,
 };
 
 // ----- helper functions -----

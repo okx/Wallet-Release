@@ -7,7 +7,7 @@ import { ethers } from 'ethers';
 import { PublicKey } from '@solana/web3.js';
 
 // Type definitions
-export type SupportedChain = 'Solana' | 'Base' | 'BNB_Chain' | 'xLayer';
+export type SupportedChain = 'Solana' | 'Base' | 'BNB_Chain' | 'xLayer' | 'Arbitrum' | 'Ethereum';
 export type EvmAssetType = 'Native Token' | 'ERC20 Token';
 export type SolanaAssetType = 'Native SOL' | 'SPL Token';
 export type AssetType = EvmAssetType | SolanaAssetType;
@@ -22,14 +22,14 @@ export class ValidationError extends Error {
 
 // Chain validation
 export function validateChain(chain: string): asserts chain is SupportedChain {
-  const supportedChains: SupportedChain[] = ['Solana', 'Base', 'BNB_Chain', 'xLayer'];
+  const supportedChains: SupportedChain[] = ['Solana', 'Base', 'BNB_Chain', 'xLayer', 'Arbitrum', 'Ethereum'];
   if (!supportedChains.includes(chain as SupportedChain)) {
     throw new ValidationError(`Invalid blockchain. Supported chains: ${supportedChains.join(', ')}`, 'chain');
   }
 }
 
-export function isEvmChain(chain: string): chain is 'Base' | 'BNB_Chain' | 'xLayer' {
-  return ['Base', 'BNB_Chain', 'xLayer'].includes(chain);
+export function isEvmChain(chain: string): chain is 'Base' | 'BNB_Chain' | 'xLayer' | 'Arbitrum' | 'Ethereum' {
+  return ['Base', 'BNB_Chain', 'xLayer', 'Arbitrum', 'Ethereum'].includes(chain);
 }
 
 export function isSolanaChain(chain: string): chain is 'Solana' {
@@ -277,7 +277,7 @@ export interface SolanaTransactionInput {
 }
 
 export function validateEvmTransactionInput(input: EvmTransactionInput): {
-  chain: 'Base' | 'BNB_Chain' | 'xLayer';
+  chain: 'Base' | 'BNB_Chain' | 'xLayer' | 'Arbitrum' | 'Ethereum';
   assetType: EvmAssetType;
   tokenAddress?: string;
   recipient: string;
